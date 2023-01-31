@@ -161,12 +161,6 @@ export class trayArtist extends domUIArtist
             errorFound = true;
         }
         
-        if(this.state == null){
-            
-            console.error("begin state of tray is not specified")
-            errorFound = true;
-        }
-        
         if(this.openPosition == null){
             
             console.error("open position of tray is not specified")
