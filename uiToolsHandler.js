@@ -1,4 +1,5 @@
 import {domUIArtist} from "./domUIArtist.js";
+import {trayArtist} from "./trayArtist.js";
 import {utilityUIArtist} from "./utilityUIArtist.js";
 
 export class uiToolsHandler
@@ -20,6 +21,17 @@ export class uiToolsHandler
         return domui
     }
     
+    AddTrayArtist(){//any arguments will be pushed as authorized DOMs
+        
+        const trayA = new trayArtist(this,externalOwnerId);
+        
+        this.tools.push(trayA);
+        
+        trayA.AddAuthorizedDOMs(arguments);
+        
+        return trayA
+    }
+    
     SetLastCreatedExternalOwnerId(str){
         
         const lastCreatedTool = this.tools.slice(-1)
@@ -31,11 +43,25 @@ export class uiToolsHandler
         }
     }
     
-    ErrorCheckAllTools(){
+    InitializeAllTools(){
         
         for(const t of this.tools){
             
-            t.ErrorCheck();
+            if(t.hasOwnProperty("Initialize")) t.Initialize();
+            if(t.hasOwnProperty("ErrorCheck")) t.ErrorCheck();
         }
     }
+    
+    CloseAllOpenTrays(){
+        
+        for(const t of this.tools){
+            
+            if(t.hasOwnProperty("toolSubtype") && t.toolSubtype == "trayArtist"){
+                
+                t.BeginTrayClose();
+            }
+        }
+    }
+    
+    
 }

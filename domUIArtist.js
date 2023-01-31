@@ -3,6 +3,7 @@ export class domUIArtist
     constructor(uiToolsHandler, externalOwnerId = null){
         
         this.authorizedDOMs = [];
+        this.toolType = "domUIArtist";
         this.uiToolsHandler= uiToolsHandler;
         this.externalOwnerId = externalOwnerId;
     }
@@ -35,7 +36,7 @@ export class domUIArtist
     
     // These methods will all take a single DOM or an array object of DOMs (that's what the _ConvertSingleDOMtoArray accomplishes)
     
-    AppendElementWithinDOM(element,dom = this.authorizedDOMs[0]){
+    AppendElementWithinDOM(element,dom = this.authorizedDOMs){
 
         const $dom = this._ConvertSingleDOMtoArray(dom);
         
@@ -48,7 +49,7 @@ export class domUIArtist
     }
     
     
-    SetDOMDisplayTo(dom = this.authorizedDOMs[0],display){
+    SetDOMDisplayTo(dom = this.authorizedDOMs,display){
 
         const $dom = this._ConvertSingleDOMtoArray(dom);
                 
@@ -58,7 +59,7 @@ export class domUIArtist
         }
     }
     
-    ClearAllChildren(dom = this.authorizedDOMs[0]){
+    ClearAllChildren(dom = this.authorizedDOMs){
         
         const $dom = this._ConvertSingleDOMtoArray(dom);
         
@@ -74,7 +75,7 @@ export class domUIArtist
 
     }
     
-    ClearInnerHTML(dom = this.authorizedDOMs[0]){
+    ClearInnerHTML(dom = this.authorizedDOMs){
         
         const $dom = this._ConvertSingleDOMtoArray(dom);
     
@@ -84,7 +85,7 @@ export class domUIArtist
         }
     }
     
-    SetDOMInnerTextTo(dom = this.authorizedDOMs[0],text){
+    SetDOMInnerTextTo(dom = this.authorizedDOMs,text){
         
         const $dom = this._ConvertSingleDOMtoArray(dom);
     
