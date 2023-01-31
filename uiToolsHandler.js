@@ -43,6 +43,29 @@ export class uiToolsHandler
         }
     }
     
+    GetArtistsByAuthorizedDOMId(id){
+        
+        let returnArr = [];
+        
+        for(const t of this.tools){
+            
+            for(const d of t.authorizedDOMs){
+                
+                if(d.id == id){
+                    
+                    returnArr.push(t);
+                    continue
+                }
+            }
+            // only push each tool once
+            if(returnArr.includes(t)) continue
+        }
+        
+        if(returnArr.length == 1) return returnArr[0];
+        
+        return returnArr
+    }
+    
     InitializeAllTools(){
         
         for(const t of this.tools){
