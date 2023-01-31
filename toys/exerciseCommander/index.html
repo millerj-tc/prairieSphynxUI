@@ -1,0 +1,15 @@
+<head>
+    <script type="module">
+        import {commandHandler} from "./scripts/commandHandler.js";
+        window.commandHandler = new commandHandler();
+               
+        //will be removed once the overall user interface is setup
+        import {exerciseBeginFlow} from "./scripts/exerciseBeginFlow.js";
+        window.exerciseBeginFlow = exerciseBeginFlow;
+        import {Onload} from "./scripts/onload.js";
+        window.onload = Onload;
+    </script>
+</head>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<div id="exerciseDisplay"><button onclick="window.exerciseBeginFlow()">START</button></div>
+<div id="remainingTime"></div>
