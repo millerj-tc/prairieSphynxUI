@@ -1,0 +1,33 @@
+<HTML>
+    <head>
+        <script type="module">
+            import {gameHandler} from './game.js';
+            window.gameHandler = new gameHandler();
+            window.gameHandler.newGamePlus = true;
+        </script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body style="font-family:sans-serif">
+        <div id="content" style="position:fixed;overflow-y:hidden;transition:transform 0.75s;z-index: 100">
+            <div style="max-width:65vw;font-size:calc(15px + 1.2vw)">
+            </div>
+        </div>
+        <div id="output" class="output" style="position:fixed;top:50px;left:50px;max-height:80vh;margin-right:50px;font-size:calc(15px + 1.2vw);text-align:left;padding:50px;overflow-y:auto;transition:transform 0.75s">
+            
+            <img src="images/marvel/frost-200.png" style="float:left;margin:25px;margin-top:0px"><i>Emma Frost:</i> "We have awoken to a strange problem, X-Team. There appear to be clones of all of us running amok. As the real X-Team, we must subdue these imposters and try to get a handle on this situation. I will be entering Cerebro in order to psychically assess the situation and will keep you posted. <b>We must collect as many allies as possible before we start facing the clones!"</b>
+            
+            <br><br><br><button style="font-size:32pt;width:200px;margin:25px" onclick="gameHandler.Start()">Start</button>
+            
+                <br><br><i>You are playing New Game+
+            
+                <br><br>Bookmark this URL and don't share it with anyone who hasn't completed Scenario 1 :)
+            
+                <br><br><i>This game will be open until Sunday June 12th at 6pm CST.
+                
+                <br><br>You can also check out the <a href="https://millerj-tc.github.io/griotGames/FAQ.html" target="_blank" rel="noopener noreferrer">FAQ here</a>.
+                
+                <br><br>This is optimized for Google Chrome on desktop. It works on my mobile browser, but I will have to keep working on it for more wide support.</i> 
+
+        </div>
+    </body>
+</HTML>

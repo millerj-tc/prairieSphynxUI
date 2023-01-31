@@ -1,0 +1,52 @@
+export const potfcData = [
+    
+    {
+    name:"Solet",
+    dataType: "char",
+    unlocked: ["left","right"],
+    imageL: "images/potfc/solet-200.jpg",
+    imageM: "images/potfc/solet-100.jpg",
+    imageS: "images/potfc/solet-50.jpg",
+    pronouns:{they: "she", them: "her", their: "her", theirs: "hers", themself: "herself"},
+    },
+    {
+    name: "Solet's fury",
+    dataType: "stance",
+    unlocked: ["left","right"],
+    imageL: "images/potfc/soletFury-200.jpg",
+    imageM: "images/potfc/soletFury-100.jpg",
+    imageS: "images/potfc/soletFury-50.jpg",
+    },
+    {
+    name: "Solet's kindness",
+    dataType: "stance",
+    unlocked: ["left","right"],
+    imageL: "images/potfc/soletFriendly-200.jpg",
+    imageM: "images/potfc/soletFriendly-100.jpg",
+    imageS: "images/potfc/soletFriendly-50.jpg",
+    },
+    {
+    name: "Solet's serenity",
+    dataType: "stance",
+    unlocked: ["left","right"],
+    imageL: "images/potfc/soletCalm-200.jpg",
+    imageM: "images/potfc/soletCalm-100.jpg",
+    imageS: "images/potfc/soletCalm-50.jpg",
+    },
+    {
+    name: "Solet's elucidation",
+    dataType: "stance",
+    unlocked: ["left","right"],
+    imageL: "images/potfc/soletInfo-200.jpg",
+    imageM: "images/potfc/soletInfo-100.jpg",
+    imageS: "images/potfc/soletInfo-50.jpg",
+    },
+    {
+    name: "Solet's eerieness",
+    dataType: "stance",
+    unlocked: ["left","right"],
+    imageL: "images/potfc/soletSpooky-200.jpg",
+    imageM: "images/potfc/soletSpooky-100.jpg",
+    imageS: "images/potfc/soletSpooky-50.jpg",
+    },
+]

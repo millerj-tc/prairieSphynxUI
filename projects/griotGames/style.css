@@ -1,0 +1,34 @@
+body{
+    
+    position:fixed;overflow-y:hidden;transition:transform 0.75s;z-index: 100
+}
+
+.output{
+    background-color: #DFF6FF;
+    position: fixed;
+    top:50px;
+    left:50px;
+    max-height:80vh;
+    margin-right:50px;
+    font-size:calc(15px + 1.2vw);
+    text-align:left;
+    padding:50px;
+    overflow-y:auto;
+    transition:transform 0.75s
+}
+
+.indexButton{
+    
+    font-size:calc(30pt + 1.2vw);
+    //width:200px;
+    margin:25px;
+    padding: 15px;
+    position:relative;
+    text-align: center
+}
+
+
+
+body{
+     background-color: #DFF6FF;
+}

@@ -1,0 +1,25 @@
+<HTML>
+    <head>
+        <script type="module">
+            import {gameHandler} from './gameHandler.js';
+            window.gameHandler = new gameHandler();
+        </script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body style="font-family:sans-serif">
+        <div id="content">
+        </div>
+        <div id="output" class="output">    
+                <div><button class="indexButton" onclick="gameHandler.Start()">Grand Adventure Games</button>
+                    <br><div class="indexButtonHelpText"><i>Assemble a team of characters to compete in the 101th Grand Adventure Games</i></div>
+            
+                <br><br><button class="indexButton" onclick="gameHandler.Start()">Explore Mode</button>
+                    <br><div class="indexButtonHelpText"><i>Explore stories of the world. Enjoy a leisurely time or compete to be among the first to unlock hidden secrets.</i></div>
+                </div>                
+                <br><br>You can also check out the <a href="https://millerj-tc.github.io/griotGames/FAQ.html" target="_blank" rel="noopener noreferrer">FAQ here</a>.
+                
+                <br><br>This is optimized for Google Chrome on desktop. It works on my mobile browser, but I will have to keep working on it for more wide support.</i> 
+
+        </div>
+    </body>
+</HTML>
