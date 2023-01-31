@@ -1,6 +1,6 @@
-import {domUIArtist} from "./domUIArtist.js";
-import {trayArtist} from "./trayArtist.js";
-import {utilityUIArtist} from "./utilityUIArtist.js";
+import {domUIArtist} from "./artists/domUIArtist.js";
+import {trayArtist} from "./artists/trayArtist.js";
+import {utilityUIArtist} from "./artists/utilityUIArtist.js";
 
 export class uiToolsHandler
 {
