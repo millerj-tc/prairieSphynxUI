@@ -100,7 +100,7 @@ export class domUIArtist
         
         let $dom = dom;
         
-        if(!Array.isArray($dom)) let $dom = [dom];
+        if(!Array.isArray($dom)) $dom = [dom];
         
         return $dom
     }
