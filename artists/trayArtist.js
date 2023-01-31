@@ -100,10 +100,10 @@ export class trayArtist extends domUIArtist
         
         if(this.clearOnClose) this.ClearAllChildren(); 
         
-        for(const d of $dom){
+            for(const dm of $dom){
             
-            d.style.transform = `translate${this.axis}(${this.closedPosition})`;
-        }
+            dm.style.transform = `translate${this.axis}(${this.closedPosition})`;
+            }
     }
     
     BeginTrayOpen(dom = this.authorizedDOMs){
