@@ -1,0 +1,13 @@
+.tray{
+    
+    top:0px;
+    left:0px;
+    width:200px;
+    height:400px;
+    background-color: aqua;
+}
+
+.trayButton{
+    
+    float:right;
+}

@@ -12,4 +12,6 @@ export function Onload(){
     uiTH.AddDOMUIArtist(edDOM);
     
     uiTH.AddDOMUIArtist(rtDOM);
+    
+    uiTH.InitializeAllTools();
 }

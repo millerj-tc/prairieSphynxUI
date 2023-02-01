@@ -2,9 +2,17 @@ import {uiToolsHandler} from "./uiToolsHandler.js";
 
 export function Test(){
     
-    const div0 = document.createElement("div")
+    const trayDOM = document.getElementById("tray");
     
-    document.body.append(div0);
+    //const trayButtonDOM = document.getElementById("trayButton");
     
-    const div1 = document.createElement("div")
+    const tArtist = uiTH.AddTrayArtist(trayDOM);
+    
+    tArtist.SetTrayOpenClosedPosition("0px","-170px")
+    
+    //tArtist.SetTrayToggleCollapseButtonToDOM(trayButtonDOM);
+    
+    tArtist.SetTrayBeginState("open");
+    
+    uiTH.InitializeAllTools();
 }

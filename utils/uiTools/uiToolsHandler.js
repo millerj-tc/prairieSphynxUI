@@ -23,7 +23,7 @@ export class uiToolsHandler
     
     AddTrayArtist(){//any arguments will be pushed as authorized DOMs
         
-        const trayA = new trayArtist(this,externalOwnerId);
+        const trayA = new trayArtist(this);
         
         this.tools.push(trayA);
         
@@ -70,8 +70,8 @@ export class uiToolsHandler
         
         for(const t of this.tools){
             
-            if(t.hasOwnProperty("Initialize")) t.Initialize();
-            if(t.hasOwnProperty("ErrorCheck")) t.ErrorCheck();
+            if(`BeginInitialize` in t) t.BeginInitialize();
+            if(`ErrorCheck` in t) t.ErrorCheck();
         }
     }
     
@@ -79,7 +79,7 @@ export class uiToolsHandler
         
         for(const t of this.tools){
             
-            if(t.hasOwnProperty("toolSubtype") && t.toolSubtype == "trayArtist"){
+            if(`toolSubtype` in t && t.toolSubtype == "trayArtist"){
                 
                 t.BeginTrayClose();
             }

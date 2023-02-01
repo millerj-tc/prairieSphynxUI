@@ -6,8 +6,12 @@ export class trayArtist extends domUIArtist
         
         super(uiToolsHandler, externalOwnerId);
         this.toolSubtype = "trayArtist";
-        this.axis = null;
+        this.axis = "X";
         this.openPosition = null;
+        this.openButtonText = null;
+        this.closeButtonText = null;
+        this.openButtonSrc = null;
+        this.closeButtonSrc = null;
         this.closedPosition = null;
         this.state = "closed";
         this.transitionTime = 500;
@@ -25,13 +29,29 @@ export class trayArtist extends domUIArtist
         
         for(const d of $dom){
             
-            d.dataset.transitionTime = transitionTime
+            d.dataset.transitionTime = transitionTime;
         }
     }
     
     SetTrayToggleCollapseButtonToDOM(dom){
         
         this.toggleCollapseButton = dom;
+        
+        const artist = this;
+        
+        dom.onclick = function(){artist._CollapseButtonOnClick(artist)};
+    }
+    
+    SetTrayToggleCollapseButtonOpenCloseText(openText,closeText){
+        
+        this.openButtonText = openText;
+        this.closeButtonText = closeText;
+    }
+    
+    SetTrayToggleCollapseButtonOpenCloseImg(openSrc,closeSrc){
+        
+        this.openButtonSrc = openSrc;
+        this.closeButtonSrc = closeSrc;
     }
     
     SetTrayBeginState(str){
@@ -85,7 +105,15 @@ export class trayArtist extends domUIArtist
         this.onFinishCloseFunc = fn;
     }
     
-    BeginTrayClose(dom = this.authorizedDOMs){
+    _CollapseButtonOnClick(artist){
+        
+        // "this" will refer to button DOM
+
+        if(artist.state == "open") artist._BeginTrayClose();
+        if(artist.state == "closed") artist._BeginTrayOpen();
+    }
+    
+    _BeginTrayClose(dom = this.authorizedDOMs){
         
         const $dom = this._ConvertSingleDOMtoArray(dom);
         
@@ -102,12 +130,13 @@ export class trayArtist extends domUIArtist
         
             for(const dm of $dom){
             
-            dm.style.transform = `translate${this.axis}(${this.closedPosition})`;
+                const translate = `translate${this.axis}(${this.closedPosition})`
+                dm.style.transform = translate;
             }
     }
     
-    BeginTrayOpen(dom = this.authorizedDOMs){
-        
+    _BeginTrayOpen(dom = this.authorizedDOMs){
+
         const $dom = this._ConvertSingleDOMtoArray(dom);
         
         for(const d of $dom){
@@ -125,28 +154,81 @@ export class trayArtist extends domUIArtist
         }
     }
     
-    _FinishTransitioningTray(){
+    _FinishTransitioningTray(artist){
         
-        if(this.state == "closing"){
-            this.state = "closed";
-            this.onFinishCloseFunc();
+        // "this" would refer to window, must be passed self bc timer
+        
+        if(artist.state == "closing"){
+            artist.state = "closed";
+            if(artist.onFinishCloseFunc != null) artist.onFinishCloseFunc();
         }
-        if(this.state == "opening"){
-            this.state = "open";
-            this.onFinishOpenFunc();
+        if(artist.state == "opening"){
+            artist.state = "open";
+            if(artist.onFinishOpenFunc != null) artist.onFinishOpenFunc();
         }
     }
     
     _ToggleCollapseButton(){
         
+        if(this.state == "opening"){
+            
+            if(this.openButtonText != null) this.toggleCollapseButton.innerText = this.closeButtonText;
+            if(this.openButtonSrc != null) this.toggleCollapseButton.firstChild.src = this.closeButtonSrc;    
+        }
         
+        if(this.state == "closing"){
+            
+            if(this.closeButtonText != null) this.toggleCollapseButton.innerText = this.openButtonText;
+            if(this.closeButtonSrc != null) this.toggleCollapseButton.firstChild.src = this.openButtonSrc;
+        }
     }
     
     _SetTimeout(){
         
         const obj = this;
         
-        setTimeout(obj._FinishTransitioningTray,obj.transitionTime);
+        setTimeout(function(){
+            obj._FinishTransitioningTray(obj);
+        },obj.transitionTime);
+    }
+    
+    BeginInitialize(){
+        
+        const $dom = this._ConvertSingleDOMtoArray(this.authorizedDOMs);
+        
+        for(const d of $dom){
+                    
+            d.style.transition += "transform " + this.transitionTime/1000 + "s"; //transition:transform 0.75s   
+        }
+        
+        if(this.toggleCollapseButton == null){
+            
+            const button = document.createElement("button");
+            
+            button.style.float = "right";
+        
+            button.style.margin = "5px";
+            
+            this.SetTrayToggleCollapseButtonOpenCloseText("⮞","⮜");
+            
+            this.authorizedDOMs[0].append(button);  
+            
+            this.SetTrayToggleCollapseButtonToDOM(button);
+        }
+        
+        if(this.state == "open"){
+            
+            if(this.openButtonText != null) this.toggleCollapseButton.innerText = this.closeButtonText;
+            if(this.openButtonSrc != null) this.toggleCollapseButton.firstChild.src = this.closeButtonSrc;    
+            }
+
+        if(this.state == "closed"){
+
+            if(this.closeButtonText != null) this.toggleCollapseButton.innerText = this.openButtonText;
+            if(this.closeButtonSrc != null) this.toggleCollapseButton.firstChild.src = this.openButtonSrc;
+
+        }
+            
     }
     
     ErrorCheck(){

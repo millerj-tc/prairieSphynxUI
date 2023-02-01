@@ -1,8 +1,10 @@
 <head>
     <script type="module">
         import {uiToolsHandler} from "./uiToolsHandler.js";
-        window.uiToolsHandler = new uiToolsHandler();
+        window.uiTH = new uiToolsHandler();
         import {Test} from "./onload.js";
         window.onload = Test;
     </script>
 </head>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<div id="tray" class="tray"></div>
