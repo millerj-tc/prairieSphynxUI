@@ -1,4 +1,5 @@
 import {domUIArtist} from "./domUIArtist.js";
+import {CollapseButtonOnClick} from "./trayArtistTrayMovement.js";
 
 export class trayArtist extends domUIArtist
 {
@@ -39,7 +40,7 @@ export class trayArtist extends domUIArtist
         
         const artist = this;
         
-        dom.onclick = function(){artist._CollapseButtonOnClick(artist)};
+        dom.onclick = function(){CollapseButtonOnClick(artist)};
     }
     
     SetTrayToggleCollapseButtonOpenCloseText(openText,closeText){
@@ -103,93 +104,6 @@ export class trayArtist extends domUIArtist
     SetOnFinishCloseFunc(fn){
         
         this.onFinishCloseFunc = fn;
-    }
-    
-    _CollapseButtonOnClick(artist){
-        
-        // "this" will refer to button DOM
-
-        if(artist.state == "open") artist._BeginTrayClose();
-        if(artist.state == "closed") artist._BeginTrayOpen();
-    }
-    
-    _BeginTrayClose(dom = this.authorizedDOMs){
-        
-        const $dom = this._ConvertSingleDOMtoArray(dom);
-        
-        for(const d of $dom){
-            
-            this.state = "closing";    
-        }
-        
-        this._ToggleCollapseButton();
-        
-        this._SetTimeout();
-        
-        if(this.clearOnClose) this.ClearAllChildren(); 
-        
-            for(const dm of $dom){
-            
-                const translate = `translate${this.axis}(${this.closedPosition})`
-                dm.style.transform = translate;
-            }
-    }
-    
-    _BeginTrayOpen(dom = this.authorizedDOMs){
-
-        const $dom = this._ConvertSingleDOMtoArray(dom);
-        
-        for(const d of $dom){
-            
-            this.state = "opening";    
-        }
-        
-        this._ToggleCollapseButton();
-        
-        this._SetTimeout();
-        
-        for(const d of $dom){
-            
-            d.style.transform = `translate${this.axis}(${this.openPosition})`;
-        }
-    }
-    
-    _FinishTransitioningTray(artist){
-        
-        // "this" would refer to window, must be passed self bc timer
-        
-        if(artist.state == "closing"){
-            artist.state = "closed";
-            if(artist.onFinishCloseFunc != null) artist.onFinishCloseFunc();
-        }
-        if(artist.state == "opening"){
-            artist.state = "open";
-            if(artist.onFinishOpenFunc != null) artist.onFinishOpenFunc();
-        }
-    }
-    
-    _ToggleCollapseButton(){
-        
-        if(this.state == "opening"){
-            
-            if(this.openButtonText != null) this.toggleCollapseButton.innerText = this.closeButtonText;
-            if(this.openButtonSrc != null) this.toggleCollapseButton.firstChild.src = this.closeButtonSrc;    
-        }
-        
-        if(this.state == "closing"){
-            
-            if(this.closeButtonText != null) this.toggleCollapseButton.innerText = this.openButtonText;
-            if(this.closeButtonSrc != null) this.toggleCollapseButton.firstChild.src = this.openButtonSrc;
-        }
-    }
-    
-    _SetTimeout(){
-        
-        const obj = this;
-        
-        setTimeout(function(){
-            obj._FinishTransitioningTray(obj);
-        },obj.transitionTime);
     }
     
     BeginInitialize(){
