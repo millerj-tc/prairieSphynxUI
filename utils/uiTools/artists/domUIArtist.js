@@ -1,3 +1,6 @@
+// domUIArtist is in charge of a specific DOM in the UI (or multiple DOMs that will behave in the exact same way)
+// the project should have a uiToolsHandler and can add any number of domUIArtists to handle any number of DOMs with the uiToolsHandler method AddDOMUIArtist()
+
 export class domUIArtist
 {
     constructor(uiToolsHandler, externalOwnerId = null){

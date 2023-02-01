@@ -1,3 +1,5 @@
+// separated out from trayArtist class for space/complexity reasons
+
 export function CollapseButtonOnClick(artist){
         
         // "this" will refer to button DOM
@@ -52,9 +54,7 @@ function _BeginTrayOpen(artist){
     }
     
  function _FinishTransitioningTray(artist){
-        
-        // "this" would refer to window, must be passed self bc timer
-        
+                
         if(artist.state == "closing"){
             artist.state = "closed";
             if(artist.onFinishCloseFunc != null) artist.onFinishCloseFunc();
