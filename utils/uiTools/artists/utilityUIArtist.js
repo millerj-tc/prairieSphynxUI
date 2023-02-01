@@ -39,5 +39,35 @@ export class utilityUIArtist
 
         return $returnString
     }
+    
+    ReplaceWordsBasedOnPluralSubjects(arrayOfSubjects,string){ 
+        //arrayOfSubjects could be any array that represents the subjects in the sentence (objects, strings, etc.), all this cares about is counting the number to determine if there's more than 1 
+        //string ex: " [[manages/manage]] to capture "
+    
+        let $returnString = string;
+
+        if($returnString.match(/\[\[(.*?)\]\]/) == null) return $returnString
+
+        if(arrayOfSubjects.length < 1) console.warn("ReplaceWordsBasedOnPluralSubjects passed 0 length array!")
+
+        let $modifiedGroup;
+
+        let $matches;
+
+        const $matchCount = $returnString.match(/\[\[(.*?)\]\]/g).length;
+
+        for(let i = 0; i < $matchCount; i ++){
+
+             $modifiedGroup = $returnString.match(/\[\[(.*?)\]\]/)[1];
+
+            // below used to be "if(array.length == 1 || array.hasOwnProperty("dataType"))"
+            if(arrayOfSubjects.length == 1) $modifiedGroup = $modifiedGroup.split("/")[0]
+            else if(arrayOfSubjects.length > 1) $modifiedGroup = $modifiedGroup.split("/")[1]
+
+            $returnString = $returnString.replace(/\[\[(.*?)\]\]/,$modifiedGroup);
+        }
+
+        return $returnString
+    }
 
 }
