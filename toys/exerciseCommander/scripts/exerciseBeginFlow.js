@@ -12,7 +12,7 @@ export function exerciseBeginFlow(){
     
     //const patternRequest = LoadUserExercisePatternSelection();
     
-    const patternRequest = [{difficulty:0.75,duration:360},{difficulty:1,duration:75},{difficulty:2,duration:45}];
+    const patternRequest = [{difficulty:0.75,duration:10},{difficulty:1,duration:10},{difficulty:2,duration:10}];
     
     //{difficulty:0.2,duration:10},{difficulty:0.4,duration:10},{difficulty:0.5,duration:45},{difficulty:0.75,duration:15},{difficulty:1,duration:60},{difficulty:1.25,duration:60},{difficulty:1.5,duration:60},{difficulty:1.75,duration:60},{difficulty:2,duration:30}
     
@@ -46,7 +46,9 @@ function _BuildExercisePattern(patternRequest){
                         
             const rate = _ChooseRate(chosenExercise,section);
             
-            let reps = _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate);
+            const restTime = _ChooseRestTime(chosenExercise,section);
+            
+            let reps = _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate,restTime);
             
             if(reps < 1){
                 
@@ -54,7 +56,7 @@ function _BuildExercisePattern(patternRequest){
                 sectionRemainingDuration = 0;
             }
             
-            const restTime = _ChooseRestTime(chosenExercise,section);
+            
                                 
             exerciseCommands.push(new exerciseCommand(chosenExercise.type, reps,rate, restTime));
             
@@ -68,15 +70,17 @@ function _BuildExercisePattern(patternRequest){
             
             console.log(`${exerciseDuration}`)
             
+            console.log(`${sectionRemainingDuration} - ${exerciseDuration} =`);
+            
             sectionRemainingDuration = sectionRemainingDuration - exerciseDuration;
             
             
-            
+            console.log(sectionRemainingDuration);
+
             
             
             console.log((reps * rate) + restTime);
             
-            console.log(sectionRemainingDuration);
             
             console.log("~~~");
         }
@@ -102,11 +106,11 @@ function _ChooseRate(chosenExercise,section){
     return chosenExercise.difficulty1rate + (chosenExercise.difficultyLvRateChange * section.difficulty);
 }
 
-function _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate){
+function _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate,restTime){
     
     let reps = Math.round(chosenExercise.difficulty1reps * section.difficulty);
     
-    while((reps * rate * 1000) > (sectionRemainingDuration + 1500)){
+    while((reps * rate * 1000) + restTime > (sectionRemainingDuration)){
         
         reps--;
     }
