@@ -12,7 +12,7 @@ export function exerciseBeginFlow(){
     
     //const patternRequest = LoadUserExercisePatternSelection();
     
-    const patternRequest = [{difficulty:0.75,duration:420},{difficulty:0.1,duration:30},{difficulty:2,duration:30}];
+    const patternRequest = [{difficulty:0.75,duration:360},{difficulty:1,duration:75},{difficulty:2,duration:45}];
     
     //{difficulty:0.2,duration:10},{difficulty:0.4,duration:10},{difficulty:0.5,duration:45},{difficulty:0.75,duration:15},{difficulty:1,duration:60},{difficulty:1.25,duration:60},{difficulty:1.5,duration:60},{difficulty:1.75,duration:60},{difficulty:2,duration:30}
     
@@ -60,7 +60,25 @@ function _BuildExercisePattern(patternRequest){
             
             const exerciseDuration = (1000 * (1/rate) * reps) + restTime;
             
+            console.log(chosenExercise.type);
+            
+            console.log(exerciseDuration);
+            
+            console.log(`(${reps} * ${rate}) + ${restTime} = ${exerciseDuration}`);
+            
+            console.log(`${exerciseDuration}`)
+            
             sectionRemainingDuration = sectionRemainingDuration - exerciseDuration;
+            
+            
+            
+            
+            
+            console.log((reps * rate) + restTime);
+            
+            console.log(sectionRemainingDuration);
+            
+            console.log("~~~");
         }
         
         
