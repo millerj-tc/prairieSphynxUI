@@ -12,7 +12,7 @@ export class uiToolsHandler
     
     AddDOMUIArtist(){ //any arguments will be pushed as authorized DOMs
         
-        const domui = new domUIArtist(this,externalOwnerId);
+        const domui = new domUIArtist(this);
         
         this.tools.push(domui);
         

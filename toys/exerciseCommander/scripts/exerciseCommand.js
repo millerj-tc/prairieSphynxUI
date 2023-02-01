@@ -8,6 +8,7 @@ export class exerciseCommand
         this.restTime = restTime;
         this.transitionTime = transitionTime;
         this.remainingReps = reps;
+        this.edArtist = window.uiTH.GetArtistsByAuthorizedDOMId("exerciseDisplay");
     }
     
     Command(){
@@ -15,9 +16,10 @@ export class exerciseCommand
         //if audio, if visual...
         
         //should not use body
-        document.body.innerText = this.exerciseReps + " " + this.exerciseType;
         
-        const audio = new Audio("../audio/pianoKey.mp3");
+        this.edArtist.SetDOMInnerTextTo(this.exerciseReps + " " + this.exerciseType);
+        
+        const audio = new Audio("../exerciseCommander/audio/pianoKey.mp3");
         
         audio.play();
         
@@ -63,23 +65,23 @@ export class exerciseCommand
     
     _MetronomeTick(){
         
-        const audio = new Audio("../audio/chime.mp3");
+        const audio = new Audio("../exerciseCommander/audio/chime.mp3");
         
         audio.play();
     }
     
     _Flash(color){
         
-        document.body.style.backgroundColor = color;
+        const edArtist = this.edArtist;
         
-        setTimeout(function(){document.body.style.backgroundColor = "white"},250)
+        edArtist.SetStylePropToValue("backgroundColor", color);
+        
+        setTimeout(function(){edArtist.SetStylePropToValue("backgroundColor","white")},250)
     }
     
     _SendEndTriggerToCommandHandler(obj){
         
-        document.body.innerText = "rest";
-        
-        console.log(obj);
+        this.edArtist.SetDOMInnerTextTo("rest");
         
         setTimeout(function(){window.commandHandler.GotoNextCommand()},obj.restTime)
     }
@@ -87,10 +89,12 @@ export class exerciseCommand
 
 function _Tick(obj){
     
+    const edArtist = window.uiTH.GetArtistsByAuthorizedDOMId("exerciseDisplay");
+    
     obj._MetronomeTick();
     obj._Flash("green");
     
     obj.remainingReps--;
     
-    document.body.innerText = obj.remainingReps + " " + obj.exerciseType;
+    edArtist.SetDOMInnerTextTo(obj.remainingReps + " " + obj.exerciseType);
 }

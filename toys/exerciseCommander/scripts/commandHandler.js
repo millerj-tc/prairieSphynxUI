@@ -22,8 +22,6 @@ export class commandHandler
     
     _PlayCommand(){
         
-        console.log(this.commands);
-        
         this.commands[this.currentCommandInd].Command();
         
     }

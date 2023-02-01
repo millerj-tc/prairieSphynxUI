@@ -2,9 +2,6 @@ import {exerciseCommand} from "./exerciseCommand.js";
 import {exercises} from "./exerciseData.js";
 import {ShuffleArray} from "./utils.js";
 
-
-const uiTH = new uiToolsHandler();
-
 export function exerciseBeginFlow(){
     
     const commandHandler = window.commandHandler;
@@ -15,7 +12,9 @@ export function exerciseBeginFlow(){
     
     //const patternRequest = LoadUserExercisePatternSelection();
     
-    const patternRequest = [{difficulty:0.2,duration:10},{difficulty:0.4,duration:10},{difficulty:0.5,duration:45},{difficulty:0.75,duration:15},{difficulty:1,duration:60},{difficulty:1.25,duration:60},{difficulty:1.5,duration:60},{difficulty:1.75,duration:60},{difficulty:2,duration:30}];
+    const patternRequest = [{difficulty:0.75,duration:420},{difficulty:0.1,duration:30},{difficulty:2,duration:30}];
+    
+    //{difficulty:0.2,duration:10},{difficulty:0.4,duration:10},{difficulty:0.5,duration:45},{difficulty:0.75,duration:15},{difficulty:1,duration:60},{difficulty:1.25,duration:60},{difficulty:1.5,duration:60},{difficulty:1.75,duration:60},{difficulty:2,duration:30}
     
     //{difficulty:0.75,duration:420},{difficulty:0.1,duration:30},{difficulty:2,duration:30}
     
@@ -23,7 +22,7 @@ export function exerciseBeginFlow(){
     
     commandHandler.PlayExercisePattern(builtPattern);
     
-    
+    _SetTimer(patternRequest);
     
 }
 
@@ -105,4 +104,28 @@ function _ChooseRestTime(chosenExercise,section){
     if(restTime < 500) return 500
     
     return restTime
+}
+
+function _SetTimer(patternRequest){
+    
+    let totalTime = 0;
+    
+    for(const p of patternRequest){
+        
+        totalTime += p.duration
+    }
+    
+    totalTime = totalTime * 1000;
+    
+    const rtArtist = window.uiTH.GetArtistsByAuthorizedDOMId("remainingTime");
+    
+    rtArtist.SetDOMInnerTextTo(totalTime/1000);
+    
+    setInterval(function(){
+        
+        totalTime = totalTime - 1000;
+        
+        rtArtist.SetDOMInnerTextTo(totalTime/1000);
+        
+    },1000);
 }

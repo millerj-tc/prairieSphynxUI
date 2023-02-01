@@ -10,9 +10,9 @@ export class domUIArtist
     
     AddAuthorizedDOMs(){
         
-        for(const a of arguments){
-            
-            this.authorizedDOMs.push(a);
+        for(const a of arguments){            
+
+            this.authorizedDOMs.push(a[0]);
         }
     }
     
@@ -85,7 +85,7 @@ export class domUIArtist
         }
     }
     
-    SetDOMInnerTextTo(dom = this.authorizedDOMs,text){
+    SetDOMInnerTextTo(text,dom = this.authorizedDOMs){
         
         const $dom = this._ConvertSingleDOMtoArray(dom);
     
@@ -93,6 +93,16 @@ export class domUIArtist
             
             d.innerText = text;
         }
+    }
+    
+    SetStylePropToValue(styleProp,value){
+    
+        for(const d of this.authorizedDOMs){
+         
+            d.style[styleProp] = value;
+        }
+        
+        
     }
     
 
