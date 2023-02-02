@@ -12,7 +12,7 @@ export function exerciseBeginFlow(){
     
     //const patternRequest = LoadUserExercisePatternSelection();
     
-    const patternRequest = [{difficulty:0.75,duration:10},{difficulty:1,duration:10},{difficulty:2,duration:10}];
+    const patternRequest = [{difficulty:0.75,duration:240},{difficulty:1,duration:60},{difficulty:2,duration:30},{difficulty:2.5,duration:30},{difficulty:3,duration:20}];
     
     //{difficulty:0.2,duration:10},{difficulty:0.4,duration:10},{difficulty:0.5,duration:45},{difficulty:0.75,duration:15},{difficulty:1,duration:60},{difficulty:1.25,duration:60},{difficulty:1.5,duration:60},{difficulty:1.75,duration:60},{difficulty:2,duration:30}
     
