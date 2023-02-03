@@ -1,9 +1,10 @@
 export class period
 {
-    constructor(periodName){
+    constructor(periodName,periodType){
         
-        this.periodName = periodName; //"scenario", "phase", "stage"
+        this.periodType = periodType; //"scenario", "phase", "stage"
         this.periodActive = false;
+        this.periodHandler;
     }
     
     LoadCards(){ //should this be decoupled?

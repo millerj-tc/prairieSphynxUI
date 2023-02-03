@@ -16,23 +16,23 @@ export function ScenarioFlow(scenario){
         
         phaseHandler.GotoNextPeriod();
                 
-        const phase = phaseHandler.GetCurrentPeriod()
+        const phase = phaseHandler.GetCurrentActivePeriod()
         
         phase.BeginPeriod();
         
         while(phase.GetPeriodActive()){
             
-            const stepHandler = phaseHandler.GetCurrentPeriod().GetSubPeriodHandlerByPeriodName();
+            const stepHandler = phaseHandler.GetCurrentActivePeriod().GetSubPeriodHandlerByPeriodName();
             
             stepHandler.GotoNextPeriod();
                         
-            const step = stepHandler.GetCurrentPeriod()
+            const step = stepHandler.GetCurrentActivePeriod()
             
             step.BeginPeriod();
             
             while(step.GetPeriodActive()){
                 
-                step.Evaluate();
+                step.Run();
                 
                 step.PeriodDeactivateFlow(); //set period.periodActive to 'false' if conditions are met
             }

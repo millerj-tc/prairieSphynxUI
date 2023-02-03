@@ -1,80 +1,143 @@
 import {periodHandler} from "./periodHandler.js";
 import {cardHandler} from "./../cards/cardHandler.js";
+import {period} from "./period.js";
 
-// const sph = new scenarioPeriodHandler;
-// const tkr = sph.AddScenario("Time Koala Rescue");
-// const ettm = tkr.AddPhase("Essay the Time Mountain");
-// const ettmSH = ettm.stageHandler;
-// ettmSH.AddStage("Get Highest Strength Character");
-// ettmSH.SetStageEvalFunc("Get...", func);
-// ettmSH.AddStage("Highest Strength Character Helps Lowest Strength Character");
-// ettmSH.AddStage("Lowest Strength Character Says Thanks");
+// AddGag101Scenario("Time Koala Rescue"); //choose gameHandler.scenarioHandler
+// AddGag101Phase("Essay the Time Mountain"); //target last created scenario
+
+// AddGag101Step("Get Highest Strength Character") //target last created scenario
 
 
-export class gagPeriodHandler extends periodHandler
+export class gag101Period extends period
 {
-    constructor(){
+    constructor(periodName,periodType){
         
-        super();
+        super(periodName,periodType);
+        
+        this.cardHandler = new cardHandler(periodType);
     }
     
     BeginPeriod(){
         
         super.BeginPeriod();
         
-        this._LoadActiveCardsFromParentPeriodHandler();
+        if(this.periodHandler.GetPreviousActivePeriod() == null) this._LoadActiveCardsFromParentPeriodHandler;
         
+        else this._LoadActiveCardsFromPreviousPeriod;
     }
     
-    _LoadActiveCardsFromParentPeriodHandler(){
+    _LoadCardArrIntoMyCardHandler(cardArr){
         
-        const activeCards = this.superPeriodHandler.cardHandler.GetCards("active");
-        
-        for(const c of activeCards){
+        for(const c of cardArr){
             
             this.cardHandler.AddCard(c); //It's important to use AddCard() rather than just declaring cardHandler.cards = [arr] in order to get disposable copies
         }
     }
-}
-
-export class scenarioPeriodHandler extends gagPeriodHandler
-{
-    constructor(){
+    
+    _LoadActiveCardsFromPreviousPeriod(){
         
-        super("scenario");
+        const activeCards = this.periodHandler.GetPreviousActivePeriod().cardHandler.GetCards("active");
         
-        this.cardHandler = new cardHandler("scenario");
+        this._LoadCardArrIntoMyCardHandler(activeCards);
+    }
+    
+    _LoadActiveCardsFromParentPeriodHandler(){
+        // use this for the first period in the sequence, inherits from the level above
+        const activeCards = this.periodHandler.superPeriodHandler.cardHandler.GetCards("active");
         
-        this.phaseHandler = periodHandler.AddSubPeriodToPeriodHandler("phase",this);
-        
-        this.phaseHandler.cardHandler = new cardHandler("phase");
-        
-        // I don't know if any of this is right. When I imagine myself coding actual stages won't I be adding phases manually? Might want to write some imaginary scenario design code in order to make sure the functions here make sense. Maybe model after how the card prototype chain works?
+        this._LoadCardArrIntoMyCardHandler(activeCards);
     }
 }
 
-export class phasePeriodHandler extends gagPeriodHandler
+export class gag101PeriodHandler extends periodHandler
 {
-    constructor(){
+    constructor(periodType){
         
-        super("phase");
+        super(periodType);
         
-        console.log("hello");
-        
-        periodHandler.AddSubPeriodToPeriodHandler("step",this);
-        
-        this.cardHandler = new cardHandler("phase");
+        this.cardHandler = new cardHandler(periodType)
     }
 }
 
-export class stepPeriodHandler extends gagPeriodHandler
-{
-    constructor(){
-        
-        super("step");
-        
-        console.log("hello");
-                
-        this.cardHandler = new cardHandler("step");
-    }
+export function AddGag101Scenario(scenarioName){
+    
+    const scenarioHandler = window.gameHandler.scenarioHandler;
+    
+    scenarioHandler.AddPeriod(scenarioName); //should be a gagPeriodHandler
+    
+    scenarioHandler.GetLastCreatedPeriod().AddSubPeriodToPeriodHandler("phase");
+    
+    
 }
+
+export function AddGag101Phase(phaseName){
+    
+    const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedSubPeriod();
+    
+    phaseHandler.AddPeriod(phaseName);
+    
+    phaseHandler.GetLastCreatedPeriod().AddSubPeriodToPeriodHandler("step");
+}
+
+export function AddGag101Step(stepName){
+    
+    const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedSubPeriod();
+    
+    const stepHandler = phaseHandler.GetLastCreatedSubPeriod();
+    
+    stepHandler.AddPeriod(stepName);
+    
+}
+
+export function AddGag101StepRunFunction(func){
+    
+    const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedSubPeriod();
+    
+    const stepHandler = phaseHandler.GetLastCreatedSubPeriod();
+    
+    stepHandler.GetLastCreatedPeriod().Run = func;
+}
+
+
+
+//export class scenarioHandler extends gagPeriodHandler
+//{
+//    constructor(){
+//        
+//        super("scenario");
+//        
+//        this.cardHandler = new cardHandler("scenario");
+//        
+//        this.phaseHandler = periodHandler.AddSubPeriodToPeriodHandler("phase",this);
+//        
+//        this.phaseHandler.cardHandler = new cardHandler("phase");
+//        
+//        // I don't know if any of this is right. When I imagine myself coding actual stages won't I be adding phases manually? Might want to write some imaginary scenario design code in order to make sure the functions here make sense. Maybe model after how the card prototype chain works?
+//    }
+//}
+//
+//export class phaseHandler extends gagPeriodHandler
+//{
+//    constructor(){
+//        
+//        super("phase");
+//        
+//        console.log("hello");
+//        
+//        periodHandler.AddSubPeriodToPeriodHandler("step",this);
+//        
+//        this.cardHandler = new cardHandler("phase");
+//    }
+//}
+//
+//export class stepHandler extends gagPeriodHandler
+//{
+//    constructor(){
+//        
+//        super("step");
+//        
+//        console.log("hello");
+//                
+//        this.cardHandler = new cardHandler("step");
+//    }
+//}

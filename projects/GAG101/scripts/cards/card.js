@@ -32,4 +32,9 @@ export class card
         
         this.active = true;
     }
+    
+    SetProp(prop,value){
+        
+        this[prop] = value;
+    }
 }
