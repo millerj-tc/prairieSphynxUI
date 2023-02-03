@@ -4,7 +4,6 @@ import {period} from "./period.js";
 
 // AddGag101Scenario("Time Koala Rescue"); //choose gameHandler.scenarioHandler
 // AddGag101Phase("Essay the Time Mountain"); //target last created scenario
-
 // AddGag101Step("Get Highest Strength Character") //target last created scenario
 
 
@@ -57,6 +56,37 @@ export class gag101PeriodHandler extends periodHandler
         
         this.cardHandler = new cardHandler(periodType)
     }
+    
+    AddPeriod(periodName){
+        
+        super.AddPeriod();
+        
+        this.periods.pop();
+        
+        const p = new gag101Period(periodName,this.periodType);
+        
+        this.periods.push(p);
+        
+        this.lastCreatedPeriod = p;
+        
+        p.periodHandler = this;
+        
+    }
+    
+    AddSubPeriodToPeriodHandler(periodType){
+        
+        super.AddSubPeriodToPeriodHandler();
+        
+        this.subPeriodHandlers.pop();
+        
+        const sph = new gag101PeriodHandler(periodType);
+        
+        sph.superPeriodHandler = this;
+        
+        this.subPeriodHandlers.push(sph);
+        
+        this.lastCreatedSubPeriod = sph;
+    }
 }
 
 export function AddGag101Scenario(scenarioName){
@@ -66,6 +96,8 @@ export function AddGag101Scenario(scenarioName){
     scenarioHandler.AddPeriod(scenarioName); //should be a gagPeriodHandler
     
     scenarioHandler.GetLastCreatedPeriod().AddSubPeriodToPeriodHandler("phase");
+    
+    console.error("needs scenario.LoadCards -- does each period type need a ui handler as well?");
     
     
 }
@@ -97,47 +129,3 @@ export function AddGag101StepRunFunction(func){
     
     stepHandler.GetLastCreatedPeriod().Run = func;
 }
-
-
-
-//export class scenarioHandler extends gagPeriodHandler
-//{
-//    constructor(){
-//        
-//        super("scenario");
-//        
-//        this.cardHandler = new cardHandler("scenario");
-//        
-//        this.phaseHandler = periodHandler.AddSubPeriodToPeriodHandler("phase",this);
-//        
-//        this.phaseHandler.cardHandler = new cardHandler("phase");
-//        
-//        // I don't know if any of this is right. When I imagine myself coding actual stages won't I be adding phases manually? Might want to write some imaginary scenario design code in order to make sure the functions here make sense. Maybe model after how the card prototype chain works?
-//    }
-//}
-//
-//export class phaseHandler extends gagPeriodHandler
-//{
-//    constructor(){
-//        
-//        super("phase");
-//        
-//        console.log("hello");
-//        
-//        periodHandler.AddSubPeriodToPeriodHandler("step",this);
-//        
-//        this.cardHandler = new cardHandler("phase");
-//    }
-//}
-//
-//export class stepHandler extends gagPeriodHandler
-//{
-//    constructor(){
-//        
-//        super("step");
-//        
-//        console.log("hello");
-//                
-//        this.cardHandler = new cardHandler("step");
-//    }
-//}
