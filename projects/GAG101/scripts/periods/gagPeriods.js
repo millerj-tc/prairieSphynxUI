@@ -99,6 +99,11 @@ export function AddGag101Scenario(scenarioName){
     
     console.error("needs scenario.LoadCards -- does each period type need a ui handler as well?");
     
+    // scenario needs a listener to update active cards based on player choices
+    
+    // scenario begin period can also have a function that can load in random/neutral/possible cards
+    
+    // also respond to player choices for other team for sim arena
     
 }
 
