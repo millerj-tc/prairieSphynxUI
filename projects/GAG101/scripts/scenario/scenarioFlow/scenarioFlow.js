@@ -8,42 +8,46 @@ export function ScenarioFlow(scenario){
     // cards are activated by: being chosen by the player, being chosen randomly, by being chosen by the other player in the Arena, by being chosen by the scenario as a specific chosen opponent (or any combination if a scenario might include random cards)
     // scenario-specific cards can be active or inactive when the scenario is constructed
     
-    scenario.BeginPeriod(); //often, this is output like dialogue or narration
+    scenario.BeginPeriod(); //often this is output like dialogue or narration
     
-    while(scenario.periodActive == true){
+    while(scenario.GetPeriodActive()){
         
         const phaseHandler = scenario.GetSubPeriodHandlerByPeriodName();
         
         phaseHandler.GotoNextPeriod();
                 
-        phaseHandler.currentPhase.BeginPeriod();
+        const phase = phaseHandler.GetCurrentPeriod()
         
-        while(currentPhase.periodActive == true){
+        phase.BeginPeriod();
+        
+        while(phase.GetPeriodActive()){
             
-            const sh = currentPhase.stepHandler;
+            const stepHandler = phaseHandler.GetCurrentPeriod().GetSubPeriodHandlerByPeriodName();
             
-            sh.GotoNextPeriod();
+            stepHandler.GotoNextPeriod();
                         
-            sh.currentStep.BeginPeriod();
+            const step = stepHandler.GetCurrentPeriod()
             
-            while(currentStep.periodActive == true){
+            step.BeginPeriod();
+            
+            while(step.GetPeriodActive()){
                 
-                sh.currentStep.Evaluate();
+                step.Evaluate();
                 
-                sh.currentStep.IsStepOver(); //set currentStep.periodActive to 'false' if conditions are met
+                step.PeriodDeactivateFlow(); //set period.periodActive to 'false' if conditions are met
             }
             
-            sh.currentStep.EndStep(); //set previousStep to currentStep, set currentStep to null -- this way if currentStep is not null, you can "resume" a paused step, phase, scenario, empty stepCards arr
+            step.EndPeriod(); //set previousStep to currentStep, set currentStep to null -- this way if currentStep is not null, you can "resume" a paused step, phase, scenario, empty stepCards arr
             
-            phaseHandler.currentPhase.IsPhaseOver();
+            phase.PeriodDeactivateFlow();
         }
         
-        currentPhase.EndPhase();
+        phase.EndPeriod();
         
-        scenario.IsScenarioOver();
+        scenario.PeriodDeactivateFlow();
     }
     
-    scenario.EndScenario();
+    scenario.EndPeriod();
     
 //    - load copies of all cards into a scenario (including unchosen ones that can "appear" mid-simulation, might be cards from firebase)
 //- choose a starting phase

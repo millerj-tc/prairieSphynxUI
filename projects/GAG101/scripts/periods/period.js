@@ -16,7 +16,12 @@ export class period
         this.periodActive = true;
     }
     
-    IsPeriodOver(){
+    GetPeriodActive(){
+        
+        return this.periodActive;
+    }
+    
+    PeriodDeactivateFlow(){
         
         
     }
