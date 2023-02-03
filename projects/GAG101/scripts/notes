@@ -9,13 +9,18 @@ the scenario level (cards actually loaded into a scenario which may not belong t
 the phase level (properties that only matter for that phase)
 the step level (properties that only matter for that step)
 
-there should be a cardCollectionDataHandler object that holds cardCollectionData objs that point to a card in the master list and hold all the collection props
-the same for:
-cardScenarioDataHandler -> cardScenarioData
-cardPhaseDataHandler -> cardPhaseData
-cardStepDataHandler -> cardStepData
+//there should be a cardCollectionDataHandler object that holds cardCollectionData objs that point to a card in the master list and hold all the collection props
+//the same for:
+//cardScenarioDataHandler -> cardScenarioData
+//cardPhaseDataHandler -> cardPhaseData
+//cardStepDataHandler -> cardStepData
 
-for props that need to be tracked at a higher level they can just be passed up the chain
+masterCardHandler -> masterCard 
+collectionCardHandler -> collectionCard from Object.create(masterCard)
+scenarioCardHandler -> scenarioCard from Object.create(collectionCard)
+phaseCardHandler -> phaseCard from Object.create(scenarioCard)
+stepCardHandler -> stepCard from Object.create(phaseCard)
+
 
 Assess what card choices are legal (based on potentially both a master list and limitations on the player -- have they unlocked it?)
 Display legal card choice slots
