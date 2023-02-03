@@ -1,5 +1,3 @@
-import 
-
 export class period
 {
     constructor(periodName){
@@ -16,7 +14,7 @@ export class period
     
     BeginPeriod(){
         
-        
+        this.periodActive = true;
     }
     
     IsPeriodOver(){

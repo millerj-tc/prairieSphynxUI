@@ -9,18 +9,14 @@ export function ScenarioFlow(scenario){
     // scenario-specific cards can be active or inactive when the scenario is constructed
     
     scenario.BeginPeriod(); //often, this is output like dialogue or narration
-        
-    scenario.periodActive = true;
     
     while(scenario.periodActive == true){
         
         const ph = scenario.phaseHandler;
         
-        ph.ChoosePhase(); //ChoosePhase/ChooseStep should be linear unless a special "nonlinear" prop (default = false) is true on the object. this will set currentPhase on phaseHandler;
+        ph.GotoNextPeriod();
         
-        ph.currentPhase.periodActive = true;
-        
-        ph.LoadCards();
+        ph.LoadCards(); //period will technically be inactive until BeginPeriod()
         
         ph.currentPhase.BeginPeriod();
         
@@ -28,9 +24,7 @@ export function ScenarioFlow(scenario){
             
             const sh = currentPhase.stepHandler;
             
-            sh.ChooseStep();
-            
-            sh.currentStep.periodActive = true;
+            sh.GotoNextPeriod();
             
             sh.LoadCards();
             
