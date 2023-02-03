@@ -5,19 +5,22 @@ export class periodHandler
     constructor(periodName){
         
         this.periodName = periodName;
-        this.linear = true;
+        this.linear = true; //does the period progress in a strictly linear fashion?
         this.periods = [];
+        this.superPeriodHandler = null; //the period above this period in the chain
         this.subPeriodHandlers = [];
         this.currentPeriodInd;
         this.previousPeriodInd;
         this.nextPeriodInd;
     }
     
-    static AddSubPeriodToPeriodHandler(periodName,periodHandler){
+    static AddSubPeriodToPeriodHandler(periodName,periodHandlerInst){
         
         const sph = new periodHandler(periodName);
         
-        periodHandler.subPeriodHandlers.push(sph);
+        sph.superPeriodHandler = periodHandlerInst;
+        
+        periodHandlerInst.subPeriodHandlers.push(sph);
     }
     
     AddPeriod(){

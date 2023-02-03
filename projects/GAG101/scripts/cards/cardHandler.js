@@ -1,4 +1,4 @@
-import card from "./card.js";
+import {card} from "./card.js";
 
 export class cardHandler
 {
@@ -18,6 +18,26 @@ export class cardHandler
     
     LoadCards(){
         
-        return this.cards;
+        //return this.cards;
+    }
+    
+    GetCards(active = ""){
+        
+        let returnArr = [];
+        
+        if(active == "active"){
+            
+            for(const c of this.cards){
+                
+                if(c.active){
+                    
+                    returnArr.push(c);
+                }
+            }
+            
+            return returnArr
+        }
+        
+        return this.cards
     }
 }

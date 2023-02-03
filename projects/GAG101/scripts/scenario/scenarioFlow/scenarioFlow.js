@@ -12,22 +12,18 @@ export function ScenarioFlow(scenario){
     
     while(scenario.periodActive == true){
         
-        const ph = scenario.phaseHandler;
+        const phaseHandler = scenario.GetSubPeriodHandlerByPeriodName();
         
-        ph.GotoNextPeriod();
-        
-        ph.LoadCards(); //period will technically be inactive until BeginPeriod()
-        
-        ph.currentPhase.BeginPeriod();
+        phaseHandler.GotoNextPeriod();
+                
+        phaseHandler.currentPhase.BeginPeriod();
         
         while(currentPhase.periodActive == true){
             
             const sh = currentPhase.stepHandler;
             
             sh.GotoNextPeriod();
-            
-            sh.LoadCards();
-            
+                        
             sh.currentStep.BeginPeriod();
             
             while(currentStep.periodActive == true){
@@ -39,7 +35,7 @@ export function ScenarioFlow(scenario){
             
             sh.currentStep.EndStep(); //set previousStep to currentStep, set currentStep to null -- this way if currentStep is not null, you can "resume" a paused step, phase, scenario, empty stepCards arr
             
-            ph.currentPhase.IsPhaseOver();
+            phaseHandler.currentPhase.IsPhaseOver();
         }
         
         currentPhase.EndPhase();
