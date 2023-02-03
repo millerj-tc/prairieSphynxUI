@@ -23,7 +23,8 @@ export class period
     
     PeriodDeactivateFlow(){
         
-        
+        if(!"CustomPeriodDeactivateFlow" in this) this.periodActive = false;
+        else this.CustomPeriodDeactivateFlow();
     }
     
     EndPeriod(){

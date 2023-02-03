@@ -1,6 +1,16 @@
 import {periodHandler} from "./periodHandler.js";
 import {cardHandler} from "./../cards/cardHandler.js";
 
+// const sph = new scenarioPeriodHandler;
+// const tkr = sph.AddScenario("Time Koala Rescue");
+// const ettm = tkr.AddPhase("Essay the Time Mountain");
+// const ettmSH = ettm.stageHandler;
+// ettmSH.AddStage("Get Highest Strength Character");
+// ettmSH.SetStageEvalFunc("Get...", func);
+// ettmSH.AddStage("Highest Strength Character Helps Lowest Strength Character");
+// ettmSH.AddStage("Lowest Strength Character Says Thanks");
+
+
 export class gagPeriodHandler extends periodHandler
 {
     constructor(){
