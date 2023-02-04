@@ -19,7 +19,7 @@ export class gameHandler
         
         this.narrOutputArtist = this.uiToolsHandler.AddDOMUIArtist(no);        
         this.cardChoiceTrayArtist = this.uiToolsHandler.AddTrayArtist(cct);
-        this.cardChoiceTrayArtist.SetTrayOpenClosedPosition("90%","0%")
+        this.cardChoiceTrayArtist.SetTrayOpenClosedPosition("100%","0%")
         this.dimmerArtist = this.uiToolsHandler.AddDOMUIArtist(dimmer);
         
         this.uiToolsHandler.InitializeAllTools();

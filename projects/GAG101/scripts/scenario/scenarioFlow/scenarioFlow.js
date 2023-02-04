@@ -23,6 +23,10 @@ export function ScenarioFlow(scenario){
                 
         const phase = phaseHandler.GetCurrentActivePeriod();
         
+        phase.cardHandler.EmptyCards();
+    
+        phase.LoadCards();
+        
         phase.BeginPeriod();
         
         while(phase.GetPeriodActive()){
@@ -31,7 +35,11 @@ export function ScenarioFlow(scenario){
             
             stepHandler.GotoNextPeriod();
                         
-            const step = stepHandler.GetCurrentActivePeriod()
+            const step = stepHandler.GetCurrentActivePeriod();
+            
+            step.cardHandler.EmptyCards();
+    
+            step.LoadCards();
             
             step.BeginPeriod();
             

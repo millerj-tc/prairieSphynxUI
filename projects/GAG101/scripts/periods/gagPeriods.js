@@ -31,38 +31,15 @@ export class gag101Period extends period
         this.lastCreatedSubPeriod = sph;
     }
     
+    LoadCards(){
+        
+        // set by Add functions below
+    }
+    
     BeginPeriod(){
         
-        super.BeginPeriod();
+        super.BeginPeriod();        
         
-        if(this.periodType == "scenario") return
-        
-        if(this.periodHandler.GetPreviousActivePeriod() == null) this._LoadActiveCardsFromParentPeriodHandler;
-        
-        else this._LoadActiveCardsFromPreviousPeriod;
-    }
-    
-    _LoadCardArrIntoMyCardHandler(cardArr){
-        
-        for(const c of cardArr){
-            
-            this.cardHandler.AddCard(c); //It's important to use AddCard() rather than just declaring cardHandler.cards = [arr] in order to get disposable copies
-        }
-    }
-    
-    _LoadActiveCardsFromPreviousPeriod(){
-        
-        const activeCards = this.periodHandler.GetPreviousActivePeriod().cardHandler.GetCards("active");
-        
-        this._LoadCardArrIntoMyCardHandler(activeCards);
-    }
-    
-    _LoadActiveCardsFromParentPeriodHandler(){
-        // use this for the first period in the sequence, inherits from the level above
-        const activeCards = this.periodHandler.superPeriodHandler.cardHandler.GetCards("active");
-        
-        this._LoadCardArrIntoMyCardHandler(activeCards);
-    }
 }
 
 export class gag101PeriodHandler extends periodHandler
@@ -119,6 +96,8 @@ export function AddGag101Phase(phaseName){
     
     phaseHandler.GetLastCreatedPeriod().AddSubPeriodHandlerToPeriod("step");
     
+    phaseHandler.GetLastCreatedPeriod().LoadCards = _DefaultPhaseStepLoadCardsFunction;
+    
     return phaseHandler.GetLastCreatedPeriod()
 }
 
@@ -127,6 +106,8 @@ export function AddGag101Step(stepName){
     const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedPeriod().GetSubPeriodHandlerByPeriodType("phase");
     
     const stepHandler = phaseHandler.GetSubPeriodHandlerByPeriodType("step");
+    
+    stepHandler.GetLastCreatedPeriod().LoadCards = _DefaultPhaseStepLoadCardsFunction;
     
     stepHandler.AddPeriod(stepName);
     
@@ -151,4 +132,33 @@ function _DefaultScenarioLoadCardsFunction(){
         
         this.cardHandler.AddCard(c);
     }
+}
+
+function _DefaultPhaseStepLoadCardsFunction(){
+    
+    if(this.periodHandler.GetPreviousActivePeriod() == null) this._LoadActiveCardsFromParentPeriodHandler;
+        
+        else this._LoadActiveCardsFromPreviousPeriod;
+    }
+    
+function _LoadCardArrIntoMyCardHandler(cardArr){
+
+    for(const c of cardArr){
+
+        this.cardHandler.AddCard(c); //It's important to use AddCard() rather than just declaring cardHandler.cards = [arr] in order to get disposable copies
+    }
+}
+    
+function _LoadActiveCardsFromPreviousPeriod(){
+
+    const activeCards = this.periodHandler.GetPreviousActivePeriod().cardHandler.GetCards("active");
+
+    this._LoadCardArrIntoMyCardHandler(activeCards);
+}
+
+function _LoadActiveCardsFromParentPeriodHandler(){
+    // use this for the first period in the sequence, inherits from the level above
+    const activeCards = this.periodHandler.superPeriodHandler.cardHandler.GetCards("active");
+
+    this._LoadCardArrIntoMyCardHandler(activeCards);
 }
