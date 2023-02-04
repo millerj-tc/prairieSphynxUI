@@ -99,7 +99,7 @@ export function AddGag101Scenario(scenarioName){
     
     console.error("needs scenario.LoadCards -- does each period type need a ui handler as well?");
     
-    // scenario needs a listener to update active cards based on player choices
+    // scenario needs a listener to update active cards based on player choices. It can cycle through scenario cards and compare image references with what is selected
     
     // scenario begin period can also have a function that can load in random/neutral/possible cards
     

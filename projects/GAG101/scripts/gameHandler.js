@@ -1,4 +1,5 @@
-import {domUIArtist} from "/utils/uiTools/artists/uiToolsHandler.js";
+import {uiToolsHandler} from "/utils/uiTools/uiToolsHandler.js";
+import {uiInputHandler} from "/utils/uiTools/uiInputHandler.js";
 import {cardHandler} from "./cards/cardHandler.js";
 
 export class gameHandler
@@ -7,13 +8,15 @@ export class gameHandler
         
         this.uiToolsHandler = new uiToolsHandler();
         
+        this.uiInputHandler = new uiInputHandler();
+        
         const no = document.getElementById("narrativeOutput");
-        
-        this.narrOutputArtist = this.uiToolsHandler.AddDOMUIArtist(no);
-        
         const cct = document.getElementById("cardChoiceTray");
+        const dimmer = document.getElementById("dimmer");
         
-        this.cardChoiceTrayArtist = this.uiToolsHandler.AddTrayArtist(cct);
+        this.narrOutputArtist = this.uiToolsHandler.AddDOMUIArtist(no);        
+        this.cardChoiceTrayArtist = this.uiToolsHandler.AddTrayArtist(cct);    
+        this.dimmerArtist = this.uiToolsHandler.AddDOMUIArtist(dimmer);
         
         this.uiToolsHandler.InitializeAllTools();
         
@@ -21,7 +24,7 @@ export class gameHandler
         
         this.collectionCardHandler = new cardHandler("collection");
         
-        console.error("load cards into master and collection, but only if it's the first time playing")
+        console.error("load cards into master and collection, but only if it's the first time playing");
 
     }
 }

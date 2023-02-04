@@ -1,0 +1,10 @@
+.dimmer{
+    
+    height:100%;
+    width:100%;
+    background-color: black;
+    opacity: 40%;
+    position: fixed;
+    top: 0ox;
+    left: 0px;
+}

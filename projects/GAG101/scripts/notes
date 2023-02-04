@@ -1,3 +1,12 @@
+Next:
+
+dimmer domui artist
++display scenarioActive cards
+uiInputHandler
+event listener on displayed cards to activate them for phase (and assign them to player's team)
+
+
+
 "cardScenario" should be able to exist within/alongside hyperlinkIFNav
 
 maybe in PvE you could even use a cardScenario selection to affect which choices you can make?
