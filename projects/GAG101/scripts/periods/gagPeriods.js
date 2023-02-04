@@ -16,9 +16,26 @@ export class gag101Period extends period
         this.cardHandler = new cardHandler(periodType);
     }
     
+    AddSubPeriodHandlerToPeriod(periodType){
+        
+        super.AddSubPeriodHandlerToPeriod();
+        
+        this.subPeriodHandlers.pop();
+        
+        const sph = new gag101PeriodHandler(periodType);
+        
+        sph.superPeriodHandler = this;
+        
+        this.subPeriodHandlers.push(sph);
+        
+        this.lastCreatedSubPeriod = sph;
+    }
+    
     BeginPeriod(){
         
         super.BeginPeriod();
+        
+        if(this.periodType == "scenario") return
         
         if(this.periodHandler.GetPreviousActivePeriod() == null) this._LoadActiveCardsFromParentPeriodHandler;
         
@@ -72,21 +89,6 @@ export class gag101PeriodHandler extends periodHandler
         p.periodHandler = this;
         
     }
-    
-    AddSubPeriodToPeriodHandler(periodType){
-        
-        super.AddSubPeriodToPeriodHandler();
-        
-        this.subPeriodHandlers.pop();
-        
-        const sph = new gag101PeriodHandler(periodType);
-        
-        sph.superPeriodHandler = this;
-        
-        this.subPeriodHandlers.push(sph);
-        
-        this.lastCreatedSubPeriod = sph;
-    }
 }
 
 export function AddGag101Scenario(scenarioName){
@@ -95,9 +97,11 @@ export function AddGag101Scenario(scenarioName){
     
     scenarioHandler.AddPeriod(scenarioName); //should be a gagPeriodHandler
     
-    scenarioHandler.GetLastCreatedPeriod().AddSubPeriodToPeriodHandler("phase");
+    scenarioHandler.GetLastCreatedPeriod().AddSubPeriodHandlerToPeriod("phase");
     
-    console.error("needs scenario.LoadCards -- does each period type need a ui handler as well?");
+    scenarioHandler.GetLastCreatedPeriod().LoadCards = _DefaultScenarioLoadCardsFunction;
+    
+    return scenarioHandler.GetLastCreatedPeriod()
     
     // scenario needs a listener to update active cards based on player choices. It can cycle through scenario cards and compare image references with what is selected
     
@@ -109,28 +113,42 @@ export function AddGag101Scenario(scenarioName){
 
 export function AddGag101Phase(phaseName){
     
-    const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedSubPeriod();
+    const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedPeriod().GetSubPeriodHandlerByPeriodType("phase");
     
     phaseHandler.AddPeriod(phaseName);
     
-    phaseHandler.GetLastCreatedPeriod().AddSubPeriodToPeriodHandler("step");
+    phaseHandler.GetLastCreatedPeriod().AddSubPeriodHandlerToPeriod("step");
+    
+    return phaseHandler.GetLastCreatedPeriod()
 }
 
 export function AddGag101Step(stepName){
     
-    const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedSubPeriod();
+    const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedPeriod().GetSubPeriodHandlerByPeriodType("phase");
     
-    const stepHandler = phaseHandler.GetLastCreatedSubPeriod();
+    const stepHandler = phaseHandler.GetSubPeriodHandlerByPeriodType("step");
     
     stepHandler.AddPeriod(stepName);
+    
+    return stepHandler.GetLastCreatedPeriod()
     
 }
 
 export function AddGag101StepRunFunction(func){
     
-    const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedSubPeriod();
+    const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedPeriod().GetSubPeriodHandlerByPeriodType("phase");
     
-    const stepHandler = phaseHandler.GetLastCreatedSubPeriod();
+    const stepHandler = phaseHandler.GetSubPeriodHandlerByPeriodType("step");
     
     stepHandler.GetLastCreatedPeriod().Run = func;
+}
+
+function _DefaultScenarioLoadCardsFunction(){
+    
+    const activeCollectionCards = window.gameHandler.collectionCardHandler.GetCards("active");
+    
+    for(const c of activeCollectionCards){
+        
+        this.cardHandler.AddCard(c);
+    }
 }

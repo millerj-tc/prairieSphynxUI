@@ -86,7 +86,7 @@ export class trayArtist extends domUIArtist
         this.axis = axis;
     }
     
-    SetTrayOpenClosedPosition(open,closed){
+    SetTrayOpenClosedPosition(open,closed){ //should most often be 0 in the argument that matches the initial position
         
         console.warn("could use some validation here")
         
@@ -133,8 +133,8 @@ export class trayArtist extends domUIArtist
         if(this.state == "open"){
             
             if(this.openButtonText != null) this.toggleCollapseButton.innerText = this.closeButtonText;
-            if(this.openButtonSrc != null) this.toggleCollapseButton.firstChild.src = this.closeButtonSrc;    
-            }
+            if(this.openButtonSrc != null) this.toggleCollapseButton.firstChild.src = this.closeButtonSrc;  
+        }
 
         if(this.state == "closed"){
 
@@ -148,6 +148,8 @@ export class trayArtist extends domUIArtist
     ErrorCheck(){
         
         super.ErrorCheck();
+        
+         const $dom = this._ConvertSingleDOMtoArray(this.authorizedDOMs); 
         
         let errorFound = false;
         
@@ -177,3 +179,8 @@ export class trayArtist extends domUIArtist
     }
     
 }
+
+/*HELP
+My tray isn't in the right place: Top, left, etc must be set in stylesheet and display must not be static.
+
+*/

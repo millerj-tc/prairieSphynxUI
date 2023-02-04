@@ -16,9 +16,26 @@ export class cardHandler
         this.cards.push(c);
     }
     
-    LoadCards(){
+    MakeCardFromJSON(jsonString){
         
-        //return this.cards;
+        const c = new card(this.protoLevel);
+        
+        const jsonObj = JSON.parse(jsonString);
+        
+        const jsonObjKeys = Object.keys(jsonObj);
+        
+        for(let i = 0; i < jsonObjKeys.length; i++){
+            
+            const keyName = jsonObjKeys[i];
+            
+            const keyValue = jsonObj[keyName];
+            
+            c.SetProp(keyName,keyValue);
+        }
+        
+        this.cards.push(c);
+        
+        
     }
     
     GetCards(active = ""){
@@ -39,5 +56,10 @@ export class cardHandler
         }
         
         return this.cards
+    }
+    
+    EmptyCards(){
+        
+        this.cards = [];
     }
 }

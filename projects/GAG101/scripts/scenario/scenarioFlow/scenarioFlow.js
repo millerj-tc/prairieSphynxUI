@@ -1,6 +1,8 @@
 export function ScenarioFlow(scenario){
         
-    //"protoLevel" -> "period"
+    console.log(scenario);
+    
+    scenario.cardHandler.EmptyCards();
     
     scenario.LoadCards(); //set cards arr on scenario by Object.Create(masterCard/collectionCard) for each card in scenario
     // this should choose which cards are active vs inactive when the scenario begins
@@ -15,11 +17,11 @@ export function ScenarioFlow(scenario){
     
     while(scenario.GetPeriodActive()){
         
-        const phaseHandler = scenario.GetSubPeriodHandlerByPeriodName();
+        const phaseHandler = scenario.GetSubPeriodHandlerByPeriodType();
         
         phaseHandler.GotoNextPeriod();
                 
-        const phase = phaseHandler.GetCurrentActivePeriod()
+        const phase = phaseHandler.GetCurrentActivePeriod();
         
         phase.BeginPeriod();
         

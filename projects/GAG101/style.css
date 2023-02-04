@@ -5,6 +5,17 @@
     background-color: black;
     opacity: 40%;
     position: fixed;
-    top: 0ox;
+    top: 0px;
     left: 0px;
+    display:none;
+}
+
+.cardChoiceTray{
+    
+    width: 80%;
+    height:60%;
+    background-color: azure;
+    top: 5%;
+    left:-75%;
+    position:fixed;
 }
