@@ -4,6 +4,7 @@ export class period
 {
     constructor(periodName,periodType){
         
+        this.periodName = periodName;
         this.periodType = periodType; //"scenario", "phase", "stage"
         this.periodActive = false;
         this.periodHandler;

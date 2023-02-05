@@ -97,8 +97,6 @@ export class gag101Scenario extends gag101Period
         
         const cardSlotArtists = this.uiToolsHandler.tools.filter(t => t.GetAuthorizedDOMs().id.includes(playerId + "CardSlot"));
         
-        console.log(cardSlotArtists);
-        
         for(const artist of cardSlotArtists){
             
             const artistDOM = artist.GetAuthorizedDOMs();
@@ -205,18 +203,4 @@ export class gag101Scenario extends gag101Period
         window.gameHandler.cardChoiceTrayArtist.AppendElementWithinDOM(but);
         
     }
-}
-
-export function AddGag101Scenario(scenarioName){
-    
-    const scenarioHandler = window.gameHandler.scenarioHandler;
-    
-    scenarioHandler.AddPeriod(scenarioName); //should be a gagPeriodHandler
-    
-    const scenario =  scenarioHandler.GetLastCreatedPeriod();
-    
-    scenario.AddSubPeriodHandlerToPeriod("phase");
-    
-    return scenarioHandler.GetLastCreatedPeriod()
-    
 }

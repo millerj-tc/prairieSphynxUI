@@ -72,4 +72,16 @@ export class periodHandler
             this.nextActivePeriodInd++;
         }
     }
+    
+    GotoPeriodByName(name){
+        
+        for(const p of this.periods){
+            
+            if(p.periodName == name){
+                
+                this.previousActivePeriod = this.currentActivePeriod;
+                this.currentActivePeriod = p;
+            }
+        }
+    }
 }

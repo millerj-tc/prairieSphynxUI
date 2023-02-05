@@ -1,4 +1,4 @@
-import {AddGag101Scenario} from "./scripts/periods/gagScenario.js";
+import {AddGag101Scenario,AddGag101Phase, AddGag101Step, AddGag101StepRunFunction} from "./scripts/periods/periodDesignFunctions.js";
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
 import {ScenarioFlow} from "./scripts/scenario/scenarioFlow/scenarioFlow.js";
@@ -11,10 +11,8 @@ export function onload(){
     
     _LoadCollectionCards();
     
-    window.gameHandler.scenarioHandler.GotoNextPeriod();
-    
-    koalas.LoadCards();
-    
+    //window.gameHandler.scenarioHandler.GotoNextPeriod();
+        
     koalas.PrepScenario();
 
 }
