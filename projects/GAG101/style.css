@@ -56,5 +56,8 @@
     overflow-y: auto;
     width:80%;
     height:100%;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
 }
 
