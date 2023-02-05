@@ -53,12 +53,12 @@ export class periodHandler
 
     GetCurrentActivePeriod(){
         
-        return this.periods[this.currentActivePeriod];
+        return this.currentActivePeriod;
     }
     
     GetPreviousActivePeriod(){
         
-        return this.periods[this.previousActivePeriod];
+        return this.previousActivePeriod;
     }
     
     GotoNextPeriod(){
@@ -68,7 +68,7 @@ export class periodHandler
             if(this.GetCurrentActivePeriod() == null) this.nextActivePeriodInd = 0
             
             this.previousActivePeriod = this.currentActivePeriod;
-            this.currentActivePeriod = this.nextActivePeriodInd;
+            this.currentActivePeriod = this.periods[this.nextActivePeriodInd];
             this.nextActivePeriodInd++;
         }
     }
