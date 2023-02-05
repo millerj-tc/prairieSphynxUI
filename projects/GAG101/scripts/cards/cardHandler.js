@@ -14,6 +14,8 @@ export class cardHandler
         c.protoLevel = this.protoLevel;
         
         this.cards.push(c);
+        
+        return c
     }
     
     MakeCardFromJSON(jsonString){

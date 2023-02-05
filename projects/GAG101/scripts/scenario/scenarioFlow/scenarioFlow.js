@@ -2,6 +2,8 @@ export function ScenarioFlow(scenario){
         
     console.log(scenario);
     
+    console.error("below must go before the scenario is launched -- ie at the chocie selection menu");
+    
     scenario.cardHandler.EmptyCards();
     
     scenario.LoadCards(); //set cards arr on scenario by Object.Create(masterCard/collectionCard) for each card in scenario

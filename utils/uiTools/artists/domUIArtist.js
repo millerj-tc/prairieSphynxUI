@@ -52,7 +52,7 @@ export class domUIArtist
     }
     
     
-    SetDOMDisplayTo(dom = this.authorizedDOMs,display){
+    SetDOMDisplayTo(display,dom = this.authorizedDOMs){
 
         const $dom = this._ConvertSingleDOMtoArray(dom);
                 

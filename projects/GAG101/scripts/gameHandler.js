@@ -16,11 +16,13 @@ export class gameHandler
         const no = document.getElementById("narrativeOutput");
         const cct = document.getElementById("cardChoiceTray");
         const dimmer = document.getElementById("dimmer");
+        const ccg = document.getElementById("cardChoiceGrid");
         
         this.narrOutputArtist = this.uiToolsHandler.AddDOMUIArtist(no);        
         this.cardChoiceTrayArtist = this.uiToolsHandler.AddTrayArtist(cct);
         this.cardChoiceTrayArtist.SetTrayOpenClosedPosition("100%","0%")
         this.dimmerArtist = this.uiToolsHandler.AddDOMUIArtist(dimmer);
+        this.cardChoiceGridArtist = this.uiToolsHandler.AddDOMUIArtist(ccg);
         
         this.uiToolsHandler.InitializeAllTools();
         

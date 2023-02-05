@@ -38,7 +38,9 @@ export class gag101Period extends period
     
     BeginPeriod(){
         
-        super.BeginPeriod();        
+        super.BeginPeriod();
+        
+    }
         
 }
 
@@ -145,7 +147,9 @@ function _LoadCardArrIntoMyCardHandler(cardArr){
 
     for(const c of cardArr){
 
-        this.cardHandler.AddCard(c); //It's important to use AddCard() rather than just declaring cardHandler.cards = [arr] in order to get disposable copies
+        const card = this.cardHandler.AddCard(c); //It's important to use AddCard() rather than just declaring cardHandler.cards = [arr] in order to get disposable copies
+        
+        card.Deactivate(); //cards must be deactivated as they are passed so that the next period can determine whether or not they need them
     }
 }
     

@@ -33,6 +33,11 @@ export class card
         this.active = true;
     }
     
+    Deactivate(){
+        
+        this.active = false;
+    }
+    
     SetProp(prop,value){
         
         this[prop] = value;

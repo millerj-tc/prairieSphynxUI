@@ -2,12 +2,15 @@
     
     height:100%;
     width:100%;
-    background-color: black;
-    opacity: 40%;
+    background-color: rgb(0,0,0,0.9);
+/*    opacity: 80%;*/
     position: fixed;
     top: 0px;
     left: 0px;
     display:none;
+    z-index:100;
+    align-items: center;
+    justify-content: center;
 }
 
 .cardChoiceTray{
@@ -18,4 +21,21 @@
     top: 5%;
     left:-75%;
     position:fixed;
+}
+
+.cardChoiceGrid{
+    
+    display:none;
+    grid-template-columns:auto auto auto auto;
+    grid-template-rows: auto auto auto auto;
+    gap: 2%;
+    align-items: center;
+    justify-content: center;
+/*    margin:15%;*/
+}
+
+.cardChoiceGrid > img{
+    
+    opacity:100%;
+    z-index:102;
 }
