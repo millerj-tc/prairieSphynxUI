@@ -8,7 +8,7 @@ export function ScenarioFlow(scenario){
         
         const phaseHandler = scenario.GetSubPeriodHandlerByPeriodType();
         
-        phaseHandler.GotoNextPeriod();
+        phaseHandler.ActivateNextPeriod();
                 
         const phase = phaseHandler.GetCurrentActivePeriod();
         
@@ -22,7 +22,7 @@ export function ScenarioFlow(scenario){
             
             const stepHandler = phaseHandler.GetCurrentActivePeriod().GetSubPeriodHandlerByPeriodName();
             
-            stepHandler.GotoNextPeriod();
+            stepHandler.ActivateNextPeriod();
                         
             const step = stepHandler.GetCurrentActivePeriod();
             

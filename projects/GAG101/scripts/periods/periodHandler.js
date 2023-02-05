@@ -61,7 +61,7 @@ export class periodHandler
         return this.previousActivePeriod;
     }
     
-    GotoNextPeriod(){
+    ActivateNextPeriod(){
         
         if(this.linear){
             
@@ -73,7 +73,7 @@ export class periodHandler
         }
     }
     
-    GotoPeriodByName(name){
+    ActivatePeriodByName(name){
         
         for(const p of this.periods){
             

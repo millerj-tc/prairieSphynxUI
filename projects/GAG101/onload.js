@@ -9,6 +9,12 @@ export function onload(){
     
     const koalas = AddGag101Scenario("Time Koala Rescue");
     
+    AddGag101Phase("Resolve Dupes");
+    
+    AddGag101Step("Find Dupes");
+    
+    
+    
     _LoadCollectionCards();
     
     //window.gameHandler.scenarioHandler.GotoNextPeriod();
