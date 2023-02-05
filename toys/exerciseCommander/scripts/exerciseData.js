@@ -116,7 +116,7 @@ export const exercises =
         type: "cossack squats",
         soundfile:null,
         difficulty1reps: 2,
-        difficulty1rate: 0.37,
+        difficulty1rate: 0.30,
         difficultyLvRateChange: 0.1,
         difficulty1rest: 2500,
         difficultyLvRestChange: -450,

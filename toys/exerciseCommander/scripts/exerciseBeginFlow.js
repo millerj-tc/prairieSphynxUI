@@ -12,7 +12,9 @@ export function exerciseBeginFlow(){
     
     //const patternRequest = LoadUserExercisePatternSelection();
     
-    const patternRequest = [{difficulty:0.75,duration:240},{difficulty:1,duration:60},{difficulty:2,duration:30},{difficulty:2.5,duration:30},{difficulty:3,duration:20}];
+    const patternRequest = [{difficulty:0.4,duration:1500}];
+    
+    //{difficulty:0.75,duration:240},{difficulty:1,duration:60},{difficulty:2,duration:30},{difficulty:2.5,duration:30},{difficulty:3,duration:20}
     
     //{difficulty:0.2,duration:10},{difficulty:0.4,duration:10},{difficulty:0.5,duration:45},{difficulty:0.75,duration:15},{difficulty:1,duration:60},{difficulty:1.25,duration:60},{difficulty:1.5,duration:60},{difficulty:1.75,duration:60},{difficulty:2,duration:30}
     
@@ -23,6 +25,8 @@ export function exerciseBeginFlow(){
     commandHandler.PlayExercisePattern(builtPattern);
     
     _SetTimer(patternRequest);
+    
+    console.error("time is incorrect because it doesn't include transition time");
     
 }
 
@@ -56,11 +60,17 @@ function _BuildExercisePattern(patternRequest){
                 sectionRemainingDuration = 0;
             }
             
+            let transitionTime = 2050;
+            
+            if(section.difficulty < 1){
+                
+                transitionTime = 2050 + ((1 - section.difficulty) * 2050);
+            }
             
                                 
-            exerciseCommands.push(new exerciseCommand(chosenExercise.type, reps,rate, restTime));
+            exerciseCommands.push(new exerciseCommand(chosenExercise.type, reps,rate, restTime,transitionTime));
             
-            const exerciseDuration = (1000 * (1/rate) * reps) + restTime;
+            const exerciseDuration = (1000 * (1/rate) * reps) + restTime + transitionTime;
             
             console.log(chosenExercise.type);
             
