@@ -1,6 +1,7 @@
 import {periodHandler} from "./periodHandler.js";
 import {cardHandler} from "./../cards/cardHandler.js";
 import {period} from "./period.js";
+import {LoadCardArrIntoObjCardHandler} from "../cards/gagCardUtils.js";
 
 // AddGag101Scenario("Time Koala Rescue"); //choose gameHandler.scenarioHandler
 // AddGag101Phase("Essay the Time Mountain"); //target last created scenario
@@ -70,26 +71,6 @@ export class gag101PeriodHandler extends periodHandler
     }
 }
 
-export function AddGag101Scenario(scenarioName){
-    
-    const scenarioHandler = window.gameHandler.scenarioHandler;
-    
-    scenarioHandler.AddPeriod(scenarioName); //should be a gagPeriodHandler
-    
-    scenarioHandler.GetLastCreatedPeriod().AddSubPeriodHandlerToPeriod("phase");
-    
-    scenarioHandler.GetLastCreatedPeriod().LoadCards = _DefaultScenarioLoadCardsFunction;
-    
-    return scenarioHandler.GetLastCreatedPeriod()
-    
-    // scenario needs a listener to update active cards based on player choices. It can cycle through scenario cards and compare image references with what is selected
-    
-    // scenario begin period can also have a function that can load in random/neutral/possible cards
-    
-    // also respond to player choices for other team for sim arena
-    
-}
-
 export function AddGag101Phase(phaseName){
     
     const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedPeriod().GetSubPeriodHandlerByPeriodType("phase");
@@ -126,43 +107,25 @@ export function AddGag101StepRunFunction(func){
     stepHandler.GetLastCreatedPeriod().Run = func;
 }
 
-function _DefaultScenarioLoadCardsFunction(){
-    
-    const activeCollectionCards = window.gameHandler.collectionCardHandler.GetCards("active");
-    
-    for(const c of activeCollectionCards){
-        
-        this.cardHandler.AddCard(c);
-    }
-}
+
 
 function _DefaultPhaseStepLoadCardsFunction(){
     
-    if(this.periodHandler.GetPreviousActivePeriod() == null) this._LoadActiveCardsFromParentPeriodHandler;
-        
-        else this._LoadActiveCardsFromPreviousPeriod;
-    }
+    let cardArr;
     
-function _LoadCardArrIntoMyCardHandler(cardArr){
-
-    for(const c of cardArr){
-
-        const card = this.cardHandler.AddCard(c); //It's important to use AddCard() rather than just declaring cardHandler.cards = [arr] in order to get disposable copies
+    if(this.periodHandler.GetPreviousActivePeriod() == null) cardArr = this._GetActiveCardsFromParentPeriodHandler;
         
-        card.Deactivate(); //cards must be deactivated as they are passed so that the next period can determine whether or not they need them
-    }
+    else cardArr = this._GetActiveCardsFromPreviousPeriod;
+    
+    LoadCardArrIntoObjCardHandler(cardArr,this);
 }
     
-function _LoadActiveCardsFromPreviousPeriod(){
+function _GetActiveCardsFromPreviousPeriod(){
 
-    const activeCards = this.periodHandler.GetPreviousActivePeriod().cardHandler.GetCards("active");
-
-    this._LoadCardArrIntoMyCardHandler(activeCards);
+    return this.periodHandler.GetPreviousActivePeriod().cardHandler.GetCards("active");
 }
 
-function _LoadActiveCardsFromParentPeriodHandler(){
+function _GetActiveCardsFromParentPeriodHandler(){
     // use this for the first period in the sequence, inherits from the level above
-    const activeCards = this.periodHandler.superPeriodHandler.cardHandler.GetCards("active");
-
-    this._LoadCardArrIntoMyCardHandler(activeCards);
+    return this.periodHandler.superPeriodHandler.cardHandler.GetCards("active");
 }

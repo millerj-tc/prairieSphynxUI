@@ -1,4 +1,4 @@
-import {AddGag101Scenario} from "./scripts/periods/gagPeriods.js";
+import {AddGag101Scenario} from "./scripts/periods/gagScenario.js";
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
 import {ScenarioFlow} from "./scripts/scenario/scenarioFlow/scenarioFlow.js";
@@ -28,6 +28,9 @@ function _LoadCollectionCards(){
         
         const cString = JSON.stringify(c)
         
-        ghCCH.MakeCardFromJSON(cString);
+        const card = ghCCH.MakeCardFromJSON(cString);
+        
+        card.owner = window.gameHandler.playerId;
+        
     }
 }

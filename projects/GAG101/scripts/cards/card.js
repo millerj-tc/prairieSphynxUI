@@ -3,7 +3,7 @@ export class card
     constructor(protoLevel){
         
         this.protoLevel = protoLevel; //values are "master"(highest), "collection", "scenario", "phase", "stage"
-        this.active = false; //usable in the game
+        this.active = "false"; //usable in the game
     }
     
     GetParentAtProtoLevel(protoLevel){
@@ -30,12 +30,12 @@ export class card
     
     Activate(){
         
-        this.active = true;
+        this.active = "true";
     }
     
     Deactivate(){
         
-        this.active = false;
+        this.active = "false";
     }
     
     SetProp(prop,value){

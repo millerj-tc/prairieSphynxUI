@@ -8,13 +8,13 @@ export function DisplayActiveCardsAsChoices(period){
     
     period.LoadCards();
     
-    const activeCards = period.cardHandler.GetCards("active");
+    const scenarioCards = period.cardHandler.GetCards();
     
     console.log(period);
     
     console.log(gh.cardChoiceGridArtist);
     
-    for(const c of activeCards){
+    for(const c of scenarioCards){
         
         const i = document.createElement("img");
         

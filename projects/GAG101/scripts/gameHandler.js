@@ -36,6 +36,9 @@ export class gameHandler
         this.scenarioHandler = new gag101PeriodHandler("scenario");
         
         this.cacheHandler = new cacheHandler();
-
+        
+        this.playerId = "player";
+        
+        console.warn("above should be their unique player ID");
     }
 }

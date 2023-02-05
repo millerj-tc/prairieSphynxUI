@@ -7,6 +7,7 @@ export class cardHandler
         this.protoLevel = protoLevel; //"master",collection", "scenario", "phase", "stage"
         this.cards = [];
     }
+    
     AddCard(card){
         
         const c = Object.create(card);
@@ -37,10 +38,12 @@ export class cardHandler
         
         this.cards.push(c);
         
+        return c
+        
         
     }
     
-    GetCards(active = ""){
+    GetCards(active = ""){ //"true" not true because it is JSON-ified -- treat all prop values as strings
         
         let returnArr = [];
         
@@ -48,7 +51,7 @@ export class cardHandler
             
             for(const c of this.cards){
                 
-                if(c.active){
+                if(c.active == "true"){
                     
                     returnArr.push(c);
                 }
