@@ -2,19 +2,6 @@ export function ScenarioFlow(scenario){
         
     console.log(scenario);
     
-    console.error("below must go before the scenario is launched -- ie at the chocie selection menu");
-    
-    scenario.cardHandler.EmptyCards();
-    
-    scenario.LoadCards(); //set cards arr on scenario by Object.Create(masterCard/collectionCard) for each card in scenario
-    // this should choose which cards are active vs inactive when the scenario begins
-    // active cards are passed down the period chain
-    // cards are activated by: being chosen by the player, being chosen randomly, by being chosen by the other player in the Arena, by being chosen by the scenario as a specific chosen opponent (or any combination if a scenario might include random cards)
-    // scenario-specific cards can be active or inactive when the scenario is constructed
-    
-    
-    // active cards in the cardHandler are passed down to the next one. That cardHandler will have functions to determine which of those cards are active
-    
     scenario.BeginPeriod(); //often this is output like dialogue or narration
     
     while(scenario.GetPeriodActive()){

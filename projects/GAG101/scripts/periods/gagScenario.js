@@ -3,6 +3,7 @@ import {ShuffleArray} from "/utils/mathAndLogicUtils/miscUtils.js";
 import {gag101Period} from "./gagPeriods.js";
 import {uiToolsHandler} from "/utils/uiTools/uiToolsHandler.js";
 import {DisplayInactiveCardsAsChoices} from "../scenario/scenarioFlow/scenarioFlowUtils.js";
+import {ScenarioFlow} from "../scenario/scenarioFlow/scenarioFlow.js";
 
 export class gag101Scenario extends gag101Period
 {
@@ -27,9 +28,19 @@ export class gag101Scenario extends gag101Period
         this._LoadNonplayerCopiesOfPlayerCards(); //for the AI
     }
     
-    BeginPeriod(){  
+    PrepScenario(){
         
-        super.BeginPeriod();
+        this.cardHandler.EmptyCards();
+    
+        this.LoadCards();
+        // active cards are passed down the period chain
+        // cards are activated by: being chosen by the player, being chosen randomly, by being chosen by the other player in the Arena, by being chosen by the scenario as a specific chosen opponent (or any combination if a scenario might include random cards)
+        // scenario-specific cards can be active or inactive when the scenario is constructed
+
+
+        // active cards in the cardHandler are passed down to the next one. That cardHandler will have functions to determine which of those cards are active
+        
+        console.warn("display card choice tray here");
         
         this._CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(this.playerCardSlots,window.gameHandler.playerId,2);
         
@@ -44,6 +55,15 @@ export class gag101Scenario extends gag101Period
         this._CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart("nonPlayer",4);
         
         this._AttachOnClickCardChoiceToDOMs();
+        
+        this._AddScenarioRunButton();
+    }
+    
+    BeginPeriod(){  
+        
+        super.BeginPeriod();
+        
+        
     }
     
     _LoadNonplayerCopiesOfPlayerCards(){
@@ -83,9 +103,11 @@ export class gag101Scenario extends gag101Period
             
             const artistDOM = artist.GetAuthorizedDOMs();
             
-            const nameSlot = document.createElement("span");
+            const nameSlot = document.createElement("div");
             
             nameSlot.id = playerId + "CardNameSlot" + artistDOM.style.gridRowStart;
+            
+            nameSlot.classList.add("nameSlot");
             
             const subArtist = this.uiToolsHandler.AddDOMUIArtist(nameSlot);
             
@@ -165,6 +187,23 @@ export class gag101Scenario extends gag101Period
                 }
             }
         }  
+    }
+    
+    _AddScenarioRunButton(){
+        
+        const but = document.createElement("button");
+        
+        but.innerText = "Run scenario";
+        
+        const scenario = this;
+        
+        but.onclick = function(){
+            
+            ScenarioFlow(scenario);
+        }
+        
+        window.gameHandler.cardChoiceTrayArtist.AppendElementWithinDOM(but);
+        
     }
 }
 

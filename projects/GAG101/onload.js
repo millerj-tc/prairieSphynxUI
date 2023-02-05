@@ -15,7 +15,7 @@ export function onload(){
     
     koalas.LoadCards();
     
-    koalas.BeginPeriod();
+    koalas.PrepScenario();
 
 }
 

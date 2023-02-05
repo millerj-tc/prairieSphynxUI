@@ -19,8 +19,7 @@ export function DisplayInactiveCardsAsChoices(period,owner){
         i.src = c.imageL;
         
         nameSpan.innerText = c.name;
-        nameSpan.style.color = "white";
-        nameSpan.style.textAlign = "center";
+        nameSpan.classList.add("nameSlot");
         
         gh.cardChoiceGridArtist.AppendElementWithinDOM(container);
         

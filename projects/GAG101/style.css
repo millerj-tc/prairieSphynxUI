@@ -18,11 +18,22 @@
     display:grid;
     grid-template-columns:auto auto auto;
 /*    grid-template-rows: auto auto auto auto;*/
-    gap: 2%;
+    gap: 10%;
     align-items: center;
     justify-content: center;
     overflow-y: scroll;
+    width:inherit;
+    height: inherit;
 }
+
+.cardChoiceGrid .nameSlot{
+    
+    text-align: center;
+    margin:10px;
+    color:white;
+    font-size: 26px;
+}
+
 
 .cardChoiceGrid::-webkit-scrollbar {
   display: none;
@@ -59,5 +70,13 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+}
+
+.cardChoiceTrayGrid .nameSlot{
+    
+    text-align: center;
+    margin:10px;
+    
+    font-size: 18px;
 }
 
