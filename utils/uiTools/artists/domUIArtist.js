@@ -32,6 +32,11 @@ export class domUIArtist
     
     }
     
+    SetCustomArtistPropToValue(prop,value){
+        
+        this[prop] = value;
+    }
+    
     GetAuthorizedDOMs(){
         
         if(this.authorizedDOMs.length ==1) return this.authorizedDOMs[0];

@@ -60,6 +60,19 @@ export class cardHandler
             return returnArr
         }
         
+        else if(active == "inactive"){
+            
+            for(const c of this.cards){
+                
+                if(c.active == "false"){
+                    
+                    returnArr.push(c);
+                }
+            }
+            
+            return returnArr
+        }
+        
         return this.cards
     }
     

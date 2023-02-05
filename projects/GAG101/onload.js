@@ -2,7 +2,6 @@ import {AddGag101Scenario} from "./scripts/periods/gagScenario.js";
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
 import {ScenarioFlow} from "./scripts/scenario/scenarioFlow/scenarioFlow.js";
-import {DisplayActiveCardsAsChoices} from "./scripts/scenario/scenarioFlow/scenarioFlowUtils.js";
 
 export function onload(){
     

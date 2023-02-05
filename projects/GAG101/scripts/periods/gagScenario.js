@@ -2,14 +2,15 @@ import {LoadCardArrIntoObjCardHandler} from "../cards/gagCardUtils.js";
 import {ShuffleArray} from "/utils/mathAndLogicUtils/miscUtils.js";
 import {gag101Period} from "./gagPeriods.js";
 import {uiToolsHandler} from "/utils/uiTools/uiToolsHandler.js";
+import {DisplayInactiveCardsAsChoices} from "../scenario/scenarioFlow/scenarioFlowUtils.js";
 
 export class gag101Scenario extends gag101Period
 {
     constructor(periodName,periodType){
         
         super(periodName,periodType);
-        this.playerCardSlots = 5;
-        this.nonPlayerCardSlots = 5;
+        this.playerCardSlots = 3;
+        this.nonPlayerCardSlots = 3;
         this.uiToolsHandler = new uiToolsHandler();
     }
     
@@ -37,6 +38,8 @@ export class gag101Scenario extends gag101Period
         this._RandomizePlayerIdCardChoicesForScenario();
         
         this._RandomizePlayerIdCardChoicesForScenario("nonPlayer");
+        
+        this._AttachOnClickCardChoiceToDOMs();
     }
     
     _LoadNonplayerCopiesOfPlayerCards(){
@@ -58,7 +61,7 @@ export class gag101Scenario extends gag101Period
             
             artist.SetStylePropToValue("grid-column-start",gridColumnStart);
             artist.SetStylePropToValue("grid-row-start",(i+1).toString());
-            
+                    
             const cardChoiceTrayArtist = window.gameHandler.uiToolsHandler.GetArtistsByAuthorizedDOMId("cardChoiceTrayGrid");
             
             cardChoiceTrayArtist.AppendElementWithinDOM(dom);
@@ -80,12 +83,52 @@ export class gag101Scenario extends gag101Period
 
             const card = shuffledAvailableCards.shift();
             
-            const img = document.createElement("img");
+            this.UpdateCardSlotArtist(artist,card);
             
-            img.src = card.imageM;
             
-            artist.AppendElementWithinDOM(img);
         }
+    }
+    
+    UpdateCardSlotArtist(artist,card){
+        
+        if(artist.associatedCard != null) artist.associatedCard.Deactivate();
+        
+        artist.ClearAllChildren();
+        
+        artist.SetCustomArtistPropToValue("associatedCard",card);
+            
+        const img = document.createElement("img");
+
+        img.src = card.imageM;
+
+        artist.AppendElementWithinDOM(img);
+
+        card.Activate();
+    }
+    
+    _AttachOnClickCardChoiceToDOMs(){
+        
+        const scenario = this;
+
+        for(const tool of this.uiToolsHandler.tools){
+            
+            const dom = tool.GetAuthorizedDOMs();
+            
+            const associatedCard = tool.associatedCard;
+            
+            if(dom.id.includes("CardSlot")){
+                
+                dom.onclick = function(){
+            
+                    DisplayInactiveCardsAsChoices(scenario,associatedCard.owner);
+                    
+                    scenario.lastClickedCardSlotArtist = tool;
+                    
+                    console.log(tool);
+                    
+                }
+            }
+        }  
     }
 }
 

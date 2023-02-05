@@ -1,24 +1,35 @@
-export function DisplayActiveCardsAsChoices(period){
+export function DisplayInactiveCardsAsChoices(period,owner){
     
     const gh = window.gameHandler;
     
     gh.dimmerArtist.SetDOMDisplayTo("flex");
+        
+    const scenarioCards = period.cardHandler.GetCards("inactive");
     
-    period.LoadCards();
+    const ownedCards = scenarioCards.filter(c => c.owner == owner);
     
-    const scenarioCards = period.cardHandler.GetCards();
-    
-    console.log(period);
-    
-    console.log(gh.cardChoiceGridArtist);
-    
-    for(const c of scenarioCards){
+    for(const c of ownedCards){
         
         const i = document.createElement("img");
         
         i.src = c.imageL;
         
         gh.cardChoiceGridArtist.AppendElementWithinDOM(i);
+        
+        i.onclick = function(){_OnClickCardSelect(c)}
     }
+    
+}
+
+function _OnClickCardSelect(card){
+    
+    const scenario = window.gameHandler.scenarioHandler.GetCurrentActivePeriod();
+    
+    console.log(scenario);
+    
+    const artist = scenario.lastClickedCardSlotArtist;
+    
+    scenario.UpdateCardSlotArtist(artist,card);
+    
     
 }
