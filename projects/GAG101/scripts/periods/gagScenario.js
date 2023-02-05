@@ -1,4 +1,93 @@
 import {LoadCardArrIntoObjCardHandler} from "../cards/gagCardUtils.js";
+import {ShuffleArray} from "/utils/mathAndLogicUtils/miscUtils.js";
+import {gag101Period} from "./gagPeriods.js";
+import {uiToolsHandler} from "/utils/uiTools/uiToolsHandler.js";
+
+export class gag101Scenario extends gag101Period
+{
+    constructor(periodName,periodType){
+        
+        super(periodName,periodType);
+        this.playerCardSlots = 5;
+        this.nonPlayerCardSlots = 5;
+        this.uiToolsHandler = new uiToolsHandler();
+    }
+    
+    LoadCards(){
+        
+        super.LoadCards();
+        
+        console.log(this);
+        
+        const activeCollectionCards = window.gameHandler.collectionCardHandler.GetCards("active");
+    
+        LoadCardArrIntoObjCardHandler(activeCollectionCards,this); //player's copies
+        
+        this._LoadNonplayerCopiesOfPlayerCards(); //for the AI
+    }
+    
+    BeginPeriod(){  
+        
+        super.BeginPeriod();
+        
+        this._CreateCardNSlotDOMArtistsForPlayerIdAtGridColumnStart(this.playerCardSlots,window.gameHandler.playerId,1);
+        
+        this._CreateCardNSlotDOMArtistsForPlayerIdAtGridColumnStart(this.nonPlayerCardSlots,"nonPlayer",3);
+        
+        this._RandomizePlayerIdCardChoicesForScenario();
+        
+        this._RandomizePlayerIdCardChoicesForScenario("nonPlayer");
+    }
+    
+    _LoadNonplayerCopiesOfPlayerCards(){
+        
+        const activeCollectionCards = window.gameHandler.collectionCardHandler.GetCards("active");
+    
+        LoadCardArrIntoObjCardHandler(activeCollectionCards,this, "nonPlayer");
+    }
+    
+    _CreateCardNSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridColumnStart){
+        
+        for(let i = 0; i < n; i++){
+            
+            const dom = document.createElement("div");
+            
+            dom.id = id + "CardSlot" + i;
+            
+            const artist = this.uiToolsHandler.AddDOMUIArtist(dom);
+            
+            artist.SetStylePropToValue("grid-column-start",gridColumnStart);
+            artist.SetStylePropToValue("grid-row-start",(i+1).toString());
+            
+            const cardChoiceTrayArtist = window.gameHandler.uiToolsHandler.GetArtistsByAuthorizedDOMId("cardChoiceTrayGrid");
+            
+            cardChoiceTrayArtist.AppendElementWithinDOM(dom);
+        }
+        
+    }
+    
+    _RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.playerId){ //called in begin period
+        
+        console.log(this.cardHandler);
+        
+        const playerCards = this.cardHandler.GetCards().filter(c => c.owner == id);
+
+        const shuffledAvailableCards = ShuffleArray(playerCards);
+        
+        const playerSlotArtistsArr = this.uiToolsHandler.tools.filter(t => t.GetAuthorizedDOMs().id.includes(id + "CardSlot"));
+
+        for(const artist of playerSlotArtistsArr){
+
+            const card = shuffledAvailableCards.shift();
+            
+            const img = document.createElement("img");
+            
+            img.src = card.imageM;
+            
+            artist.AppendElementWithinDOM(img);
+        }
+    }
+}
 
 export function AddGag101Scenario(scenarioName){
     
@@ -10,28 +99,6 @@ export function AddGag101Scenario(scenarioName){
     
     scenario.AddSubPeriodHandlerToPeriod("phase");
     
-    scenario.LoadCards = _DefaultScenarioLoadCardsFunction;
-    
-    scenario.playerCardSlots = 5;
-    
     return scenarioHandler.GetLastCreatedPeriod()
-    
-    // scenario needs a listener to update active cards based on player choices. It can cycle through scenario cards and compare image references with what is selected
-    
-    // scenario begin period can also have a function that can load in random/neutral/possible cards
-    
-    // also respond to player choices for other team for sim arena
-    
-}
-
-function _DefaultScenarioLoadCardsFunction(){
-    
-    const activeCollectionCards = window.gameHandler.collectionCardHandler.GetCards("active");
-    
-    LoadCardArrIntoObjCardHandler(activeCollectionCards,this);
-}
-
-function _RandomizePlayerCardChoices(){
-    
     
 }

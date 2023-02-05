@@ -13,26 +13,15 @@
     justify-content: center;
 }
 
-.cardChoiceTray{
-    
-    width: 80%;
-    height:60%;
-    background-color: azure;
-    top: 5%;
-    left:-75%;
-    position:fixed;
-}
-
 .cardChoiceGrid{
     
-    display:none;
+    display:grid;
     grid-template-columns:auto auto auto;
 /*    grid-template-rows: auto auto auto auto;*/
     gap: 2%;
     align-items: center;
     justify-content: center;
     overflow-y: scroll;
-/*    margin:15%;*/
 }
 
 .cardChoiceGrid::-webkit-scrollbar {
@@ -46,3 +35,26 @@
     z-index:102;
     margin:8%;
 }
+
+.cardChoiceTray{
+    
+    width: 80%;
+    height:60%;
+    background-color: azure;
+    top: 5%;
+    left:-75%;
+    position:relative;
+}
+
+.cardChoiceTrayGrid{
+    
+    display:grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 1%;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    width:80%;
+    height:100%;
+}
+

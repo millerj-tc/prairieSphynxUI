@@ -4,8 +4,6 @@ export function DisplayActiveCardsAsChoices(period){
     
     gh.dimmerArtist.SetDOMDisplayTo("flex");
     
-    gh.cardChoiceGridArtist.SetDOMDisplayTo("grid");
-    
     period.LoadCards();
     
     const scenarioCards = period.cardHandler.GetCards();

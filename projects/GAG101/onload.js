@@ -12,9 +12,11 @@ export function onload(){
     
     _LoadCollectionCards();
     
-    DisplayActiveCardsAsChoices(koalas);
+    //DisplayActiveCardsAsChoices(koalas);
     
-    //ScenarioFlow(koalas);
+    koalas.LoadCards();
+    
+    koalas.BeginPeriod();
 
 }
 

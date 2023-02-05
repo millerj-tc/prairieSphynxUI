@@ -32,6 +32,13 @@ export class domUIArtist
     
     }
     
+    GetAuthorizedDOMs(){
+        
+        if(this.authorizedDOMs.length ==1) return this.authorizedDOMs[0];
+        
+        else return this.authorizedDOMs;
+    }
+    
     ScrollDOMIntoView(dom = this.authorizedDOMs[0]){
     
         dom.scrollIntoView(); //trying without "true" for mobile

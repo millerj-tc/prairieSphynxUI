@@ -123,9 +123,13 @@ export class trayArtist extends domUIArtist
         
             button.style.margin = "5px";
             
+//            button.style.position = "absolute";
+//            
+//            button.style.bottom = "0px";
+            
             this.SetTrayToggleCollapseButtonOpenCloseText("⮞","⮜");
             
-            this.authorizedDOMs[0].append(button);  
+            this.authorizedDOMs[0].prepend(button);  
             
             this.SetTrayToggleCollapseButtonToDOM(button);
         }
