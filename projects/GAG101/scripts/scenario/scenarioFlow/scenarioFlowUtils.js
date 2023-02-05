@@ -3,6 +3,8 @@ export function DisplayInactiveCardsAsChoices(period,owner){
     const gh = window.gameHandler;
     
     gh.dimmerArtist.SetDOMDisplayTo("flex");
+    
+    gh.cardChoiceGridArtist.ClearAllChildren();
         
     const scenarioCards = period.cardHandler.GetCards("inactive");
     
@@ -23,9 +25,11 @@ export function DisplayInactiveCardsAsChoices(period,owner){
 
 function _OnClickCardSelect(card){
     
-    const scenario = window.gameHandler.scenarioHandler.GetCurrentActivePeriod();
+    const gh = window.gameHandler;
     
-    console.log(scenario);
+    gh.dimmerArtist.SetDOMDisplayTo("none");
+    
+    const scenario = window.gameHandler.scenarioHandler.GetCurrentActivePeriod();
     
     const artist = scenario.lastClickedCardSlotArtist;
     

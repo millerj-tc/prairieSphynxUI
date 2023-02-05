@@ -11,7 +11,7 @@ export function onload(){
     
     _LoadCollectionCards();
     
-    //DisplayActiveCardsAsChoices(koalas);
+    window.gameHandler.scenarioHandler.GotoNextPeriod();
     
     koalas.LoadCards();
     

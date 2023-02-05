@@ -124,7 +124,7 @@ export class gag101Scenario extends gag101Period
                     
                     scenario.lastClickedCardSlotArtist = tool;
                     
-                    console.log(tool);
+                    console.log(scenario);
                     
                 }
             }
