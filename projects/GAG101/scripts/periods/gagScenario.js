@@ -31,13 +31,17 @@ export class gag101Scenario extends gag101Period
         
         super.BeginPeriod();
         
-        this._CreateCardNSlotDOMArtistsForPlayerIdAtGridColumnStart(this.playerCardSlots,window.gameHandler.playerId,1);
+        this._CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(this.playerCardSlots,window.gameHandler.playerId,2);
         
-        this._CreateCardNSlotDOMArtistsForPlayerIdAtGridColumnStart(this.nonPlayerCardSlots,"nonPlayer",3);
+        this._CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(this.nonPlayerCardSlots,"nonPlayer",3);
         
         this._RandomizePlayerIdCardChoicesForScenario();
         
         this._RandomizePlayerIdCardChoicesForScenario("nonPlayer");
+        
+        this._CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(window.gameHandler.playerId,1);
+        
+        this._CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart("nonPlayer",4);
         
         this._AttachOnClickCardChoiceToDOMs();
     }
@@ -49,7 +53,7 @@ export class gag101Scenario extends gag101Period
         LoadCardArrIntoObjCardHandler(activeCollectionCards,this, "nonPlayer");
     }
     
-    _CreateCardNSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridColumnStart){
+    _CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridColumnStart){
         
         for(let i = 0; i < n; i++){
             
@@ -69,9 +73,40 @@ export class gag101Scenario extends gag101Period
         
     }
     
-    _RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.playerId){ //called in begin period
+    _CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(playerId,gridColumnStart){
         
-        console.log(this.cardHandler);
+        const cardSlotArtists = this.uiToolsHandler.tools.filter(t => t.GetAuthorizedDOMs().id.includes(playerId + "CardSlot"));
+        
+        console.log(cardSlotArtists);
+        
+        for(const artist of cardSlotArtists){
+            
+            const artistDOM = artist.GetAuthorizedDOMs();
+            
+            const nameSlot = document.createElement("span");
+            
+            nameSlot.id = playerId + "CardNameSlot" + artistDOM.style.gridRowStart;
+            
+            const subArtist = this.uiToolsHandler.AddDOMUIArtist(nameSlot);
+            
+            artist.SetCustomArtistPropToValue("servantArtist",subArtist);
+            
+            subArtist.SetCustomArtistPropToValue("masterArtist",artist);
+            
+            subArtist.SetStylePropToValue("grid-column-start",gridColumnStart);
+            
+            subArtist.SetStylePropToValue("grid-row-start",artistDOM.style.gridRowStart);
+            
+            subArtist.SetDOMInnerTextTo(artist.associatedCard.name);
+            
+            const cardChoiceTrayArtist = window.gameHandler.uiToolsHandler.GetArtistsByAuthorizedDOMId("cardChoiceTrayGrid");
+            
+            cardChoiceTrayArtist.AppendElementWithinDOM(nameSlot);
+            
+        }
+    }
+    
+    _RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.playerId){ //called in begin period
         
         const playerCards = this.cardHandler.GetCards().filter(c => c.owner == id);
 
@@ -91,7 +126,10 @@ export class gag101Scenario extends gag101Period
     
     UpdateCardSlotArtist(artist,card){
         
-        if(artist.associatedCard != null) artist.associatedCard.Deactivate();
+        if(artist.associatedCard != null){
+            artist.associatedCard.Deactivate();
+            artist.servantArtist.SetDOMInnerTextTo(card.name);
+        }
         
         artist.ClearAllChildren();
         
@@ -123,8 +161,6 @@ export class gag101Scenario extends gag101Period
                     DisplayInactiveCardsAsChoices(scenario,associatedCard.owner);
                     
                     scenario.lastClickedCardSlotArtist = tool;
-                    
-                    console.log(scenario);
                     
                 }
             }

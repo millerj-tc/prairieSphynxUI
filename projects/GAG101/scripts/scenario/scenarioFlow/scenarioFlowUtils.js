@@ -12,11 +12,21 @@ export function DisplayInactiveCardsAsChoices(period,owner){
     
     for(const c of ownedCards){
         
+        const container = document.createElement("div");
         const i = document.createElement("img");
+        const nameSpan = document.createElement("div");
         
         i.src = c.imageL;
         
-        gh.cardChoiceGridArtist.AppendElementWithinDOM(i);
+        nameSpan.innerText = c.name;
+        nameSpan.style.color = "white";
+        nameSpan.style.textAlign = "center";
+        
+        gh.cardChoiceGridArtist.AppendElementWithinDOM(container);
+        
+        container.append(i);
+        container.insertAdjacentHTML("beforeend","<br>");
+        container.append(nameSpan);
         
         i.onclick = function(){_OnClickCardSelect(c)}
     }
