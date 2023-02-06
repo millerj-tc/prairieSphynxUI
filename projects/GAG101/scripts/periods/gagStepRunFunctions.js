@@ -1,3 +1,5 @@
+import {charData} from "../data/charData.js";
+
 export function ActivateDuplicateCards(){
     
     for(const c of this.cardHandler.GetCards()){
@@ -67,6 +69,25 @@ export function DeactivateDupedCharsWhoLoseDupeContest(){
     
 }
 
+function _DupeContestOutput(contestLoserArr){
+    
+    const artist = gameHandler.narrOutputArtist;
+    
+    const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
+    
+    const div = document.createElement("div");
+    
+    const taggedArr = _ReplaceNounNamesWithImageTagTeamNameAtSize(contestLoserArr);
+    
+    const charString = utilityArtist.ReturnStringOfNounsBasedOnNumber(gussiedArr);
+    
+    const outputString = " feel alienated by their team and decide not to participate.";
+    
+    console.warn("need to go through each team and the characters that sided with them. Also everything above can probably be built into one big function here");
+    
+    
+}
+
 function _GetTeamRatingForCharInScenarioForStep(char,step){
     
     let teamRating = 0;
@@ -99,7 +120,7 @@ function _GetDupeCards(step){
         
         for(const c2 of step.cardHandler.GetCards()){
             
-            if(c.name == c2.name && c != c2){
+            if(c.name == c2.name && c.owner != c2.owner){
                 
                 returnArr.push(c);
             }
@@ -178,4 +199,24 @@ function _AddDebugInfoToCards(cardArr){
         c.debugName = c.name;
         c.debugOwner = c.owner;
     }
+}
+
+function _ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size){
+    
+    const returnArr = [];
+    
+    for(const n of nounArr){
+        
+        console.warn("careful where you put other non-char nouns or this will break");
+        
+        for(const c of charData){
+            
+            if(n.name == c.name){
+                
+                returnArr.push(`$$IMAGE:${c["image" + size]}IMAGE$$ ${c.name}`);
+            }
+        }
+    }
+    
+    return returnArr
 }

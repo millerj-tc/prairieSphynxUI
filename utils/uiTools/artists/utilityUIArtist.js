@@ -17,6 +17,8 @@ export class utilityUIArtist
     }
     
     GetSpanWithImageTagsReplacedWithImagesFromText(text){
+        
+        //ex: $$IMAGE:/images/char/char.pngIMAGE$$
                 
         let textSplitArr = text.split("IMAGE$$");
         
@@ -38,6 +40,24 @@ export class utilityUIArtist
         }
                 
         return span
+    }
+    
+    ReturnStringOfNounsBasedOnNumber(nounArr){
+        
+        let $returnString = "";
+        
+        for(let i = 0; i < nounArr.length; i++){
+            
+            if(nounArr.length == 1) $returnString = nounArr[0];
+            else if(i == nounArr.length - 1){
+                
+                $returnString += " and " + nounArr[i];
+            }
+            else if(nounArr.length == 2) $returnString += nounArr[i]
+            else $returnString += nounArr[i] + ",";
+        }
+            
+        return $returnString
     }
     
     ReplacePronouns(obj,string){
