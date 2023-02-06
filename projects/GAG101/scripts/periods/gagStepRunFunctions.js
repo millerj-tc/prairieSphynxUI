@@ -59,13 +59,9 @@ export function DeactivateDupedCharsWhoLoseDupeContest(){
             deactivatedCards.push(pair[1]);
         }
         
-        _AddDebugInfoToCards(deactivatedCards);
-        
         
         _DeactivateCardArrAtLevelForStep(deactivatedCards,"phase",this);
-            
-        
-        console.log(deactivatedCards);
+
     }
     
     
@@ -82,10 +78,6 @@ function _GetTeamRatingForCharInScenarioForStep(char,step){
     teammates = teammates.filter(c => c.dataType == "char");
     
     teammates = teammates.filter(c => c.name != char.name);
-    
-    _AddDebugInfoToCards(teammates);
-    
-    console.log(teammates);
     
     for(const cha of teammates){
         

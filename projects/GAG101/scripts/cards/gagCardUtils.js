@@ -1,4 +1,4 @@
-    export function LoadCardArrIntoObjCardHandler(cardArr,obj,owner=null){
+export function LoadCardArrIntoObjCardHandler(cardArr,obj,owner=null){
 
     for(const c of cardArr){
 
@@ -9,3 +9,5 @@
         if(owner != null) card.owner = owner;
     }
 }
+    
+    

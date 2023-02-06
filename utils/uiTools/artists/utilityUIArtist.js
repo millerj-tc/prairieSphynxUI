@@ -16,6 +16,38 @@ export class utilityUIArtist
         return text.replace(/\n/gm,"<br>");
     }
     
+    GetSpanWithImageTagsReplacedWithImagesFromText(text){
+        
+        //split around IMAGE$$, then replace, then rejoin
+        
+        let textSplitArr = text.split("IMAGE$$");
+        
+        const span = document.createElement("span");
+        
+        for(const t of textSplitArr){
+            
+            const imgLink = t.match(/(?<=\$\$IMAGE:)(.*)/gm);
+            
+            const img = document.createElement("img");
+
+            if(imgLink != null) img.src = imgLink;
+            
+            console.log(t);
+            
+            const plainText = t.replace(/\$\$IMAGE:(.*)/gm,"");
+            
+            console.log(plainText);
+            
+            span.append(plainText);
+            
+            span.append(img);
+            
+            
+        }
+                
+        return span
+    }
+    
     ReplacePronouns(obj,string){
     
         let $returnString = string;
