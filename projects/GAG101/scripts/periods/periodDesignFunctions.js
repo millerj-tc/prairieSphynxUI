@@ -61,8 +61,6 @@ function _DefaultPhaseStepLoadCardsFunction(){
     else cardArr = _GetActiveCardsFromPreviousPeriod(this);
     
     LoadCardArrIntoObjCardHandler(cardArr,this);
-    
-    console.log(this);
 }
     
 function _GetActiveCardsFromPreviousPeriod(period){

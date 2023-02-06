@@ -26,8 +26,6 @@ export function ScenarioFlow(scenario){
                         
             const step = stepHandler.GetCurrentActivePeriod();
             
-            console.log(step);
-            
             step.cardHandler.EmptyCards();
     
             step.LoadCards();

@@ -57,6 +57,8 @@ export class gag101Scenario extends gag101Period
         this._AttachOnClickCardChoiceToDOMs();
         
         this._AddScenarioRunButton();
+        
+        this.periodHandler.preppedScenario = this;
     }
     
     BeginPeriod(){  

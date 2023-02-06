@@ -38,7 +38,9 @@ function _OnClickCardSelect(card){
     
     gh.dimmerArtist.SetDOMDisplayTo("none");
     
-    const scenario = window.gameHandler.scenarioHandler.GetCurrentActivePeriod();
+    const scenario = window.gameHandler.scenarioHandler.preppedScenario;
+    
+    console.log(scenario);
     
     const artist = scenario.lastClickedCardSlotArtist;
     
