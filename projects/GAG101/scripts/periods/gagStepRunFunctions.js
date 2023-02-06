@@ -28,11 +28,75 @@ export function GetAndActivateAllPhaseCards(){
     
 }
 
-export function DeactivateDupedCardsWhoLoseDupeContest(){
+export function DeactivateDupedCharsWhoLoseDupeContest(){
     
-    const dupeArr = _GetDupeCards(this);
+    let dupeArr = _GetDupeCards(this);
     
-    console.log(_GetPairArrs(dupeArr));
+    dupeArr = dupeArr.filter(c => c.dataType == "char");
+    
+    const pairArrArr = _GetPairArrs(dupeArr);
+    
+    for(const pair of pairArrArr){
+        
+        const deactivatedCards = [];
+        
+        const pair0Rating = _GetTeamRatingForCharInScenarioForStep(pair[0],this);
+        
+        const pair1Rating = _GetTeamRatingForCharInScenarioForStep(pair[1],this);
+        
+        if(pair0Rating > pair1Rating){
+            
+            deactivatedCards.push(pair[1]);
+        }
+        
+        else if(pair1Rating > pair0Rating){
+            
+            deactivatedCards.push(pair[0]);
+        }
+        else{
+            
+            deactivatedCards.push(pair[0]);
+            deactivatedCards.push(pair[1]);
+        }
+        
+        _AddDebugInfoToCards(deactivatedCards);
+        
+        
+        _DeactivateCardArrAtLevelForStep(deactivatedCards,"phase",this);
+            
+        
+        console.log(deactivatedCards);
+    }
+    
+    
+}
+
+function _GetTeamRatingForCharInScenarioForStep(char,step){
+    
+    let teamRating = 0;
+    
+    const scenario = step.GetSuperPeriodByType("scenario");
+    
+    let teammates = _GetCardTeammatesAtLevelForStep(char,"scenario",step);
+    
+    teammates = teammates.filter(c => c.dataType == "char");
+    
+    teammates = teammates.filter(c => c.name != char.name);
+    
+    _AddDebugInfoToCards(teammates);
+    
+    console.log(teammates);
+    
+    for(const cha of teammates){
+        
+        teamRating += cha.charisma;
+        
+        let cunningPenalty = Math.abs(char.cunning - cha.cunning);
+        
+        teamRating += cunningPenalty;
+    }
+    
+    return teamRating;
 }
 
 function _GetDupeCards(step){
@@ -71,9 +135,7 @@ function _GetPairArrs(dupeCardsArr){
                 }
                 
                 if(!dupeMatch){
-                
-                    c.debugDisplay = c.name;
-                    c2.debugDisplay = c2.name;
+                    
                     returnArr.push([c,c2]);
                 }
             }
@@ -101,7 +163,7 @@ function _GetCardTeammatesAtLevelForStep(card,level,step){
     return returnArr
 }
 
-function _DeactivateCardArrAtLevel(cardArr,level,step=this){
+function _DeactivateCardArrAtLevelForStep(cardArr,level,step){
     
     for(const c of cardArr){
         
@@ -114,5 +176,14 @@ function _DeactivateCardArrAtLevel(cardArr,level,step=this){
                 card.Deactivate();
             }
         }
+    }
+}
+
+function _AddDebugInfoToCards(cardArr){
+    
+    for(const c of cardArr){
+        
+        c.debugName = c.name;
+        c.debugOwner = c.owner;
     }
 }

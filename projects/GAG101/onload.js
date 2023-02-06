@@ -16,9 +16,9 @@ export function onload(){
     
     AddGag101StepRunFunction(gagStepRunFunctions.GetAndActivateAllPhaseCards);  
     
-    AddGag101Step("Find Dupes");
+    AddGag101Step("Deactivate Duped Chars Who Lose Contest");
     
-    AddGag101StepRunFunction(gagStepRunFunctions.Console);
+    AddGag101StepRunFunction(gagStepRunFunctions.DeactivateDupedCharsWhoLoseDupeContest);
     
     // assess dupe prefs: deactiveate losing dupes at phase & scenario level
     
