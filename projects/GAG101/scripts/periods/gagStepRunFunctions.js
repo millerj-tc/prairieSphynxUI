@@ -63,6 +63,9 @@ export function DeactivateDupedCharsWhoLoseDupeContest(){
         
         
         _DeactivateCardArrAtLevelForStep(deactivatedCards,"phase",this);
+        
+        _DupeContestOutput(deactivatedCards);
+
 
     }
     
@@ -71,21 +74,43 @@ export function DeactivateDupedCharsWhoLoseDupeContest(){
 
 function _DupeContestOutput(contestLoserArr){
     
-    const artist = gameHandler.narrOutputArtist;
+    const artist = window.gameHandler.narrOutputArtist;
     
-    const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
+    const playerControlledLosers = contestLoserArr.filter(c => c.owner == window.gameHandler.playerId);
     
-    const div = document.createElement("div");
+    const playerControlledLosersString = _GetStringListOfCharImageNameTeam(playerControlledLosers);
     
-    const taggedArr = _ReplaceNounNamesWithImageTagTeamNameAtSize(contestLoserArr);
+    const playerDOM = document.createElement("div");
     
-    const charString = utilityArtist.ReturnStringOfNounsBasedOnNumber(gussiedArr);
+    const playerOutputString = playerControlledLosersString + ` decide to side with the right team.`;
+    
+    playerDOM.append(playerOutputString);
+    
+    const nonPlayerControlledLosers = contestLoserArr.filter(c => c.owner != window.gameHandler.playerId);
+        
+    const nonPlayerControlledLosersString = _GetStringListOfCharImageNameTeam(nonPlayerControlledLosers);
+    
+    const nonPlayerDOM = document.createElement("div");
+    
+    const nonPlayerOutputString = nonPlayerControlledLosersString + ` decide to side with the left team.`;
+    
+    nonPlayerDOM.append(nonPlayerOutputString);
     
     const outputString = " feel alienated by their team and decide not to participate.";
     
-    console.warn("need to go through each team and the characters that sided with them. Also everything above can probably be built into one big function here");
+    artist.AppendElementWithinDOM(playerDOM);
     
+    artist.AppendElementWithinDOM(nonPlayerDOM);
     
+}
+
+function _GetStringListOfCharImageNameTeam(charArr){
+    
+    const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
+    
+    const taggedArr = _ReplaceNounNamesWithImageTagTeamNameAtSize(charArr);
+    
+    return utilityArtist.ReturnStringOfNounsBasedOnNumber(taggedArr);
 }
 
 function _GetTeamRatingForCharInScenarioForStep(char,step){
@@ -158,7 +183,7 @@ function _GetPairArrs(dupeCardsArr){
     return returnArr
 }
 
-function _GetCardTeammatesAtLevelForStep(card,level,step){
+function _GetCardTeammatesAtLevelForStep(card,level,step,enemies = "false"){
     
     let searchArr;
     
@@ -170,7 +195,8 @@ function _GetCardTeammatesAtLevelForStep(card,level,step){
     
     for(const c of searchArr){
         
-        if(c.owner == card.owner && c.name != card.name) returnArr.push(c);
+        if(c.owner == card.owner && c.name != card.name && !enemies) returnArr.push(c);
+        else if(c.owner != card.owner && c.name != card.name && enemies) returnArr.push(c);
     }
     
     return returnArr
