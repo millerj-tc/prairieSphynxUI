@@ -47,12 +47,7 @@ function _GetCardTeammatesAtLevelForStep(card,level,step){
     if(level == "phase") searchArr = step.GetSuperPeriodByType("phase").cardHandler.GetCards("active");
     if(level == "scenario") searchArr = step.GetSuperPeriodByType("scenario").cardHandler.GetCards("active");
     
-
-    console.log(card);
-    
     for(const c of searchArr){
-        
-        console.log(c);
         
         if(c.owner == card.owner && c.name != card.name) returnArr.push(c);
     }

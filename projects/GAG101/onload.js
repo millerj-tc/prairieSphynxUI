@@ -20,6 +20,14 @@ export function onload(){
     
     AddGag101StepRunFunction(gagStepRunFunctions.Console);
     
+    // assess dupe prefs: deactiveate losing dupes at phase & scenario level
+    
+    // dupe resolution output
+    
+    // phase: dig up a Vigonian Crystal
+    
+    // find highest speed + str
+    
     _LoadCollectionCards();
     
     //window.gameHandler.scenarioHandler.GotoNextPeriod();
