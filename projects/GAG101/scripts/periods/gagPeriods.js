@@ -1,7 +1,6 @@
 import {periodHandler} from "./periodHandler.js";
 import {cardHandler} from "./../cards/cardHandler.js";
 import {period} from "./period.js";
-import {LoadCardArrIntoObjCardHandler} from "../cards/gagCardUtils.js";
 
 // AddGag101Scenario("Time Koala Rescue"); //choose gameHandler.scenarioHandler
 // AddGag101Phase("Essay the Time Mountain"); //target last created scenario
@@ -25,7 +24,7 @@ export class gag101Period extends period
         
         const sph = new gag101PeriodHandler(periodType);
         
-        sph.superPeriodHandler = this;
+        sph.superPeriod = this;
         
         this.subPeriodHandlers.push(sph);
         
@@ -34,7 +33,7 @@ export class gag101Period extends period
     
     LoadCards(){
         
-        // set by Add functions below
+        // set by Add functions in periodDesignFunctions
     }
     
     BeginPeriod(){
@@ -67,6 +66,8 @@ export class gag101PeriodHandler extends periodHandler
         this.lastCreatedPeriod = p;
         
         p.periodHandler = this;
+        
+        return p
         
     }
 }

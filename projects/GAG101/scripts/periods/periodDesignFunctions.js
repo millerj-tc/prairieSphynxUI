@@ -1,3 +1,5 @@
+import {LoadCardArrIntoObjCardHandler} from "../cards/gagCardUtils.js";
+
 export function AddGag101Scenario(scenarioName){
     
     const scenarioHandler = window.gameHandler.scenarioHandler;
@@ -16,24 +18,24 @@ export function AddGag101Phase(phaseName){
     
     const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedPeriod().GetSubPeriodHandlerByPeriodType("phase");
     
-    phaseHandler.AddPeriod(phaseName);
+    const phase = phaseHandler.AddPeriod(phaseName);
     
-    phaseHandler.GetLastCreatedPeriod().AddSubPeriodHandlerToPeriod("step");
+    phase.AddSubPeriodHandlerToPeriod("step");
     
-    phaseHandler.GetLastCreatedPeriod().LoadCards = _DefaultPhaseStepLoadCardsFunction;
+    phase.LoadCards = _DefaultPhaseStepLoadCardsFunction;
     
-    return phaseHandler.GetLastCreatedPeriod()
+    return phase
 }
 
 export function AddGag101Step(stepName){
     
     const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedPeriod().GetSubPeriodHandlerByPeriodType("phase");
     
-    const stepHandler = phaseHandler.GetSubPeriodHandlerByPeriodType("step");
-    
-    stepHandler.GetLastCreatedPeriod().LoadCards = _DefaultPhaseStepLoadCardsFunction;
+    const stepHandler = phaseHandler.GetLastCreatedPeriod().GetSubPeriodHandlerByPeriodType("step");
     
     stepHandler.AddPeriod(stepName);
+    
+    stepHandler.GetLastCreatedPeriod().LoadCards = _DefaultPhaseStepLoadCardsFunction;
     
     return stepHandler.GetLastCreatedPeriod()
     
@@ -43,7 +45,7 @@ export function AddGag101StepRunFunction(func){
     
     const phaseHandler = window.gameHandler.scenarioHandler.GetLastCreatedPeriod().GetSubPeriodHandlerByPeriodType("phase");
     
-    const stepHandler = phaseHandler.GetSubPeriodHandlerByPeriodType("step");
+    const stepHandler = phaseHandler.GetLastCreatedPeriod().GetSubPeriodHandlerByPeriodType("step");
     
     stepHandler.GetLastCreatedPeriod().Run = func;
 }
@@ -54,19 +56,21 @@ function _DefaultPhaseStepLoadCardsFunction(){
     
     let cardArr;
     
-    if(this.periodHandler.GetPreviousActivePeriod() == null) cardArr = this._GetActiveCardsFromParentPeriodHandler;
+    if(this.periodHandler.GetPreviousActivePeriod() == null) cardArr = _GetActiveCardsFromParentPeriodHandler(this);
         
-    else cardArr = this._GetActiveCardsFromPreviousPeriod;
+    else cardArr = _GetActiveCardsFromPreviousPeriod(this);
     
     LoadCardArrIntoObjCardHandler(cardArr,this);
+    
+    console.log(this);
 }
     
-function _GetActiveCardsFromPreviousPeriod(){
+function _GetActiveCardsFromPreviousPeriod(period){
 
-    return this.periodHandler.GetPreviousActivePeriod().cardHandler.GetCards("active");
+    return period.periodHandler.GetPreviousActivePeriod().cardHandler.GetCards("active");
 }
 
-function _GetActiveCardsFromParentPeriodHandler(){
+function _GetActiveCardsFromParentPeriodHandler(period){
     // use this for the first period in the sequence, inherits from the level above
-    return this.periodHandler.superPeriodHandler.cardHandler.GetCards("active");
+    return period.periodHandler.superPeriod.cardHandler.GetCards("active");
 }

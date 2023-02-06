@@ -2,6 +2,7 @@ import {AddGag101Scenario,AddGag101Phase, AddGag101Step, AddGag101StepRunFunctio
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
 import {ScenarioFlow} from "./scripts/scenario/scenarioFlow/scenarioFlow.js";
+import * as gagStepRunFunctions from "./scripts/periods/gagStepRunFunctions.js";
 
 export function onload(){
     
@@ -11,9 +12,13 @@ export function onload(){
     
     AddGag101Phase("Resolve Dupes");
     
+    AddGag101Step("Get All Phase Cards");
+    
+    AddGag101StepRunFunction(gagStepRunFunctions.GetAndActivateAllPhaseCards);  
+    
     AddGag101Step("Find Dupes");
     
-    
+    AddGag101StepRunFunction(gagStepRunFunctions.Console);
     
     _LoadCollectionCards();
     

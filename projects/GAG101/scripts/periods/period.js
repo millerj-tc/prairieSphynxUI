@@ -33,6 +33,26 @@ export class period
         }
     }
     
+    GetSuperPeriodByType(typ){
+        
+        let foundType;
+        
+        let basePeriod = this; //the obj the search is started from
+        
+        while(typ != foundType){
+            
+            let checkPeriod = basePeriod.periodHandler.superPeriod;
+            
+            foundType = checkPeriod.periodType;
+            
+            if(checkPeriod == null) return null
+            
+            if(checkPeriod.periodType == typ) return checkPeriod
+            
+            basePeriod = checkPeriod;
+        }
+    }
+    
     GetLastCreatedSubPeriodHandler(){
         
         return this.lastCreatedSubPeriod;
@@ -50,12 +70,13 @@ export class period
     
     PeriodDeactivateFlow(){
         
-        if(!"CustomPeriodDeactivateFlow" in this) this.periodActive = false;
+        if("CustomPeriodDeactivateFlow" in this === false){
+            if(this.GetSubPeriodHandlerByPeriodType() == null || !this.GetSubPeriodHandlerByPeriodType().ActivateNextPeriod()) this.periodActive = false
+        }
         else this.CustomPeriodDeactivateFlow();
     }
     
     EndPeriod(){
-        
         
     }
     

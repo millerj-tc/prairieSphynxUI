@@ -7,7 +7,7 @@ export class periodHandler
         this.periodType = periodType;
         this.linear = true; //does the period progress in a strictly linear fashion?
         this.periods = [];
-        this.superPeriodHandler = null; //the period above this period in the chain
+        this.superPeriod = null; //the period above this period in the chain
         this.currentActivePeriod;
         this.previousActivePeriod;
         this.nextActivePeriodInd;
@@ -18,7 +18,7 @@ export class periodHandler
 //        
 //        const sph = new periodHandler(periodType);
 //        
-//        sph.superPeriodHandler = this;
+//        sph.superPeriod = this;
 //        
 //        this.subPeriodHandlers.push(sph);
 //        
@@ -34,6 +34,8 @@ export class periodHandler
         this.lastCreatedPeriod = p;
         
         p.periodHandler = this;
+        
+        return p
     }
     
 //    GetSubPeriodHandlerByPeriodType(periodType = null){
@@ -71,6 +73,9 @@ export class periodHandler
             this.currentActivePeriod = this.periods[this.nextActivePeriodInd];
             this.nextActivePeriodInd++;
         }
+        
+        if(this.currentActivePeriod != null) return true
+        return false
     }
     
     ActivatePeriodByName(name){

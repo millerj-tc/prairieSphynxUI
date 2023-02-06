@@ -4,11 +4,11 @@ export function ScenarioFlow(scenario){
     
     scenario.BeginPeriod(); //often this is output like dialogue or narration
     
-    while(scenario.GetPeriodActive()){
+    const phaseHandler = scenario.GetSubPeriodHandlerByPeriodType();
         
-        const phaseHandler = scenario.GetSubPeriodHandlerByPeriodType();
-        
-        phaseHandler.ActivateNextPeriod();
+    phaseHandler.ActivateNextPeriod();
+    
+    while(scenario.GetPeriodActive()){    
                 
         const phase = phaseHandler.GetCurrentActivePeriod();
         
@@ -18,13 +18,15 @@ export function ScenarioFlow(scenario){
         
         phase.BeginPeriod();
         
+        const stepHandler = phaseHandler.GetCurrentActivePeriod().GetSubPeriodHandlerByPeriodType();
+            
+        stepHandler.ActivateNextPeriod();
+        
         while(phase.GetPeriodActive()){
-            
-            const stepHandler = phaseHandler.GetCurrentActivePeriod().GetSubPeriodHandlerByPeriodName();
-            
-            stepHandler.ActivateNextPeriod();
                         
             const step = stepHandler.GetCurrentActivePeriod();
+            
+            console.log(step);
             
             step.cardHandler.EmptyCards();
     
@@ -36,10 +38,10 @@ export function ScenarioFlow(scenario){
                 
                 step.Run();
                 
-                step.PeriodDeactivateFlow(); //set period.periodActive to 'false' if conditions are met
+                step.PeriodDeactivateFlow(); //set period.periodActive to 'false' if conditions are met. Normally, activate the next period in the period handler
             }
             
-            step.EndPeriod(); //set previousStep to currentStep, set currentStep to null -- this way if currentStep is not null, you can "resume" a paused step, phase, scenario, empty stepCards arr
+            step.EndPeriod(); 
             
             phase.PeriodDeactivateFlow();
         }
@@ -64,4 +66,53 @@ export function ScenarioFlow(scenario){
 //    - determine how to move to the next phase
 //- perform a bunch of operations on the cards, leading changed card properties (changed card properties could be at the step, phase, scenario, or player collection level)
 //- check what happened and output text to show player what happened (potentially in concise mode)
+}
+
+function _RunPhases(scenario){
+    
+    const phaseHandler = scenario.GetSubPeriodHandlerByPeriodType();
+    
+    for(const phase of phaseHandler.periods){
+        
+        phaseHandler.ActivateNextPeriod();
+        
+        const phase = phaseHandler.GetCurrentActivePeriod();
+        
+        phase.cardHandler.EmptyCards();
+    
+        phase.LoadCards();
+        
+        phase.BeginPeriod();
+        
+        _RunSteps(phase);
+        
+        
+        
+        
+        
+    }
+}
+
+function _RunSteps(phase){
+    
+    const stepHandler = phase.GetSubPeriodHandlerByPeriodType();
+    
+    stepHandler.ActivateNextPeriod();
+    
+    for(const step of stepHandler.periods){
+        
+        
+        
+        const step = stepHandler.GetCurrentActivePeriod();
+        
+        step.cardHandler.EmptyCards();
+        
+        step.LoadCards();
+        
+        step.BeginPeriod();
+        
+        step.Run();
+        
+        step.PeriodDeactivateFlow(); //deactivate self and activate next if done
+    }
 }

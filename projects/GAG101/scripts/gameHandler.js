@@ -32,7 +32,7 @@ export class gameHandler
         
         this.collectionCardHandler = new cardHandler("collection");
         
-        console.error("load cards into master and collection, but only if it's the first time playing");
+        console.warn("load cards into master and collection, but only if it's the first time playing");
         //(Cache handler)
         
         this.scenarioHandler = new gag101ScenarioHandler("scenario");
