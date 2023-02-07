@@ -2,7 +2,8 @@ import {AddGag101Scenario,AddGag101Phase, AddGag101Step, AddGag101StepRunFunctio
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
 import {ScenarioFlow} from "./scripts/scenario/scenarioFlow/scenarioFlow.js";
-import * as gagStepRunFunctions from "./scripts/periods/gagStepRunFunctions.js";
+import * as gagStepRunFunctions from "./scripts/periods/gagStepRun/gagStepRunFunctions.js";
+import {DupeConkLosers} from "./scripts/periods/gagStepRun/gagStepDupeConk.js";
 
 export function onload(){
     
@@ -16,9 +17,9 @@ export function onload(){
     
     AddGag101StepRunFunction(gagStepRunFunctions.GetAndActivateAllPhaseCards);  
     
-    AddGag101Step("Deactivate Duped Chars Who Lose Contest");
+    AddGag101Step("Dupe Conk The Losers");
     
-    AddGag101StepRunFunction(gagStepRunFunctions.DupeConkLosers);
+    AddGag101StepRunFunction(DupeConkLosers);
     
     // assess dupe prefs: deactiveate losing dupes at phase & scenario level
     

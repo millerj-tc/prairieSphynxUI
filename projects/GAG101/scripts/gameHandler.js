@@ -19,7 +19,10 @@ export class gameHandler
         const dimmer = document.getElementById("dimmer");
         const ccg = document.getElementById("cardChoiceGrid");
         
-        this.narrOutputArtist = this.uiToolsHandler.AddDOMUIArtist(no);        
+        this.narrOutputArtist = this.uiToolsHandler.AddDOMUIArtist(no);    
+        
+        this.narrOutputArtist.imageSize = "M";
+        
         this.cardChoiceTrayArtist = this.uiToolsHandler.AddTrayArtist(cct);
         this.cardChoiceTrayArtist.SetTrayOpenClosedPosition("100%","0%");
         this.cardChoiceTrayGridArtist = this.uiToolsHandler.AddDOMUIArtist(cctg);

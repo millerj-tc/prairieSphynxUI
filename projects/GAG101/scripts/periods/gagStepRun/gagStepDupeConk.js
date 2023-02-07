@@ -1,34 +1,5 @@
-import {charData} from "../data/charData.js";
-
-export function ActivateDuplicateCards(){
-    
-    for(const c of this.cardHandler.GetCards()){
-        
-        for(const c2 of this.cardHandler.GetCards()){
-            
-            if(c.name == c2.name && c != c2){
-                
-                c.Activate();
-            }
-        }
-    }
-}
-
-export function GetAndActivateAllPhaseCards(){
-    
-    const phase = this.GetSuperPeriodByType("phase");
-    
-    const phaseCards = phase.cardHandler.GetCards();
-    
-    for(const c of phaseCards){
-        
-        const card = this.cardHandler.AddCard(c);
-        
-        card.Activate();
-    }
-    
-    
-}
+import {charData} from "../../data/charData.js";
+import * as gagStepRunFunctions from "./gagStepRunFunctions.js";
 
 export function DupeConkLosers(){
     
@@ -42,7 +13,7 @@ export function DupeConkLosers(){
     
     for(const pair of pairArrArr){
         
-        _AddDebugInfoToCards(pair);
+        gagStepRunFunctions.AddDebugInfoToCards(pair);
         
         console.log(pair[0]);
         
@@ -106,17 +77,19 @@ function _DupeContestOutput(contestLoserArr){
     
     const neitherDOM = document.createElement("div");
     
-    const doubleDupeConkersSpan = _GetSpanListOfCharImageNameTeam(doubleDupeConkers,"S");
+    const doubleDupeConkersSpan = gagStepRunFunctions.GetSpanListOfCharImageNameTeam(doubleDupeConkers,artist.imageSize);
     
     neitherDOM.append(doubleDupeConkersSpan);
     
-    const neitherUnpluralizedString = ` can't decide who to side with! So [p[[they]/they]p] are sitting this one out.`;
+    const neitherUnpluralizedString = ` can't decide who to side with! [p[[they]/they]p] are sitting this one out.`;
     
     let neitherPluralizedString = utilityUIArtist.ReplaceWordsBasedOnPluralSubjects(doubleDupeConkers,neitherUnpluralizedString);
     
     if(doubleDupeConkers.length == 1) neitherPluralizedString = utilityUIArtist.ReplacePronouns(doubleDupeConkers[0],neitherPluralizedString);
     
-    neitherDOM.append(neitherPluralizedString);
+    const neitherCapitalizedString = utilityUIArtist.CapitalizeLettersAfterAppropriatePunctuation(neitherPluralizedString);
+    
+    neitherDOM.append(neitherCapitalizedString);
     
     if(doubleDupeConkers.length > 0) artist.AppendElementWithinDOM(neitherDOM);
     
@@ -126,7 +99,7 @@ function _DupeContestOutput(contestLoserArr){
     
     const playerControlledLosers = singleDupeConkers.filter(c => c.owner == window.gameHandler.playerId);
     
-    const playerControlledLosersSpan = _GetSpanListOfCharImageNameTeam(playerControlledLosers,"S");
+    const playerControlledLosersSpan = gagStepRunFunctions.GetSpanListOfCharImageNameTeam(playerControlledLosers,artist.imageSize);
     
     playerDOM.append(playerControlledLosersSpan);
     
@@ -144,7 +117,7 @@ function _DupeContestOutput(contestLoserArr){
     
     const nonPlayerControlledLosers = singleDupeConkers.filter(c => c.owner != window.gameHandler.playerId);
         
-    const nonPlayerControlledLosersSpan = _GetSpanListOfCharImageNameTeam(nonPlayerControlledLosers,"S");
+    const nonPlayerControlledLosersSpan = gagStepRunFunctions.GetSpanListOfCharImageNameTeam(nonPlayerControlledLosers,artist.imageSize);
     
     nonPlayerDOM.append(nonPlayerControlledLosersSpan);
     
@@ -158,24 +131,13 @@ function _DupeContestOutput(contestLoserArr){
     
 }
 
-function _GetSpanListOfCharImageNameTeam(charArr,size){
-    
-    const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
-    
-    const taggedArr = _ReplaceNounNamesWithImageTagTeamNameAtSize(charArr,size);
-    
-    const stringBasedOnNumber = utilityArtist.ReturnStringOfNounsBasedOnNumber(taggedArr);
-    
-    return utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(stringBasedOnNumber);
-}
-
 function _GetTeamRatingForCharInScenarioForStep(char,step){
     
     let teamRating = 0;
     
     const scenario = step.GetSuperPeriodByType("scenario");
     
-    let teammates = _GetCardTeammatesAtLevelForStep(char,"scenario",step);
+    let teammates = gagStepRunFunctions.GetCardTeammatesAtLevelForStep(char,"scenario",step);
     
     teammates = teammates.filter(c => c.dataType == "char");
     
@@ -241,66 +203,3 @@ function _GetPairArrs(dupeCardsArr){
     return returnArr
 }
 
-function _GetCardTeammatesAtLevelForStep(card,level,step,enemies = "false"){
-    
-    let searchArr;
-    
-    const returnArr = [];
-    
-    if(level == "step") searchArr = step.cardHandler.GetCards("active");
-    if(level == "phase") searchArr = step.GetSuperPeriodByType("phase").cardHandler.GetCards("active");
-    if(level == "scenario") searchArr = step.GetSuperPeriodByType("scenario").cardHandler.GetCards("active");
-    
-    for(const c of searchArr){
-        
-        if(c.owner == card.owner && c.name != card.name && !enemies) returnArr.push(c);
-        else if(c.owner != card.owner && c.name != card.name && enemies) returnArr.push(c);
-    }
-    
-    return returnArr
-}
-
-function _DeactivateCardArrAtLevelForStep(cardArr,level,step){
-    
-    for(const c of cardArr){
-        
-        const superPeriod = step.GetSuperPeriodByType(level);
-        
-        for(const card of superPeriod.cardHandler.GetCards("active")){
-            
-            if(card.name == c.name && card.owner == c.owner){
-                
-                card.Deactivate();
-            }
-        }
-    }
-}
-
-function _AddDebugInfoToCards(cardArr){
-    
-    for(const c of cardArr){
-        
-        c.debugName = c.name;
-        c.debugOwner = c.owner;
-    }
-}
-
-function _ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M"){
-    
-    const returnArr = [];
-    
-    for(const n of nounArr){
-        
-        console.warn("careful where you put other non-char nouns or this will break");
-        
-        for(const c of charData){
-            
-            if(n.name == c.name){
-                
-                returnArr.push(`$$IMAGE:${c["image" + size]}IMAGE$$ ${c.name}`);
-            }
-        }
-    }
-    
-    return returnArr
-}

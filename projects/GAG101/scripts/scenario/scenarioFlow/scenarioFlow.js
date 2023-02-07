@@ -1,8 +1,12 @@
 export function ScenarioFlow(scenario){
         
+    const gh = window.gameHandler;
+    
     console.log(scenario);
     
     scenario.BeginPeriod(); //often this is output like dialogue or narration
+    
+    gh.narrOutputArtist.ClearAllChildren();
     
     const phaseHandler = scenario.GetSubPeriodHandlerByPeriodType();
         

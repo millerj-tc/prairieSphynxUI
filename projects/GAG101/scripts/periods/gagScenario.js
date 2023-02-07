@@ -67,7 +67,6 @@ export class gag101Scenario extends gag101Period
         
         super.BeginPeriod();
         
-        
     }
     
     EndPeriod(){
@@ -176,7 +175,7 @@ export class gag101Scenario extends gag101Period
             
         const img = document.createElement("img");
 
-        img.src = card.imageM;
+        img.src = card.imageL;
 
         artist.AppendElementWithinDOM(img);
 
