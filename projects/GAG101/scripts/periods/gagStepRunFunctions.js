@@ -38,9 +38,11 @@ export function DeactivateDupedCharsWhoLoseDupeContest(){
     
     const pairArrArr = _GetPairArrs(dupeArr);
     
+    const deactivatedCards = [];
+    
     for(const pair of pairArrArr){
         
-        const deactivatedCards = [];
+        
         
         const pair0Rating = _GetTeamRatingForCharInScenarioForStep(pair[0],this);
         
@@ -64,10 +66,12 @@ export function DeactivateDupedCharsWhoLoseDupeContest(){
         
         _DeactivateCardArrAtLevelForStep(deactivatedCards,"phase",this);
         
-        _DupeContestOutput(deactivatedCards);
+        
 
 
     }
+    
+    _DupeContestOutput(deactivatedCards);
     
     
 }
@@ -76,41 +80,65 @@ function _DupeContestOutput(contestLoserArr){
     
     const artist = window.gameHandler.narrOutputArtist;
     
-    const playerControlledLosers = contestLoserArr.filter(c => c.owner == window.gameHandler.playerId);
-    
-    const playerControlledLosersString = _GetStringListOfCharImageNameTeam(playerControlledLosers);
+    const utilityUIArtist = window.gameHandler.uiToolsHandler.utilityUIArtist;
     
     const playerDOM = document.createElement("div");
     
-    const playerOutputString = playerControlledLosersString + ` decide to side with the right team.`;
+    const playerControlledLosers = contestLoserArr.filter(c => c.owner == window.gameHandler.playerId);
     
-    playerDOM.append(playerOutputString);
+    console.log("player controlled losers:");
     
-    const nonPlayerControlledLosers = contestLoserArr.filter(c => c.owner != window.gameHandler.playerId);
-        
-    const nonPlayerControlledLosersString = _GetStringListOfCharImageNameTeam(nonPlayerControlledLosers);
+    _AddDebugInfoToCards(playerControlledLosers);
+    
+    console.log(playerControlledLosers);
+    
+    const playerControlledLosersSpan = _GetSpanListOfCharImageNameTeam(playerControlledLosers,"S");
+    
+    playerDOM.append(playerControlledLosersSpan);
+    
+    const playerUnpluralizedString = ` [p[decides/decide]p] to side with the left team.`;
+    
+    const playerPluralizedString = utilityUIArtist.ReplaceWordsBasedOnPluralSubjects(playerControlledLosers,playerUnpluralizedString);
+    
+    playerDOM.append(playerPluralizedString);
     
     const nonPlayerDOM = document.createElement("div");
     
-    const nonPlayerOutputString = nonPlayerControlledLosersString + ` decide to side with the left team.`;
+    const nonPlayerControlledLosers = contestLoserArr.filter(c => c.owner != window.gameHandler.playerId);
     
-    nonPlayerDOM.append(nonPlayerOutputString);
+    console.log("nonplayer controlled losers:")
+    
+    _AddDebugInfoToCards(nonPlayerControlledLosers);
+    
+    console.log(nonPlayerControlledLosers);
+        
+    const nonPlayerControlledLosersSpan = _GetSpanListOfCharImageNameTeam(nonPlayerControlledLosers,"S");
+    
+    nonPlayerDOM.append(nonPlayerControlledLosersSpan);
+    
+    const nonPlayerUnpluralizedString = ` [p[decides/decide]p] to side with the right team.`;
+    
+    const nonPlayerPluralizedString = utilityUIArtist.ReplaceWordsBasedOnPluralSubjects(nonPlayerControlledLosers,nonPlayerUnpluralizedString);
+    
+    nonPlayerDOM.append(nonPlayerPluralizedString);
     
     const outputString = " feel alienated by their team and decide not to participate.";
     
-    artist.AppendElementWithinDOM(playerDOM);
+    if(playerControlledLosers.length > 0)artist.AppendElementWithinDOM(playerDOM);
     
-    artist.AppendElementWithinDOM(nonPlayerDOM);
+    if(nonPlayerControlledLosers.length > 0) artist.AppendElementWithinDOM(nonPlayerDOM);
     
 }
 
-function _GetStringListOfCharImageNameTeam(charArr){
+function _GetSpanListOfCharImageNameTeam(charArr,size){
     
     const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
     
-    const taggedArr = _ReplaceNounNamesWithImageTagTeamNameAtSize(charArr);
+    const taggedArr = _ReplaceNounNamesWithImageTagTeamNameAtSize(charArr,size);
     
-    return utilityArtist.ReturnStringOfNounsBasedOnNumber(taggedArr);
+    const stringBasedOnNumber = utilityArtist.ReturnStringOfNounsBasedOnNumber(taggedArr);
+    
+    return utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(stringBasedOnNumber);
 }
 
 function _GetTeamRatingForCharInScenarioForStep(char,step){
@@ -227,7 +255,7 @@ function _AddDebugInfoToCards(cardArr){
     }
 }
 
-function _ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size){
+function _ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M"){
     
     const returnArr = [];
     

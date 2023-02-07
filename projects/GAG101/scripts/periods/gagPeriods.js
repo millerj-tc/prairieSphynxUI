@@ -1,5 +1,5 @@
 import {periodHandler} from "./periodHandler.js";
-import {cardHandler} from "./../cards/cardHandler.js";
+import {gagCardHandler} from "./../cards/gagCards.js";
 import {period} from "./period.js";
 
 // AddGag101Scenario("Time Koala Rescue"); //choose gameHandler.scenarioHandler
@@ -13,7 +13,7 @@ export class gag101Period extends period
         
         super(periodName,periodType);
         
-        this.cardHandler = new cardHandler(periodType);
+        this.cardHandler = new gagCardHandler(periodType);
     }
     
     AddSubPeriodHandlerToPeriod(periodType){
@@ -50,7 +50,7 @@ export class gag101PeriodHandler extends periodHandler
         
         super(periodType);
         
-        this.cardHandler = new cardHandler(periodType)
+        this.cardHandler = new gagCardHandler(periodType)
     }
     
     AddPeriod(periodName){
