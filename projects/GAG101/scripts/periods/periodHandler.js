@@ -14,7 +14,7 @@ export class periodHandler
         this.lastCreatedPeriod;
     }
     
-    ResetAllPeriods(){
+    ResetAllPeriods(){ // you need to call this if you are going to run through the periods again "fresh"
         
         this.currentActivePeriod = null;
         this.previousActivePeriod = null;
@@ -38,16 +38,6 @@ export class periodHandler
         
         return p
     }
-    
-//    GetSubPeriodHandlerByPeriodType(periodType = null){
-//        
-//        if(periodType == null) return this.subPeriodHandlers[0];
-//        
-//        for(const sph of this.subPeriodHandlers){
-//            
-//            if(periodType = sph.periodType) return sph
-//        }
-//    }
     
     GetLastCreatedPeriod(){
         
