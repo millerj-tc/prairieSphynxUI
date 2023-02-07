@@ -14,16 +14,17 @@ export class periodHandler
         this.lastCreatedPeriod;
     }
     
-//    AddSubPeriodToPeriodHandler(periodType){
-//        
-//        const sph = new periodHandler(periodType);
-//        
-//        sph.superPeriod = this;
-//        
-//        this.subPeriodHandlers.push(sph);
-//        
-//        this.lastCreatedSubPeriod = sph;
-//    }
+    ResetAllPeriods(){
+        
+        this.currentActivePeriod = null;
+        this.previousActivePeriod = null;
+        this.nextActivePeriodInd = null;
+        
+        for(const p of this.periods){
+            
+            period.active = false;
+        }
+    }
     
     AddPeriod(periodName){
         

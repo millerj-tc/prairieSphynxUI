@@ -34,6 +34,8 @@ export function ScenarioFlow(scenario){
             
             while(step.GetPeriodActive()){
                 
+                console.log(step);
+                
                 step.Run();
                 
                 step.PeriodDeactivateFlow(); //set period.periodActive to 'false' if conditions are met. Normally, activate the next period in the period handler

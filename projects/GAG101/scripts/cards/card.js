@@ -1,4 +1,4 @@
-export class card
+    export class card
 {
     constructor(protoLevel){
         

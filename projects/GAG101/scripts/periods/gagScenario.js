@@ -13,6 +13,8 @@ export class gag101Scenario extends gag101Period
         this.playerCardSlots = 3;
         this.nonPlayerCardSlots = 3;
         this.uiToolsHandler = new uiToolsHandler();
+        
+        this.otherPlayerId = "otherPlayer";
     }
     
     LoadCards(){
@@ -44,15 +46,15 @@ export class gag101Scenario extends gag101Period
         
         this._CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(this.playerCardSlots,window.gameHandler.playerId,2);
         
-        this._CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(this.nonPlayerCardSlots,"nonPlayer",3);
+        this._CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(this.nonPlayerCardSlots,this.otherPlayerId,3);
         
         this._RandomizePlayerIdCardChoicesForScenario();
         
-        this._RandomizePlayerIdCardChoicesForScenario("nonPlayer");
+        this._RandomizePlayerIdCardChoicesForScenario(this.otherPlayerId);
         
         this._CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(window.gameHandler.playerId,1);
         
-        this._CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart("nonPlayer",4);
+        this._CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(this.otherPlayerId,4);
         
         this._AttachOnClickCardChoiceToDOMs();
         
@@ -68,11 +70,26 @@ export class gag101Scenario extends gag101Period
         
     }
     
+    EndPeriod(){
+        
+        super.EndPeriod();
+        
+        const ph = this.subPeriodHandlers[0];
+        
+        ph.ResetAllPeriods();
+            
+        for(const p of ph.periods){
+
+            p.subPeriodHandlers[0].ResetAllPeriods();
+        }
+        
+    }
+    
     _LoadNonplayerCopiesOfPlayerCards(){
         
         const activeCollectionCards = window.gameHandler.collectionCardHandler.GetCards("active");
     
-        LoadCardArrIntoObjCardHandler(activeCollectionCards,this, "nonPlayer");
+        LoadCardArrIntoObjCardHandler(activeCollectionCards,this, this.otherPlayerId);
     }
     
     _CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridColumnStart){

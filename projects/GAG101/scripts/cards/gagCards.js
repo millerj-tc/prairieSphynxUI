@@ -7,8 +7,6 @@ export class gagCard extends card
     constructor(protoLevel){
         
         super(protoLevel);
-        
-        this.immuneSys = new immuneSys(this);
     }
 }
 
@@ -30,6 +28,8 @@ export class gagCardHandler extends cardHandler
         c.protoLevel = this.protoLevel;
         
         this.cards.push(c);
+        
+        c.immuneSys = new immuneSys(c);
         
         return c
     }

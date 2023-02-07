@@ -18,13 +18,7 @@ export function onload(){
     
     AddGag101Step("Deactivate Duped Chars Who Lose Contest");
     
-    AddGag101StepRunFunction(gagStepRunFunctions.DeactivateDupedCharsWhoLoseDupeContest);
-    
-    const testDOM = window.gameHandler.uiToolsHandler.utilityUIArtist.GetSpanWithImageTagsReplacedWithImagesFromText("$$IMAGE:images/chars/sinch01-M.pngIMAGE$$, and $$IMAGE:images/chars/rhino-M.pngIMAGE$$. Lorem ipsum$$IMAGE:images/chars/pluto-M.pngIMAGE$$test test");
-    
-    console.log(testDOM.innerText);
-    
-    document.body.append(testDOM);
+    AddGag101StepRunFunction(gagStepRunFunctions.DupeConkLosers);
     
     // assess dupe prefs: deactiveate losing dupes at phase & scenario level
     

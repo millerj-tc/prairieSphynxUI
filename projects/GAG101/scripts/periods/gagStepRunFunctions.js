@@ -30,7 +30,7 @@ export function GetAndActivateAllPhaseCards(){
     
 }
 
-export function DeactivateDupedCharsWhoLoseDupeContest(){
+export function DupeConkLosers(){
     
     let dupeArr = _GetDupeCards(this);
     
@@ -42,7 +42,11 @@ export function DeactivateDupedCharsWhoLoseDupeContest(){
     
     for(const pair of pairArrArr){
         
+        _AddDebugInfoToCards(pair);
         
+        console.log(pair[0]);
+        
+        console.log(pair[1]);
         
         const pair0Rating = _GetTeamRatingForCharInScenarioForStep(pair[0],this);
         
@@ -50,30 +54,34 @@ export function DeactivateDupedCharsWhoLoseDupeContest(){
         
         if(pair0Rating > pair1Rating){
             
-            deactivatedCards.push(pair[1]);
+            _DupeConkCardMatchingNameAndOwnerForStep(pair[1].name,pair[1].owner,this);
         }
         
         else if(pair1Rating > pair0Rating){
             
-            deactivatedCards.push(pair[0]);
+            _DupeConkCardMatchingNameAndOwnerForStep(pair[0].name,pair[0].owner,this);
         }
         else{
             
-            deactivatedCards.push(pair[0]);
-            deactivatedCards.push(pair[1]);
+            pair[0].immuneSys.DoubleDupeConk();
+            pair[1].immuneSys.DoubleDupeConk();
         }
-        
-        
-        _DeactivateCardArrAtLevelForStep(deactivatedCards,"phase",this);
-        
-        
-
 
     }
     
-    _DupeContestOutput(deactivatedCards);
+    const dupeConkedCards = this.cardHandler.GetCards().filter(c => c.immuneSys.IsDupeConked());
+    
+    _DupeContestOutput(dupeConkedCards);
     
     
+}
+
+function _DupeConkCardMatchingNameAndOwnerForStep(name,owner,step){
+    
+    for(const c of step.cardHandler.GetCards()){
+        
+        if(c.name == name && c.owner == owner) c.immuneSys.DupeConk();
+    }
 }
 
 function _DupeContestOutput(contestLoserArr){
@@ -82,15 +90,41 @@ function _DupeContestOutput(contestLoserArr){
     
     const utilityUIArtist = window.gameHandler.uiToolsHandler.utilityUIArtist;
     
+    let doubleDupeConkers = contestLoserArr.filter(c => c.immuneSys.IsDoubleDupeConked());
+    
+    doubleDupeConkers = doubleDupeConkers.sort();
+    
+    doubleDupeConkers = doubleDupeConkers.slice(doubleDupeConkers.length/2); // remove duplicates from doubleDupeConkers
+    
+    const singleDupeConkers = contestLoserArr.filter(c => !c.immuneSys.IsDoubleDupeConked());
+    
+    console.log(doubleDupeConkers);
+    
+    console.log(singleDupeConkers);
+    
+    ///
+    
+    const neitherDOM = document.createElement("div");
+    
+    const doubleDupeConkersSpan = _GetSpanListOfCharImageNameTeam(doubleDupeConkers,"S");
+    
+    neitherDOM.append(doubleDupeConkersSpan);
+    
+    const neitherUnpluralizedString = ` can't decide who to side with! So [p[[they]/they]p] are sitting this one out.`;
+    
+    let neitherPluralizedString = utilityUIArtist.ReplaceWordsBasedOnPluralSubjects(doubleDupeConkers,neitherUnpluralizedString);
+    
+    if(doubleDupeConkers.length == 1) neitherPluralizedString = utilityUIArtist.ReplacePronouns(doubleDupeConkers[0],neitherPluralizedString);
+    
+    neitherDOM.append(neitherPluralizedString);
+    
+    if(doubleDupeConkers.length > 0) artist.AppendElementWithinDOM(neitherDOM);
+    
+    ///
+    
     const playerDOM = document.createElement("div");
     
-    const playerControlledLosers = contestLoserArr.filter(c => c.owner == window.gameHandler.playerId);
-    
-    console.log("player controlled losers:");
-    
-    _AddDebugInfoToCards(playerControlledLosers);
-    
-    console.log(playerControlledLosers);
+    const playerControlledLosers = singleDupeConkers.filter(c => c.owner == window.gameHandler.playerId);
     
     const playerControlledLosersSpan = _GetSpanListOfCharImageNameTeam(playerControlledLosers,"S");
     
@@ -102,15 +136,13 @@ function _DupeContestOutput(contestLoserArr){
     
     playerDOM.append(playerPluralizedString);
     
+    if(playerControlledLosers.length > 0) artist.AppendElementWithinDOM(playerDOM);
+    
+    ///
+    
     const nonPlayerDOM = document.createElement("div");
     
-    const nonPlayerControlledLosers = contestLoserArr.filter(c => c.owner != window.gameHandler.playerId);
-    
-    console.log("nonplayer controlled losers:")
-    
-    _AddDebugInfoToCards(nonPlayerControlledLosers);
-    
-    console.log(nonPlayerControlledLosers);
+    const nonPlayerControlledLosers = singleDupeConkers.filter(c => c.owner != window.gameHandler.playerId);
         
     const nonPlayerControlledLosersSpan = _GetSpanListOfCharImageNameTeam(nonPlayerControlledLosers,"S");
     
@@ -121,11 +153,7 @@ function _DupeContestOutput(contestLoserArr){
     const nonPlayerPluralizedString = utilityUIArtist.ReplaceWordsBasedOnPluralSubjects(nonPlayerControlledLosers,nonPlayerUnpluralizedString);
     
     nonPlayerDOM.append(nonPlayerPluralizedString);
-    
-    const outputString = " feel alienated by their team and decide not to participate.";
-    
-    if(playerControlledLosers.length > 0)artist.AppendElementWithinDOM(playerDOM);
-    
+        
     if(nonPlayerControlledLosers.length > 0) artist.AppendElementWithinDOM(nonPlayerDOM);
     
 }
@@ -168,6 +196,8 @@ function _GetTeamRatingForCharInScenarioForStep(char,step){
 function _GetDupeCards(step){
     
     const returnArr = [];
+    
+    console.log(step.cardHandler.GetCards()); 
     
     for(const c of step.cardHandler.GetCards()){
         

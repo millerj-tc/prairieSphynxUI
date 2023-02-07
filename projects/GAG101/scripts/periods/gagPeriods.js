@@ -41,6 +41,19 @@ export class gag101Period extends period
         super.BeginPeriod();
         
     }
+    
+    EndPeriod(){
+        
+        super.EndPeriod();
+        
+        for(const c of this.cardHandler.GetCards()){
+            
+            for(const s of c.immuneSys.statusFxs){
+                
+                s.CureIfDurationEquals(this.periodType);
+            }
+        }
+    }
         
 }
 
@@ -66,6 +79,8 @@ export class gag101PeriodHandler extends periodHandler
         this.lastCreatedPeriod = p;
         
         p.periodHandler = this;
+        
+        if(this.superPeriod != null) this.otherPlayerId = this.superPeriod.otherPlayerId;
         
         return p
         
