@@ -1,37 +1,16 @@
-class statusFx
-{
-    constructor(immuneSysOwner,type,duration,special){
-        
-        this.immuneSysOwner = immuneSysOwner;
-        this.duration = duration;
-        this.type = type;
-        this.special = special;
-    }
-    
-    Cure(){
-        
-        this.immuneSysOwner.statusFxs = this.immuneSysOwner.statusFxs.filter(c => c!= this);
-    }
-    
-    CureIfDurationEquals(duration){
-        
-        if(this.duration = duration) this.Cure();
-    }
-}
-
-export class immuneSys
+export class cardFxHandler
 {
     constructor(cardOwner){
         
         this.cardOwner = cardOwner;
-        this.statusFxs = [];
+        this.cardFxs = [];
     }
     
     Stun(duration,special){
 
         const sfx = new statusFx(this,"stun",duration,special);
         
-        this.statusFxs.push(sfx);
+        this.cardFxs.push(sfx);
         
         if(duration == "phase" || duration == "scenario"){
             
@@ -76,7 +55,7 @@ export class immuneSys
         
         let match = false
         
-        for(const s of this.statusFxs){
+        for(const s of this.cardFxs){
             
             if(s.special == special) match = true;
         }
@@ -89,7 +68,7 @@ export class immuneSys
         
         let match = false;
         
-        for(const s of this.statusFxs){
+        for(const s of this.cardFxs){
             
             if(s.type == type && s.special == special) match = true
             
@@ -104,12 +83,34 @@ export class immuneSys
         
         let match = false
         
-        for(const s of this.statusFxs){
+        for(const s of this.cardFxs){
             
             if(s.type == type) match = true;
         }
         
         if(match) return true
         return false
+    }
+}
+
+class cardFx
+{
+    constructor(handler,type,duration,special,value=0){
+        
+        this.cardFxHandler = handler;
+        this.duration = duration;
+        this.type = type;
+        this.special = special;
+        this.value = value;
+    }
+    
+    Remove(){
+        
+        this.cardFxHandler.cardFxs = this.cardFxHandler.cardFxs.filter(c => c!= this);
+    }
+    
+    RemoveIfDurationEquals(duration){
+        
+        if(this.duration == duration) this.Remove();
     }
 }

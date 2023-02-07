@@ -15,6 +15,7 @@ export class cardHandler
         
         this.cards = [];
         this.cardsArchive = [];
+        this.cardCount = 0;
     }
     
     ModifyCard(){
@@ -47,6 +48,8 @@ export class cardHandler
         
         c.cardHandler = this;
         
+        c.uniqueCardId
+        
         this.cards.push(c);
         
         return c
@@ -62,24 +65,5 @@ export class cardHandler
     EmptyCards(){
         
         this.cards = [];
-    }
-    
-    ArchiveCard(card,archiveEffectName){
-        
-        card.archiveEffect = new archiveEffect(archiveEffect);
-        
-        this.cardsArchive.push(card);
-        
-        this.cards.filter(c => c!= card);
-        
-        // what about cards with different owners?
-    }
-    
-    RestoreCard(cardName,archiveEffectName){
-        
-        for(const ac of this.cardsArchive){
-            
-            
-        }
     }
 }

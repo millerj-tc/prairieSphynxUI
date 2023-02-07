@@ -1,10 +1,13 @@
-    export class card
+import class {cardFxHandler} from "./cardFxHandler.js";
+
+export class card
 {
     constructor(protoLevel){
         
         this.protoLevel = protoLevel; //values are "master"(highest), "collection", "scenario", "phase", "stage"
         this.cardHandler;
-        this.readyToModify = "false"; //usable in the game
+        this.cardFxHandler = new cardFxHandler(this);
+
     }
     
     GetParentAtProtoLevel(protoLevel){
@@ -29,15 +32,16 @@
         return parent
     }
     
-    CreateCopyToModify(){
+    GetProp(prop){
         
-        const mc = new card();
+        for(const fx of this.cardFxHandler.cardFxs){
+            
+            if(fx.type == prop) return fx.special;
+        }
         
-        this.cardHandler
-    }
-    
-    SetProp(prop,value){
+        console.error("how would this handle stacking effects?");
         
-        this[prop] = value;
+        return this[prop] 
     }
 }
+
