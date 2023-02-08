@@ -11,6 +11,8 @@ export class cardFxHandler
         const sfx = new cardFx(type,duration);
         
         this.cardFxs.push(sfx);
+        
+        return sfx
     }
 }
     

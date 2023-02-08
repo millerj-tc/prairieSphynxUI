@@ -10,6 +10,17 @@ export function LoadCardArrIntoObjCardHandler(cardArr,obj,owner=null){
     }
 }
 
-export function 
+export function StunCard(card,duration){
+    
+    const runId = window.gameHandler.scenarioHandler.preppedScenario.runId;
+    
+    console.error("scenario handler needs runcount -- use Date.now?");
+    
+    const sfx = card.cardFxHandler.ApplyFx("stun",duration);
+    
+    sfx.gamestateMarker = new gagGamestateMarker(runId,)
+    
+    // have an object that runs through an array of functions [func,args] with .apply you can get name with .toString and id# with position in array. Also gives you an easy way to check what is "after" or "before" any step in a scenario;
+}
     
     
