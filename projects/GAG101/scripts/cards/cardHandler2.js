@@ -1,33 +1,14 @@
 import {card} from "./card.js";
 
-class archiveEffect
-{
-    constructor(name){
-        
-        this.name = name;
-        
-    }
-}
 
 export class cardHandler
 {
     constructor(){
         
         this.cards = [];
-        this.cardsArchive = [];
         this.cardCount = 0;
     }
     
-    ModifyCard(){
-        
-        const c = Object.create(card);
-        
-        c.protoLevel = this.protoLevel;
-        
-        this.cards.push(c);
-        
-        return c
-    }
     
     MakeCardFromJSON(jsonString){
         
