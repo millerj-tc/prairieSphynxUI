@@ -3,28 +3,53 @@
 
 export class scenarioProcessor
 {
-    constructor(){
+    constructor(scenarioName){
+        
+        this.scenarioName = scenarioName;
+        this.phases = [];
+        this.runProcessors = [];
+        this.currentRunProcessor;
+    }
+    
+    AddPhase(phaseName,func,pause){
+        
+        const p = new scenarioPhase(phaseName,func,pause);
+        
+        this.phases.push(p);
+    }
+    
+    BeginProcess(runId){
+        
+        const rp = new scenarioRunProcessor(runId);
+        
+        rp.phases = [...this.phases];
+        
+        this.runProcessors.push(rp);
+        
+        this.currentRunProcessor = rp;
+        
+        this.rp.RunNext();
+    }
+}
+
+class scenarioRunProcessor
+{
+    constructor(runId){
         
         this.phases = [];
-        this.currentPhaseInd = 0;
-    }
-    
-    AddPhase(){
-        
-        
-    }
-    
-    BeginProcess(){
-        
         this.currentPhaseInd = -1;
-        this.RunNext();
+        this.runId;
     }
     
     RunNext(){
         
         this.currentPhaseInd++;
         
-        this.phases[this.currentPhaseInd].Run();
+        const phase = this.phases[this.currentPhaseInd];
+        
+        phase.scenarioRunProcessor = this;
+        
+        phase.Run();
     }
 }
 
@@ -32,12 +57,13 @@ class scenarioPhase
 {
     constructor(phaseName,func,pause = false){
         
-        this.scenarioProcessor;
+        this.scenarioRunProcessor;
         this.phaseInd;
         this.func = func;
+        this.pause = pause;
     }
     
-    Run(){
+    Run(){ //can set pause within phase with by manipulating this.pause
         
         this.func();
         

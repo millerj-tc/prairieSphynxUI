@@ -62,6 +62,8 @@ class cardProp
     ChangeValueTo(value){
         
         this.values.push(value);
+        
+        console.error("call a gag function that adds the scenario id/run data to this as a prop")
     }
 }
 
