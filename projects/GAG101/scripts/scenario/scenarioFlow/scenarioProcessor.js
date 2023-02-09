@@ -20,7 +20,7 @@ export class scenarioProcessor
     
     BeginProcess(runId){
         
-        const rp = new scenarioRunProcessor(runId);
+        const rp = new scenarioProcessorRun(runId);
         
         rp.phases = [...this.phases];
         
@@ -28,11 +28,11 @@ export class scenarioProcessor
         
         this.currentRunProcessor = rp;
         
-        this.rp.RunNext();
+        this.rp.RunNextPhase();
     }
 }
 
-class scenarioRunProcessor
+class scenarioProcessorRun
 {
     constructor(runId){
         
@@ -41,13 +41,13 @@ class scenarioRunProcessor
         this.runId;
     }
     
-    RunNext(){
+    RunNextPhase(){
         
         this.currentPhaseInd++;
         
         const phase = this.phases[this.currentPhaseInd];
         
-        phase.scenarioRunProcessor = this;
+        phase.scenarioProcessorRun = this;
         
         phase.Run();
     }
@@ -57,7 +57,7 @@ class scenarioPhase
 {
     constructor(phaseName,func,pause = false){
         
-        this.scenarioRunProcessor;
+        this.scenarioProcessorRun;
         this.phaseInd;
         this.func = func;
         this.pause = pause;
@@ -67,6 +67,6 @@ class scenarioPhase
         
         this.func();
         
-        if(!pause) this.scenarioProcessor.RunNext();
+        if(!pause) this.scenarioProcessorRun.RunNextPhase();
     }
 }

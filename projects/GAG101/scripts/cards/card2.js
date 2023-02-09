@@ -54,16 +54,27 @@ class cardProp
     constructor(key,value,phaseId){
         
         this.key = key;
-        this.values = [value];
-        this.phaseId = phaseId; //when did this prop change?
-        this.changeTime = Date.now();
+        const initialValue = new cardPropValue(value,phaseId);
+        this.values = [initialValue];
     }
     
-    ChangeValueTo(value){
+    ChangeValueTo(value,phaseId){
         
-        this.values.push(value);
+        const cpv = new cardPropValue(value,phaseId);
+        
+        this.values.push(cpv);
         
         console.error("call a gag function that adds the scenario id/run data to this as a prop")
+    }
+}
+
+class cardPropValue
+{
+    constructor(value,phaseId){
+        
+        this.value = value;
+        this.phaseId = phaseId;
+        this.changeTime = Date.now();
     }
 }
 

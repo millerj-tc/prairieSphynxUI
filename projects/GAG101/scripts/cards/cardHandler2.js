@@ -24,7 +24,7 @@ export class cardHandler
             
             const keyValue = jsonObj[keyName];
             
-            c.SetProp(keyName,keyValue);
+            c.AddProp(keyName,keyValue);
         }
         
         c.cardHandler = this;
