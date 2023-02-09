@@ -7,6 +7,7 @@ export class card
         this.protoLevel = protoLevel; //values are "master"(highest), "collection", "scenario", "phase", "stage"
         this.cardHandler;
         this.cardFxHandler = new cardFxHandler(this);
+        this.cardProps = [];
 
     }
     
@@ -32,16 +33,35 @@ export class card
         return parent
     }
     
+    AddProp(key,value){
+        
+        const p = new cardProp(key,value,id="initial");
+        
+        this.cardProps.push(p);
+    }
+    
     GetProp(prop){
         
-        for(const fx of this.cardFxHandler.cardFxs){
+        for(const p of this.props){
             
-            if(fx.type == prop) return fx.special;
+            if(p.key == prop) return p.values.slice(-1);
         }
+    }
+}
+    
+class cardProp
+{
+    constructor(key,value,phaseId){
         
-        console.error("how would this handle stacking effects?");
+        this.key = key;
+        this.values = [value];
+        this.phaseId = phaseId; //when did this prop change?
+        this.changeTime = Date.now();
+    }
+    
+    ChangeValueTo(value){
         
-        return this[prop] 
+        this.values.push(value);
     }
 }
 
