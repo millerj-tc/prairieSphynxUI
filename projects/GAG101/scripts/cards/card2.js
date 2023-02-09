@@ -45,6 +45,9 @@ export class card
         for(const p of this.props){
             
             if(p.key == prop) return p.values.slice(-1);
+            
+            
+            console.error("still not sure how to do modifications that wear off -- what about stacking, etc.? How do you know which to remove first?");
         }
     }
 }

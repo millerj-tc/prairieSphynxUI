@@ -28,9 +28,7 @@ export class cardHandler
         }
         
         c.cardHandler = this;
-        
-        c.uniqueCardId
-        
+                
         this.cards.push(c);
         
         return c
