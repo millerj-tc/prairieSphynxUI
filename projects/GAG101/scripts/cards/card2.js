@@ -31,6 +31,11 @@ export class card
         return parent
     }
     
+    GetPronouns(){
+        
+        return this.pronouns
+    }
+    
     AddProp(key,value){
         
         const p = new cardProp(key,value,"initial");

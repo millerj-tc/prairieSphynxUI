@@ -20,9 +20,11 @@ export function onload(){
     
     gh.scenarioHandler.SetCurrentScenarioByName("Time Koalas");
     
+    koalas.AddPhase("Subsequent Reset", SubsequentRunReset);
+
+    
     koalas.AddPhase("DupeConk Loser Dupes", DupeConkLosers);
     
-    koalas.AddPhase("Subsequent Reset", SubsequentRunReset);
     
     // assess dupe prefs: deactiveate losing dupes at phase & scenario level
     
