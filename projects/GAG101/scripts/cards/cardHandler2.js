@@ -24,13 +24,11 @@ export class cardHandler
             
             const keyValue = jsonObj[keyName];
             
-            c.SetProp(keyName,keyValue);
+            c.AddProp(keyName,keyValue);
         }
         
         c.cardHandler = this;
-        
-        c.uniqueCardId
-        
+                
         this.cards.push(c);
         
         return c
