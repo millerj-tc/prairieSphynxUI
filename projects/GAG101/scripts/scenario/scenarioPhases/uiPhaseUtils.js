@@ -20,21 +20,35 @@ export function AddDebugInfoToCards(cardArr){
     }
 }
 
-export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M"){
+export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M",noTeam = false){
     
     const returnArr = [];
     
     for(const n of nounArr){
-        
-        console.warn("careful where you put other non-char nouns or this will break");
-        
-        for(const c of charData){
-            
-            if(n.name == c.name){
                 
-                returnArr.push(`$$IMAGE:${c["image" + size]}IMAGE$$ ${c.name}`);
-            }
-        }
+//        for(const c of charArr){
+            
+//            if(n.name == c.name){
+                
+                let string = `$$IMAGE:${n["image" + size]}IMAGE$$`;
+        
+                if(noTeam){
+                    
+                    returnArr.push(string + " " + n.name);
+                    continue
+                }
+                
+                console.log(string);
+                
+                if(n.owner == window.gameHandler.playerId) string = `$$IMAGE:images/chars/leftTeamBar-M.pngIMAGE$$` + string + " " + n.name;
+                
+                else string = string + `$$IMAGE:images/chars/rightTeamBar-M.pngIMAGE$$` + " " + n.name
+                
+                console.log(string);
+                
+                returnArr.push(string);
+//            }
+//        }
     }
     
     return returnArr
