@@ -4,7 +4,7 @@ export function SubsequentRunReset(){
     
     if(scenario.runProcessors.length > 1){
         
-        gh.narrOutputArtist.ClearAllChildren();
+        window.gameHandler.narrOutputArtist.ClearAllChildren();
 
     }
 }

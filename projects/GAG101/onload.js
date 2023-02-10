@@ -22,6 +22,8 @@ export function onload(){
     
     koalas.AddPhase("DupeConk Loser Dupes", DupeConkLosers);
     
+    koalas.AddPhase("Subsequent Reset", SubsequentRunReset);
+    
     // assess dupe prefs: deactiveate losing dupes at phase & scenario level
     
     // dupe resolution output
