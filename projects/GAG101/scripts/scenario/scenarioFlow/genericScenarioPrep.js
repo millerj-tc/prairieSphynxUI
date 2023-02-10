@@ -1,9 +1,9 @@
 import {ShuffleArray} from "/utils/mathAndLogicUtils/miscUtils.js";
-import {UpdateCardSlotArtist,DisplayUnselectedCardsAsChoices} from "./uiPhaseUtils.js";
+import {UpdateCardSlotArtist,DisplayUnselectedCardsAsChoices} from "../scenarioPhases/uiPhaseUtils.js";
 import {CollapseButtonOnClick} from "/utils/uiTools/artists/trayArtistTrayMovement.js";
 
 
-export function GenericScenarioPrepWithAI(){
+export function GenericScenarioPrepWithAI(){ //only run this once when the scenario starts, not as a phase
     
     const gh = window.gameHandler;
 
@@ -132,8 +132,6 @@ function _AttachOnClickCardChoiceToDOMs(){
     const cardHandler = gh.collectionCardHandler;
 
     const scenario = gh.scenarioHandler.GetCurrentScenario();
-    
-    const phase = scenario.GetCurrentPhase();
         
     for(const tool of scenario.uiToolsHandler.tools){
 
@@ -171,7 +169,7 @@ function _AddScenarioRunButton(){
 
     but.onclick = function(){
 
-        scenario.ContinueProcess();
+        scenario.BeginProcess();
         
         CollapseButtonOnClick(gh.cardChoiceTrayArtist);
 
