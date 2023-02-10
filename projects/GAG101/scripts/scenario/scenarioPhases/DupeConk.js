@@ -4,6 +4,8 @@ import * as cardInfoPhaseUtils from "./cardInfoPhaseUtils.js";
 
 export function DupeConkLosers(){
     
+    console.warn("DupeConking!");
+    
     const cardHandler = window.gameHandler.collectionCardHandler;
     
     let dupeArr = _GetDupeCards();
@@ -13,10 +15,6 @@ export function DupeConkLosers(){
     const pairArrArr = _GetPairArrs(dupeArr);
     
     for(const pair of pairArrArr){
-        
-        console.log(pair[0]);
-        
-        console.log(pair[1]);
         
         const pair0Rating = _GetTeamRatingForCharInScenarioForStep(pair[0],this);
         
@@ -81,15 +79,11 @@ function _DupeContestOutput(contestLoserArr){
     
     let doubleDupeConkers = contestLoserArr.filter(c => c.GetProp("doubleDupeConk") ==1);
     
-    doubleDupeConkers = doubleDupeConkers.sort();
+    doubleDupeConkers = doubleDupeConkers.sort((a, b) => a.name - b.name);
     
     doubleDupeConkers = doubleDupeConkers.slice(doubleDupeConkers.length/2); // remove duplicates from doubleDupeConkers
     
     const singleDupeConkers = contestLoserArr.filter(c => (c.GetProp("dupeConk") == 1 && c.GetProp("doubleDupeConk") != 1));
-    
-    console.log(doubleDupeConkers);
-    
-    console.log(singleDupeConkers);
     
     ///
     
@@ -99,7 +93,7 @@ function _DupeContestOutput(contestLoserArr){
     
     neitherDOM.append(doubleDupeConkersSpan);
     
-    const neitherUnpluralizedString = ` can't decide who to side with! [p[[they]/they]p] are sitting this one out.`;
+    const neitherUnpluralizedString = ` can't decide who to side with! [p[[they]/they]p] [p[is/are]p] sitting this one out.`;
     
     let neitherPluralizedString = utilityUIArtist.ReplaceWordsBasedOnPluralSubjects(doubleDupeConkers,neitherUnpluralizedString);
     
@@ -176,8 +170,6 @@ function _GetDupeCards(){
     const cardHandler = window.gameHandler.collectionCardHandler;
     
     const returnArr = [];
-    
-    console.log(cardHandler.GetCards()); 
     
     for(const c of cardHandler.GetCards()){
         
