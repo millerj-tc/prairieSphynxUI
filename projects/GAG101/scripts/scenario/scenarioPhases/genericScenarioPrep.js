@@ -1,5 +1,7 @@
 import {ShuffleArray} from "/utils/mathAndLogicUtils/miscUtils.js";
 import {UpdateCardSlotArtist,DisplayUnselectedCardsAsChoices} from "./uiPhaseUtils.js";
+import {CollapseButtonOnClick} from "/utils/uiTools/artists/trayArtistTrayMovement.js";
+
 
 export function GenericScenarioPrepWithAI(){
     
@@ -169,9 +171,13 @@ function _AddScenarioRunButton(){
 
     but.onclick = function(){
 
-        scenario.ContinueProcess()    
+        scenario.ContinueProcess();
+        
+        CollapseButtonOnClick(gh.cardChoiceTrayArtist);
+
     }
 
-    window.gameHandler.cardChoiceTrayArtist.AppendElementWithinDOM(but);
+    gh.cardChoiceTrayArtist.AppendElementWithinDOM(but);
+    
 
 }

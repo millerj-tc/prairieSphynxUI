@@ -67,6 +67,8 @@ class scenarioProcessorRun
         
         this.currentPhaseInd++;
         
+        if(this.currentPhaseInd >= this.phases.length) return
+        
         const phase = this.phases[this.currentPhaseInd];
         
         phase.scenarioProcessorRun = this;

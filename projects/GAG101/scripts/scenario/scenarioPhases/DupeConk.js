@@ -45,10 +45,6 @@ export function DupeConkLosers(){
     
     for(const c of cardHandler.GetCards()){
         
-        console.log(c.name);
-        console.log(c.GetProp("dupeConk"));
-        console.log(c.cardProps);
-        
     }
     
     _DupeContestOutput(dupeConkedCards);
@@ -89,7 +85,7 @@ function _DupeContestOutput(contestLoserArr){
     
     doubleDupeConkers = doubleDupeConkers.slice(doubleDupeConkers.length/2); // remove duplicates from doubleDupeConkers
     
-    const singleDupeConkers = contestLoserArr.filter(c => !c.immuneSys.IsDoubleDupeConked());
+    const singleDupeConkers = contestLoserArr.filter(c => (c.GetProp("dupeConk") == 1 && c.GetProp("doubleDupeConk") != 1));
     
     console.log(doubleDupeConkers);
     
@@ -157,7 +153,7 @@ function _GetTeamRatingForCharInScenarioForStep(char){
     
     let teamRating = 0;
     
-    let teammates = cardInfoPhaseUtils.GetCardTeammates(char);
+    let teammates = cardInfoPhaseUtils.GetCardSelectedTeammates(char);
     
     teammates = teammates.filter(c => c.dataType == "char");
     
@@ -165,19 +161,13 @@ function _GetTeamRatingForCharInScenarioForStep(char){
     
     for(const cha of teammates){
         
-        teamRating += cha.GetProp("charisma");
+        teamRating += cha.GetProp("charisma","number");
         
-        console.log(cha.GetProp("charisma"));
-        
-        console.log(cha.GetProp("cunning"));
-        
-        let cunningPenalty = Math.abs(cha.GetProp("cunning") - char.GetProp("cunning"));
+        let cunningPenalty = Math.abs(cha.GetProp("cunning","number") - char.GetProp("cunning","number"));
         
         teamRating += cunningPenalty;
     }
-    
-    console.log(teamRating);
-    
+        
     return teamRating;
 }
 

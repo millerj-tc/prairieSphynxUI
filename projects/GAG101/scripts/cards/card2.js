@@ -38,12 +38,14 @@ export class card
         this.cardProps.push(p);
     }
     
-    GetProp(prop){
+    GetProp(prop,typ = "number"){
         
         for(const p of this.cardProps){
             
             if(p.key == prop) {
-                return p.values.slice(-1)[0].value;
+                
+                if(typ == "number") return Number(p.values.slice(-1)[0].value)
+                if(typ == "string") return String(p.values.slice(-1)[0].value)
             }
             
         }
