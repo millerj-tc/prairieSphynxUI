@@ -1,5 +1,10 @@
 export function GenericScenarioPrep(scenario){
     
+    const gh = window.gameHandler;
+    
+    gh.narrOutputArtist.ClearAllChildren();
+
+    
     scenario.cardHandler.EmptyCards();
 
     const activeCollectionCards = window.gameHandler.collectionCardHandler.GetCards("active");

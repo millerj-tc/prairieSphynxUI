@@ -46,37 +46,33 @@ export class card
             
             if(p.key == prop) return p.values.slice(-1);
             
-            
-            console.error("still not sure how to do modifications that wear off -- what about stacking, etc.? How do you know which to remove first?");
         }
     }
 }
     
 class cardProp
 {
-    constructor(key,value,phaseId){
+    constructor(key,value,phaseName){
         
         this.key = key;
-        const initialValue = new cardPropValue(value,phaseId);
+        const initialValue = new cardPropValue(value,phaseName);
         this.values = [initialValue];
     }
     
-    ChangeValueTo(value,phaseId){
+    ChangeValueTo(value,phaseName){
         
-        const cpv = new cardPropValue(value,phaseId);
+        const cpv = new cardPropValue(value,phaseName);
         
         this.values.push(cpv);
-        
-        console.error("call a gag function that adds the scenario id/run data to this as a prop")
     }
 }
 
-class cardPropValue
+class cardPropValue //for values that fall off, decrement a prop whose key is the status effect, then if the value is 0, reverse the operation (hard code at the step where it falls off)
 {
-    constructor(value,phaseId){
+    constructor(value,phaseName){
         
         this.value = value;
-        this.phaseId = phaseId;
+        this.phaseName = phaseName;
         this.changeTime = Date.now();
     }
 }
