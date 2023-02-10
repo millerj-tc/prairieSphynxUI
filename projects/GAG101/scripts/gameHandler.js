@@ -1,9 +1,8 @@
 import {uiToolsHandler} from "/utils/uiTools/uiToolsHandler.js";
 import {uiInputHandler} from "/utils/uiTools/uiInputHandler.js";
-import {gagCardHandler} from "./cards/gagCards.js";
-import {gag101ScenarioHandler} from "./periods/gagScenarioHandler.js";
+import {cardHandler} from "./cards/cardHandler2.js";
 import {cacheHandler} from "/utils/cacheHandler/cacheHandler.js";
-
+import {scenarioProcessorHandler} from "./scenario/scenarioFlow/scenarioProcessorHandler.js";
 
 export class gameHandler
 {
@@ -31,14 +30,13 @@ export class gameHandler
         
         this.uiToolsHandler.InitializeAllTools();
         
-        this.masterCardHandler = new gagCardHandler("master");
+        this.masterCardHandler = new cardHandler("master");
         
-        this.collectionCardHandler = new gagCardHandler("collection");
+        this.collectionCardHandler = new cardHandler("collection");
         
         console.warn("load cards into master and collection, but only if it's the first time playing");
-        //(Cache handler)
         
-        this.scenarioHandler = new gag101ScenarioHandler("scenario");
+        this.scenarioHandler = new scenarioProcessorHandler();
         
         this.cacheHandler = new cacheHandler();
         

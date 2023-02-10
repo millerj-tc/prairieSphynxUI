@@ -1,25 +1,27 @@
-import {AddGag101Scenario,AddGag101Phase, AddGag101Step, AddGag101StepRunFunction} from "./scripts/periods/periodDesignFunctions.js";
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
-import {ScenarioFlow} from "./scripts/scenario/scenarioFlow/scenarioFlow.js";
-import * as gagStepRunFunctions from "./scripts/periods/gagStepRun/gagStepRunFunctions.js";
-import {DupeConkLosers} from "./scripts/periods/gagStepRun/gagStepDupeConk.js";
+import {DupeConkLosers,RemoveDupeConkStatuses} from "./scripts/scenario/scenarioPhases/DupeConk.js";
+import {GenericScenarioPrepWithAI} from "./scripts/scenario/scenarioPhases/genericScenarioPrep.js";
+import * as cardInfoPhaseUtils from "./scripts/scenario/scenarioPhases/cardInfoPhaseUtils.js";
+import * as uiPhaseUtils from "./scripts/scenario/scenarioPhases/uiPhaseUtils.js";
+import {scenarioProcessor} from "./scripts/scenario/scenarioFlow/scenarioProcessor.js";
+
 
 export function onload(){
     
     window.gameHandler = new gameHandler();
     
-    const koalas = AddGag101Scenario("Time Koala Rescue");
+    const gh = window.gameHandler;
     
-    AddGag101Phase("Resolve Dupes");
+    _LoadCollectionCards();
     
-    AddGag101Step("Get All Phase Cards");
+    const koalas = gh.scenarioHandler.AddScenario("Time Koalas");
     
-    AddGag101StepRunFunction(gagStepRunFunctions.GetAndActivateAllPhaseCards);  
+    gh.scenarioHandler.SetCurrentScenarioByName("Time Koalas");
     
-    AddGag101Step("Dupe Conk The Losers");
+    koalas.AddPhase("Generic Scenario Prep", GenericScenarioPrepWithAI, 1);
     
-    AddGag101StepRunFunction(DupeConkLosers);
+    koalas.AddPhase("DupeConk Loser Dupes", DupeConkLosers);
     
     // assess dupe prefs: deactiveate losing dupes at phase & scenario level
     
@@ -29,11 +31,13 @@ export function onload(){
     
     // find highest speed + str
     
-    _LoadCollectionCards();
+    koalas.AddPhase("Remove DupeConk Statuses", RemoveDupeConkStatuses)
     
     //window.gameHandler.scenarioHandler.GotoNextPeriod();
+    
+    console.log(gh.scenarioHandler);
         
-    koalas.PrepScenario();
+    gh.scenarioHandler.StartCurrentScenario();
 
 }
 
@@ -49,7 +53,13 @@ function _LoadCollectionCards(){
         
         const card = ghCCH.MakeCardFromJSON(cString);
         
+        if(card.unlockedForPlayer == "false") continue
+        
+        const card2 = ghCCH.MakeCardFromJSON(cString);
+        
         card.owner = window.gameHandler.playerId;
+        
+        card2.owner = "AI";
         
     }
 }

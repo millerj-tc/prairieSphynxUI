@@ -1,13 +1,11 @@
-import class {cardFxHandler} from "./cardFxHandler.js";
-
 export class card
 {
     constructor(protoLevel){
         
         this.protoLevel = protoLevel; //values are "master"(highest), "collection", "scenario", "phase", "stage"
         this.cardHandler;
-        this.cardFxHandler = new cardFxHandler(this);
         this.cardProps = [];
+        this.selectedForTeam = "false";
 
     }
     
@@ -35,18 +33,35 @@ export class card
     
     AddProp(key,value){
         
-        const p = new cardProp(key,value,id="initial");
+        const p = new cardProp(key,value,"initial");
         
         this.cardProps.push(p);
     }
     
     GetProp(prop){
         
-        for(const p of this.props){
+        for(const p of this.cardProps){
             
-            if(p.key == prop) return p.values.slice(-1);
+            if(p.key == prop) {
+                return p.values.slice(-1)[0].value;
+            }
             
         }
+    }
+    
+    SetProp(key,value,phaseName){
+        
+        let match = false;
+        
+        for(const p of this.cardProps){
+            
+            if(p.key == key) {
+                p.ChangeValueTo(value,phaseName);
+                match = true;
+            }
+        }
+        
+        if(!match) this.AddProp(key,value);
     }
 }
     

@@ -1,6 +1,8 @@
 // scenarioProcessor.AddPhase("dupeConk",DupeConk);
 // phaseName/function
 
+import {uiToolsHandler} from "/utils/uiTools/uiToolsHandler.js";
+
 export class scenarioProcessor
 {
     constructor(scenarioName){
@@ -9,13 +11,21 @@ export class scenarioProcessor
         this.phases = [];
         this.runProcessors = [];
         this.currentRunProcessor;
+        this.playerCardSlots = 3;
+        this.otherPlayerCardSlots = 3;
+        this.uiToolsHandler = new uiToolsHandler();
+
     }
     
     AddPhase(phaseName,func,pause){
         
         const p = new scenarioPhase(phaseName,func,pause);
         
+        p.phaseInd = this.phases.length;
+        
         this.phases.push(p);
+        
+        return p
     }
     
     BeginProcess(runId){
@@ -28,7 +38,19 @@ export class scenarioProcessor
         
         this.currentRunProcessor = rp;
         
-        this.rp.RunNextPhase();
+        rp.RunNextPhase();
+    }
+    
+    ContinueProcess(){
+        
+        this.currentRunProcessor.RunNextPhase();
+    }
+    
+    GetCurrentPhase(){
+        
+        const rp = this.currentRunProcessor;
+        
+        return rp.phases[rp.currentPhaseInd];
     }
 }
 
@@ -58,15 +80,21 @@ class scenarioPhase
     constructor(phaseName,func,pause = false){
         
         this.scenarioProcessorRun;
+        this.phaseName = phaseName;
         this.phaseInd;
         this.func = func;
         this.pause = pause;
+    }
+    
+    SetFunc(func){
+        
+        this.func = func;
     }
     
     Run(){ //can set pause within phase with by manipulating this.pause
         
         this.func();
         
-        if(!pause) this.scenarioProcessorRun.RunNextPhase();
+        if(!this.pause) this.scenarioProcessorRun.RunNextPhase();
     }
 }

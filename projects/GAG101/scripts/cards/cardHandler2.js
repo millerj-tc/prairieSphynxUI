@@ -1,4 +1,4 @@
-import {card} from "./card.js";
+import {card} from "./card2.js";
 
 
 export class cardHandler
@@ -10,7 +10,7 @@ export class cardHandler
     }
     
     
-    MakeCardFromJSON(jsonString){
+    MakeCardFromJSON(jsonString,owner){
         
         const c = new card(this.protoLevel);
         
@@ -24,8 +24,17 @@ export class cardHandler
             
             const keyValue = jsonObj[keyName];
             
-            c.AddProp(keyName,keyValue);
+            if(keyName == "power" || keyName == "toughness" || keyName == "speed" || keyName == "cunning" || keyName == "charisma" || keyName == "cume"){
+            
+                c.AddProp(keyName,keyValue);
+            }
+            else{
+                
+                c[keyName] = keyValue;
+            }
         }
+        
+        c.owner = owner;
         
         c.cardHandler = this;
                 

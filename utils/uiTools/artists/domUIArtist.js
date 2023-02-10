@@ -120,6 +120,11 @@ export class domUIArtist
         
     }
     
+    GetStyleProp(prop){
+        
+        return this.authorizedDOMs[0].style[prop];
+    }
+    
 
     _ConvertSingleDOMtoArray(dom){
         
