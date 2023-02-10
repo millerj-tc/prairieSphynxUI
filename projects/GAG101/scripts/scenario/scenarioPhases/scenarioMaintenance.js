@@ -7,4 +7,6 @@ export function SubsequentRunReset(){
         window.gameHandler.narrOutputArtist.ClearAllChildren();
 
     }
+    
+    console.warn("CLEAR");
 }
