@@ -25,6 +25,10 @@ export class cardHandler
             const keyValue = jsonObj[keyName];
             
             if(keyName == "power" || keyName == "toughness" || keyName == "speed" || keyName == "cunning" || keyName == "charisma" || keyName == "cume"){
+                
+                
+                console.log(typeof keyValue);
+                console.log(keyValue);
             
                 c.AddProp(keyName,keyValue);
             }

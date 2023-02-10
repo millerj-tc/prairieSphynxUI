@@ -106,7 +106,7 @@ function _RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.playerId
 
     const scenario = gh.scenarioHandler.GetCurrentScenario();
     
-    const playerCards = cardHandler.GetCards().filter(c => (c.owner == id && c.unlockedForPlayer == "true"));
+    const playerCards = cardHandler.GetCards().filter(c => (c.owner == id && c.unlockedForPlayer == true));
     
     console.log(playerCards);
 
@@ -120,7 +120,7 @@ function _RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.playerId
 
         UpdateCardSlotArtist(artist,card);
 
-        card.selectedForTeam = "true"; //must be string bc of JSON ification
+        card.selectedForTeam = true;
     }
 }
 
@@ -149,7 +149,7 @@ function _AttachOnClickCardChoiceToDOMs(){
 
                 scenario.lastClickedCardSlotArtist = tool;
                 
-                associatedCard.selectedForTeam = "false";
+                associatedCard.selectedForTeam = false;
             }
         }
     }  

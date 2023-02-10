@@ -56,7 +56,7 @@ function _LoadCollectionCards(){
         
         const card = ghCCH.MakeCardFromJSON(cString);
         
-        if(card.unlockedForPlayer == "false") continue
+        if(card.unlockedForPlayer == false) continue
         
         const card2 = ghCCH.MakeCardFromJSON(cString);
         

@@ -6,8 +6,8 @@ export function GetCardSelectedTeammates(card,enemies = "false"){
     
     for(const c of cardHandler.GetCards()){
         
-        if(c.owner == card.owner && c.name != card.name && c.selectedForTeam == "true" && !enemies) returnArr.push(c);
-        else if(c.owner != card.owner && c.name != card.name && c.selectedForTeam == "true" && enemies) returnArr.push(c);
+        if(c.owner == card.owner && c.name != card.name && c.selectedForTeam == true && !enemies) returnArr.push(c);
+        else if(c.owner != card.owner && c.name != card.name && c.selectedForTeam == true && enemies) returnArr.push(c);
     }
     
     return returnArr

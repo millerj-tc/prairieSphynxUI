@@ -183,7 +183,7 @@ function _GetDupeCards(){
         
         for(const c2 of cardHandler.GetCards()){
             
-            if(c.name == c2.name && c.owner != c2.owner && c.selectedForTeam == "true" && c2.selectedForTeam == "true"){
+            if(c.name == c2.name && c.owner != c2.owner && c.selectedForTeam == true && c2.selectedForTeam == true){
                 
                 returnArr.push(c);
             }

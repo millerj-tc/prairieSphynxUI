@@ -5,7 +5,7 @@ export class card
         this.protoLevel = protoLevel; //values are "master"(highest), "collection", "scenario", "phase", "stage"
         this.cardHandler;
         this.cardProps = [];
-        this.selectedForTeam = "false";
+        this.selectedForTeam = false;
 
     }
     
@@ -43,14 +43,13 @@ export class card
         this.cardProps.push(p);
     }
     
-    GetProp(prop,typ = "number"){
+    GetProp(prop){
         
         for(const p of this.cardProps){
             
             if(p.key == prop) {
                 
-                if(typ == "number") return Number(p.values.slice(-1)[0].value)
-                if(typ == "string") return String(p.values.slice(-1)[0].value)
+                return p.values.slice(-1)[0].value
             }
             
         }
@@ -93,7 +92,12 @@ class cardPropValue //for values that fall off, decrement a prop whose key is th
 {
     constructor(value,phaseName){
         
-        this.value = value;
+//        if(typeof value == "number") this.value = Number(value)
+//        else if(typeof value == "boolean") this.value = Boolean(value)
+//        else this.value = String(value)
+        
+        this.value = value
+        
         this.phaseName = phaseName;
         this.changeTime = Date.now();
     }

@@ -54,7 +54,7 @@ export function DisplayUnselectedCardsAsChoices(owner){
     
     console.log(scenarioCards);
     
-    const ownedAndUnlockedAndUnchosenCards = scenarioCards.filter(c => (c.owner == owner && c.unlockedForPlayer == "true" && c.selectedForTeam == "false"));
+    const ownedAndUnlockedAndUnchosenCards = scenarioCards.filter(c => (c.owner == owner && c.unlockedForPlayer == true && c.selectedForTeam == false));
     
     for(const c of ownedAndUnlockedAndUnchosenCards){
         
@@ -92,7 +92,7 @@ function _OnClickCardSelect(card){
     
     UpdateCardSlotArtist(artist,card);
     
-    card.selectedForTeam = "true";
+    card.selectedForTeam = true;
     
     
 }
@@ -100,7 +100,7 @@ function _OnClickCardSelect(card){
 export function UpdateCardSlotArtist(artist,card){
         
     if(artist.associatedCard != null){
-        artist.associatedCard.selectedForTeam = "false";
+        artist.associatedCard.selectedForTeam = false;
         artist.servantArtist.SetDOMInnerTextTo(card.name);
     }
 
