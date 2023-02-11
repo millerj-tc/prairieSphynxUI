@@ -14,6 +14,6 @@ export const charData = [
     
     {name: "Pluto", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 9, toughness: 7, speed: 6, cunning: 3, charisma: 3, cume: 28, imageXL: 'images/chars/pluto-XL.png',imageL: 'images/chars/pluto-L.png', imageM: 'images/chars/pluto-M.png', imageS: 'images/chars/pluto-S.png'},
     
-    {name: "Yetelu", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 7, toughness: 9, speed: 3, cunning: 3, charisma: 1, cume: error, imageXL: 'images/chars/treeKnight.png',imageL: 'images/chars/treeKnight.png', imageM: 'images/chars/treeKnight.png', imageS: 'images/chars/treeKnight.png'}
+    {name: "Yetelu", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 8, toughness: 9, speed: 2, cunning: 5, charisma: 1, cume: 25, imageXL: 'images/chars/treeKnight.png',imageL: 'images/chars/treeKnight.png', imageM: 'images/chars/treeKnight.png', imageS: 'images/chars/treeKnight.png'}
         
 ]

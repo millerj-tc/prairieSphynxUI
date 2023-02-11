@@ -86,6 +86,12 @@ class scenarioPhase
         this.phaseInd;
         this.func = func;
         this.pause = pause;
+        this.arguments = [];
+    }
+    
+    SetArguments(argArr){
+        
+        this.arguments = argArr;
     }
     
     SetFunc(func){
@@ -95,7 +101,9 @@ class scenarioPhase
     
     Run(){ //can set pause within phase with by manipulating this.pause
         
-        this.func();
+        this.func.apply(this,this.arguments);
+        
+//        this.func();
         
         if(!this.pause) this.scenarioProcessorRun.RunNextPhase();
     }

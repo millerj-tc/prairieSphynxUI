@@ -37,14 +37,10 @@ export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M",noTe
                     returnArr.push(string + " " + n.name);
                     continue
                 }
-                
-                console.log(string);
-                
+                                
                 if(n.owner == window.gameHandler.playerId) string = `$$IMAGE:images/chars/leftTeamBar-M.pngIMAGE$$` + string + " " + n.name;
                 
                 else string = string + `$$IMAGE:images/chars/rightTeamBar-M.pngIMAGE$$` + " " + n.name
-                
-                console.log(string);
                 
                 returnArr.push(string);
 //            }
@@ -65,8 +61,6 @@ export function DisplayUnselectedCardsAsChoices(owner){
     gh.cardChoiceGridArtist.ClearAllChildren();
         
     const scenarioCards = gh.collectionCardHandler.GetCards();
-    
-    console.log(scenarioCards);
     
     const ownedAndUnlockedAndUnchosenCards = scenarioCards.filter(c => (c.owner == owner && c.unlockedForPlayer == true && c.selectedForTeam == false));
     
@@ -99,8 +93,6 @@ function _OnClickCardSelect(card){
     gh.dimmerArtist.SetDOMDisplayTo("none");
     
     const scenario = gh.scenarioHandler.GetCurrentScenario();
-    
-    console.log(scenario);
     
     const artist = scenario.lastClickedCardSlotArtist;
     
