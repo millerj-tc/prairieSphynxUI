@@ -1,6 +1,6 @@
 import {charData} from "../../data/charData.js";
 
-export function GetSpanListOfCharImageNameTeam(charArr,size){
+export function GetSpanListOfCharImageNameTeam(charArr,size){ //returns a span DOM element with images embedded
     
     const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
     
@@ -20,7 +20,7 @@ export function AddDebugInfoToCards(cardArr){
     }
 }
 
-export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M",noTeam = false){
+export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M",noTeam = false,noName = false){ //gives you back arr of strings with image tags (references that utilityartist can use with GetSpanWithImageTagsReplacedWithImagesFromText)
     
     const returnArr = [];
     
@@ -48,6 +48,22 @@ export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M",noTe
     }
     
     return returnArr
+}
+
+export function GetNounUtilArtistImageTagAtSize(noun,size="M",team = false, name = false){
+    
+    let returnString = `$$IMAGE:${noun["image" + size]}IMAGE$$`;
+    
+    if(team){
+        
+        if(noun.owner == window.gameHandler.playerId) returnString += `$$IMAGE:images/chars/leftTeamBar-M.pngIMAGE$$` + string;
+        
+        else returnString += `$$IMAGE:images/chars/rightTeamBar-M.pngIMAGE$$`;
+    }
+    
+    if(name) returnString += " " + noun.name;
+    
+    return returnString
 }
 
 export function DisplayUnselectedCardsAsChoices(owner){
