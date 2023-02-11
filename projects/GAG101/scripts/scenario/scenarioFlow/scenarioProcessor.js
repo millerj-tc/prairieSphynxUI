@@ -91,6 +91,8 @@ class scenarioPhase
     
     SetArguments(argArr){
         
+        if(!Array.isArray(argArr)) console.error("SetArguments passed non-array! This shall not be tolerated!");
+        
         this.arguments = argArr;
     }
     
