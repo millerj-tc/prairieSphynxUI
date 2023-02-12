@@ -79,17 +79,25 @@ function _DupeContestOutput(contestLoserArr){
     
     let doubleDupeConkers = contestLoserArr.filter(c => c.GetProp("doubleDupeConk") ==1);
     
-    doubleDupeConkers = doubleDupeConkers.sort((a, b) => a.name - b.name);
-    
+    doubleDupeConkers.sort(function (a, b) {
+      if (a.owner < b.owner) {
+        return -1;
+      }
+      if (a.owner > b.owner) {
+        return 1;
+      }
+      return 0;
+    });
+        
     doubleDupeConkers = doubleDupeConkers.slice(doubleDupeConkers.length/2); // remove duplicates from doubleDupeConkers
-    
+        
     const singleDupeConkers = contestLoserArr.filter(c => (c.GetProp("dupeConk") == 1 && c.GetProp("doubleDupeConk") != 1));
     
     ///
     
     const neitherDOM = document.createElement("div");
     
-    const doubleDupeConkersSpan = uiPhaseUtils.GetSpanListOfCharImageNameTeam(doubleDupeConkers,artist.imageSize);
+    const doubleDupeConkersSpan = uiPhaseUtils.GetSpanListOfCharImageNameTeam(doubleDupeConkers,artist.imageSize,false);
     
     neitherDOM.append(doubleDupeConkersSpan);
     

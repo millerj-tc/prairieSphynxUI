@@ -10,7 +10,8 @@ export const exercises =
         difficultyLvRateChange:-0.25,
         difficulty1rest: 2000,
         difficultyLvRestChange: -300,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["hamstrings","abs"] 
     },
     {
         type: "pushups",
@@ -20,7 +21,8 @@ export const exercises =
         difficultyLvRateChange:-0.15,
         difficulty1rest: 3000,
         difficultyLvRestChange: -450,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["biceps","abs"]
     },
     {
         type: "spider pushups",
@@ -30,7 +32,8 @@ export const exercises =
         difficultyLvRateChange: -0.15,
         difficulty1rest: 3000,
         difficultyLvRestChange: -450,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["biceps","abs","hamstrings"]
     },
     {
         type: "diamond pushups",
@@ -40,7 +43,8 @@ export const exercises =
         difficultyLvRateChange:-0.1,
         difficulty1rest: 3000,
         difficultyLvRestChange: -450,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["triceps","abs"]
     },
     {
         type: "burpees",
@@ -50,7 +54,8 @@ export const exercises =
         difficultyLvRateChange: 0.075,
         difficulty1rest: 4000,
         difficultyLvRestChange: -500,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["calves","hamstrings"]
     },
     {
         type: "situps",
@@ -60,7 +65,8 @@ export const exercises =
         difficultyLvRateChange:-0.15,
         difficulty1rest: 3000,
         difficultyLvRestChange: -450,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["abs"]
     },
     {
         type: "cross situps",
@@ -70,7 +76,8 @@ export const exercises =
         difficultyLvRateChange:-0.15,
         difficulty1rest: 2000,
         difficultyLvRestChange: -200,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["abs"]
     },
     {
         type: "jumping jacks",
@@ -80,7 +87,8 @@ export const exercises =
         difficultyLvRateChange:0.1,
         difficulty1rest: 3000,
         difficultyLvRestChange: -450,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["biceps","calves"]
     },
     {
         type: "lunges",
@@ -90,7 +98,8 @@ export const exercises =
         difficultyLvRateChange: 0.1,
         difficulty1rest: 2500,
         difficultyLvRestChange: -450,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["glutes","quads"]
     },
     {
         type: "mountain climbers",
@@ -100,7 +109,8 @@ export const exercises =
         difficultyLvRateChange: 0.15,
         difficulty1rest: 2000,
         difficultyLvRestChange: -450,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["abs","quads"]
     },
     {
         type: "squats",
@@ -110,7 +120,8 @@ export const exercises =
         difficultyLvRateChange: 0.05,
         difficulty1rest: 2500,
         difficultyLvRestChange: -450,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["quads","hamstrings","glutes"]
     },
     {
         type: "cossack squats",
@@ -120,7 +131,8 @@ export const exercises =
         difficultyLvRateChange: 0.1,
         difficulty1rest: 2500,
         difficultyLvRestChange: -450,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups:["quads","hamstrings","glutes"]
     },
     {
         type: "squat jumps",
@@ -130,7 +142,8 @@ export const exercises =
         difficultyLvRateChange: 0.05,
         difficulty1rest: 3500,
         difficultyLvRestChange: -450,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups: ["quads","hamstrings","glutes","calves"]
     },
     {
         type: "chair tricep dips",
@@ -140,6 +153,7 @@ export const exercises =
         difficultyLvRateChange: -0.15,
         difficulty1rest: 2000,
         difficultyLvRestChange: -300,
-        requiresEquipment:false
+        requiresEquipment:false,
+        muscleGroups: ["triceps"]
     },
 ]

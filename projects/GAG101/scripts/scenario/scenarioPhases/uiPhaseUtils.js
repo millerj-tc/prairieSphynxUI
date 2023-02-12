@@ -1,10 +1,10 @@
 import {charData} from "../../data/charData.js";
 
-export function GetSpanListOfCharImageNameTeam(charArr,size){ //returns a span DOM element with images embedded
+export function GetSpanListOfCharImageNameTeam(charArr,size,team = true,name = true){ //returns a span DOM element with images embedded
     
     const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
     
-    const taggedArr = ReplaceNounNamesWithImageTagTeamNameAtSize(charArr,size);
+    const taggedArr = ReplaceNounNamesWithImageTagTeamNameAtSize(charArr,size,team,name);
     
     const stringBasedOnNumber = utilityArtist.ReturnStringOfNounsBasedOnNumber(taggedArr);
     
@@ -20,32 +20,16 @@ export function AddDebugInfoToCards(cardArr){
     }
 }
 
-export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M",noTeam = false,noName = false){ //gives you back arr of strings with image tags (references that utilityartist can use with GetSpanWithImageTagsReplacedWithImagesFromText)
+export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M",team = true,name = true){ //gives you back arr of strings with image tags (references that utilityartist can use with GetSpanWithImageTagsReplacedWithImagesFromText)
     
     const returnArr = [];
     
     for(const n of nounArr){
                 
-//        for(const c of charArr){
-            
-//            if(n.name == c.name){
-                
-                let string = `$$IMAGE:${n["image" + size]}IMAGE$$`;
-        
-                if(noTeam){
-                    
-                    returnArr.push(string + " " + n.name);
-                    continue
-                }
-                                
-                if(n.owner == window.gameHandler.playerId) string = `$$IMAGE:images/chars/leftTeamBar-M.pngIMAGE$$` + string + " " + n.name;
-                
-                else string = string + `$$IMAGE:images/chars/rightTeamBar-M.pngIMAGE$$` + " " + n.name
-                
-                returnArr.push(string);
-//            }
-//        }
+        returnArr.push(GetNounUtilArtistImageTagAtSize(n,size,team,name));
     }
+    
+    console.log(returnArr);
     
     return returnArr
 }
@@ -56,7 +40,7 @@ export function GetNounUtilArtistImageTagAtSize(noun,size="M",team = false, name
     
     if(team){
         
-        if(noun.owner == window.gameHandler.playerId) returnString += `$$IMAGE:images/chars/leftTeamBar-M.pngIMAGE$$` + string;
+        if(noun.owner == window.gameHandler.playerId) returnString = `$$IMAGE:images/chars/leftTeamBar-M.pngIMAGE$$` + returnString;
         
         else returnString += `$$IMAGE:images/chars/rightTeamBar-M.pngIMAGE$$`;
     }
