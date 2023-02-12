@@ -149,7 +149,7 @@ function _AttachOnClickCardChoiceToDOMs(){
 
                 scenario.lastClickedCardSlotArtist = tool;
                 
-                associatedCard.selectedForTeam = false;
+                //associatedCard.selectedForTeam = false;
             }
         }
     }  

@@ -83,6 +83,8 @@ export function DisplayUnselectedCardsAsChoices(owner){
         
         i.onclick = function(){_OnClickCardSelect(c)}
     }
+
+    gh.dimmerArtist.GetAuthorizedDOMs().onclick = function(){gh.dimmerArtist.SetDOMDisplayTo("none");}
     
 }
 
@@ -90,7 +92,7 @@ function _OnClickCardSelect(card){
     
     const gh = window.gameHandler;
     
-    gh.dimmerArtist.SetDOMDisplayTo("none");
+    //gh.dimmerArtist.SetDOMDisplayTo("none");
     
     const scenario = gh.scenarioHandler.GetCurrentScenario();
     
