@@ -44,9 +44,11 @@ export function OutputTextDivWithNounImages(string){
             attachName = true;
         }
         
-        returnString = returnString.replace(regex,GetSpanListOfCharImageNameTeam(nounGroupsArr[i]),gh.narrOutputArtist.imageSize,teamBar,attachName);
+        const replacementSpan = GetSpanListOfCharImageNameTeam(nounGroupsArr[i],gh.narrOutputArtist.imageSize,teamBar,attachName);
         
-        console.error("cant pass all these args in the second args of the replace function above");
+        console.log(replacementSpan);
+        
+        returnString = returnString.replace(regex,replacementSpan);
     }
     
 //    for (let i = 0; i < nounGroupsArr.length; i++){
@@ -93,6 +95,8 @@ function _OutputTextReplacementFunction(match,string){
         
         returnString = GetNounUtilArtistImageTagAtSize(nounObj,gh.narrOutputArtist.imageSize,teamBar,attachName);
     //}
+    
+    console.error("combine this and GetSpanListOfCharImageNameTeam");
     
     return returnString
 }
