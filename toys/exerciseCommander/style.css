@@ -4,6 +4,11 @@
     text-align: center;
 }
 
+.sectionBuilders{
+    
+    overflow-y: auto;
+}
+
 .remainingTime{
     
     position: fixed;
@@ -12,6 +17,7 @@
     bottom: 5%;
     font-size: 100px;
     text-align: center;
+    z-index: -1;
 }
 
 .sectionBuilderTitle{
