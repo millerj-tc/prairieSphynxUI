@@ -4,12 +4,32 @@ export function OutputTextDivWithNounImages(string){
     
     //Also build in all the steps of dupeCunk output (replace based on plural subjects, specify pronouns, etc.)
     
-    //"[argNN[name (for image)]team?]: Welcome to the Dance of Riddles, [arg01[(use GetSpanList)/team/name]]
+    //"[argNN[name (for image)]team]: Welcome to the Dance of Riddles, [arg01[(use GetSpanList)/team/name]]
     
-    const nounGroupsArr = arguments.slice(1);
+    const returnDOM = document.createElement("div");
     
-    for(const m of string.match(/\[arg**\[(.*?)\]\]/)){
+    const replacementArr = [];
+    
+    const nounGroupsArr = Array.from(arguments).slice(1);
+    
+    const text = string.replace(/\[arg..\[(.*?)\](.*?)\]/gm,_OutputTextReplacementFunction)
+    
+//    for(const m of string.match(/\[arg..\[(.*?)\](.*?)\]/gm)){
+//        
+//        console.log(m.match("argNN"));
+//        
+//        console.log(m.match("]team]"));
+//    }
+}
+
+function _OutputTextReplacementFunction(match,string){
+    
+    let returnString;
+    
+    if(match.includes("[argNN[")){
         
-        console.log(m);
+        
     }
+    
+    return returnString
 }
