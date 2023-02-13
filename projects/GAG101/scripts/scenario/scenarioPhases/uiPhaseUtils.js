@@ -28,7 +28,7 @@ export function OutputTextDivWithNounImages(string){
         
         const match = matchArr[i];
         
-        const regex = new RegExp(`/\[arg\\` + i + `\[(.*?)\](.*?)\]/gm`);
+        const regex = new RegExp(`\\[arg` + i + `\\[(.*?)\\](.*?)\\]`,"gm");
         
         let teamBar = false;
     
@@ -46,13 +46,19 @@ export function OutputTextDivWithNounImages(string){
             attachName = true;
         }
         
+        console.log(regex);
+        
+        console.log(returnString.match(regex));
+        
+        console.log(nounGroupsArr[i]);
+        
         const replacementString = _GetStringListingNounsBasedOnNumber(nounGroupsArr[i],gh.narrOutputArtist.imageSize,teamBar,attachName);
         
         console.log(replacementString);
         
         console.log(returnString);
         
-        returnString = returnString.replace("[arg0[]]",replacementString);
+        returnString = returnString.replace(regex,replacementString); //for some reason replace was removing one "$" at either end so they have been forced in manually
         
         console.log(returnString);
     }
@@ -102,7 +108,6 @@ function _OutputTextReplacementFunction(match,string){
         returnString = GetNounUtilArtistImageTagAtSize(nounObj,gh.narrOutputArtist.imageSize,teamBar,attachName);
     //}
     
-    console.error("combine this and GetSpanListOfCharImageNameTeam");
     
     return returnString
 }
@@ -138,6 +143,8 @@ export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M",team
     
     const returnArr = [];
     
+    console.log(nounArr);
+    
     for(const n of nounArr){
                 
         returnArr.push(GetNounUtilArtistImageTagAtSize(n,size,team,name));
@@ -150,13 +157,13 @@ export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M",team
 
 export function GetNounUtilArtistImageTagAtSize(noun,size="M",team = false, name = false){
     
-    let returnString = `$$IMAGE:${noun["image" + size]}IMAGE$$`;
+    let returnString = `##IMAGE:${noun["image" + size]}IMAGE##`;
     
     if(team){
         
-        if(noun.owner == window.gameHandler.playerId) returnString = `$$IMAGE:images/chars/leftTeamBar-M.pngIMAGE$$` + returnString;
+        if(noun.owner == window.gameHandler.playerId) returnString = `##IMAGE:images/chars/leftTeamBar-M.pngIMAGE##` + returnString;
         
-        else returnString += `$$IMAGE:images/chars/rightTeamBar-M.pngIMAGE$$`;
+        else returnString += `##IMAGE:images/chars/rightTeamBar-M.pngIMAGE##`;
     }
     
     if(name) returnString += " " + noun.name;

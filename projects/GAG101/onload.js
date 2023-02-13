@@ -44,7 +44,7 @@ export function onload(){
     
     const testCharObj = charData[0];
     
-    console.log(uiPhaseUtils.OutputTextDivWithNounImages(`[argN[Yetelu]]: Welcome to the Dance of Riddles, [arg0[]]`,[testCharObj]));
+    console.log(uiPhaseUtils.OutputTextDivWithNounImages(`[argN[Yetelu]]: Welcome [arg0[]] to the Dance of Riddles, [arg1[]], [arg2[]]`,[testCharObj],[charData[1]],[charData[2],charData[3]]));
 
 }
 

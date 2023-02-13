@@ -20,19 +20,19 @@ export class utilityUIArtist
         
         //ex: $$IMAGE:/images/char/char.pngIMAGE$$
                 
-        let textSplitArr = text.split("IMAGE$$");
+        let textSplitArr = text.split("IMAGE##");
         
         const span = document.createElement("span");
         
         for(const t of textSplitArr){
             
-            const imgLink = t.match(/(?<=\$\$IMAGE:)(.*)/gm);
+            const imgLink = t.match(/(?<=\#\#IMAGE:)(.*)/gm);
             
             const img = document.createElement("img");
 
             if(imgLink != null) img.src = imgLink;
             
-            const plainText = t.replace(/\$\$IMAGE:(.*)/gm,"");
+            const plainText = t.replace(/\#\#IMAGE:(.*)/gm,"");
             
             span.append(plainText);
             
