@@ -6,7 +6,6 @@ import * as cardInfoPhaseUtils from "./scripts/scenario/scenarioPhases/cardInfoP
 import * as uiPhaseUtils from "./scripts/scenario/scenarioPhases/uiPhaseUtils.js";
 import {scenarioProcessor} from "./scripts/scenario/scenarioFlow/scenarioProcessor.js";
 import {SubsequentRunReset} from "./scripts/scenario/scenarioPhases/scenarioMaintenance.js";
-import {OutputTextDivWithNounImages} from "./scripts/scenario/scenarioPhases/outputUtils.js";
 
 
 export function onload(){
@@ -43,7 +42,9 @@ export function onload(){
     
     GenericScenarioPrepWithAI();
     
-    OutputTextDivWithNounImages(`[argNN[name (for image)]team]: Welcome to the Dance of Riddles, [arg01[(use GetSpanList)/team/name`,"foo")
+    const testCharObj = charData[0];
+    
+    console.log(uiPhaseUtils.OutputTextDivWithNounImages(`[argN[Yetelu]]: Welcome to the Dance of Riddles, [arg0[]]`,[testCharObj]));
 
 }
 
