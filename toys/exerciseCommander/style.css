@@ -13,3 +13,33 @@
     font-size: 100px;
     text-align: center;
 }
+
+.sectionBuilderTitle{
+    
+    font-size: 20px;
+    text-align: center;
+}
+
+.selectionSpan{
+    
+    width:100%;
+    text-align: center;
+    display:grid;
+    grid-template-columns: 30% 30%;
+    grid-template-rows: auto;
+    justify-content: center;
+    align-content: center;
+    gap: 20px;
+}
+
+/*
+.selectionSpan > div{
+    
+    width: 30%;
+}
+*/
+
+.selection{
+    
+    width:50px;
+}

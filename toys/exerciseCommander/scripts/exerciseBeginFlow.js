@@ -4,15 +4,25 @@ import {ShuffleArray} from "./utils.js";
 
 export function exerciseBeginFlow(){
     
+    const sectionCount = document.getElementsByClassName("sectionBuilderTitle").length;
+    
+    const uiTH = window.uiTH;
+    
+    const edArtist = uiTH.GetArtistsByAuthorizedDOMId("exerciseDisplay");
+    
+    const sbArtist = uiTH.GetArtistsByAuthorizedDOMId("sectionBuilders");
+    
     const commandHandler = window.commandHandler;
     
     // filter exercises based on user requests ("abs","legs", etc.)?
+        
+    const patternRequest = LoadUserExercisePatternSelection(sectionCount);
     
-    // workout was 2 minutes longer than expected
+    edArtist.ClearAllChildren();
     
-    //const patternRequest = LoadUserExercisePatternSelection();
+    sbArtist.ClearAllChildren();
     
-    const patternRequest = [{difficulty:0.4,duration:1250},{difficulty:0.6,duration:600},{difficulty:0.8,duration:300}];
+    //const patternRequest = [{difficulty:0.4,duration:1250},{difficulty:0.6,duration:600},{difficulty:0.8,duration:300}];
     
     // long tv workout harder {difficulty:0.6,duration:900},{difficulty:0.8,duration:600},{difficulty:1,duration:300},{difficulty:1.2,duration:150},{difficulty:1.4,duration:75},{difficulty:1.8,duration:35}
     
@@ -37,6 +47,28 @@ export function exerciseBeginFlow(){
 // durRegularity measures variation in length of time doing a single exercise within the section
 // diffVar measures how often a session will deviate from indicated difficulty
 // rateVar measures how consistent the "beat" of the sections are
+
+function LoadUserExercisePatternSelection(sectionCount){
+    
+    const returnArr = [];
+    
+    console.log(sectionCount);
+    
+    for(let i = 0; i < sectionCount; i++){
+        
+        const difficulty = Number(document.getElementById("difficultySelection" + i).value);
+        
+        const duration = Number(document.getElementById("durationSelection" + i).value);
+        
+        const section = {difficulty:difficulty, duration:duration};
+        
+        returnArr.push(section); 
+    }
+    
+    console.log(returnArr);
+    
+    return returnArr
+}
 
 function _BuildExercisePattern(patternRequest){
     

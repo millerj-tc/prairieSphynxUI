@@ -63,6 +63,18 @@ export class domUIArtist
         
     }
     
+    PrependElementWithinDOM(element,dom = this.authorizedDOMs){
+
+        const $dom = this._ConvertSingleDOMtoArray(dom);
+        
+        for(const a of $dom){
+            
+            a.prepend(element);
+
+        }
+        
+    }
+    
     
     SetDOMDisplayTo(display,dom = this.authorizedDOMs){
 
