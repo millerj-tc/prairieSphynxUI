@@ -61,16 +61,15 @@ export function OutputTextDivWithNounImages(string){
         returnString = returnString.replace(regex,replacementString); //for some reason replace was removing one "$" at either end so they have been forced in manually
         
         console.log(returnString);
+        
+        returnString = utilityArtist.ReplaceWordsBasedOnPluralSubjects(nounGroupsArr[i],returnString,i);
+        
+        returnString = utilityArtist.ReplacePronouns(nounGroupsArr[i],returnString,i);
     }
+
     
-//    for (let i = 0; i < nounGroupsArr.length; i++){
-//        
-//        const regex = New RegExp(`/\[arg\\` + i + `\[(.*?)\](.*?)\]/gm`);
-//        
-//        string.replace(regex,GetSpanListOfCharImageNameTeam(nounGroupsArr[i]),gh.narrOutputArtist.imageSize,)
-//    }
-    
-    return utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(returnString);
+     
+    gh.narrOutputArtist.AppendElementWithinDOM(utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(returnString));
 
 }
 
