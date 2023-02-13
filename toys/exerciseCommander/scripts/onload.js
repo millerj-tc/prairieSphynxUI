@@ -1,4 +1,4 @@
-import {uiToolsHandler} from "/utils/uiTools/uiToolsHandler.js";
+import {uiToolsHandler} from "../../../utils/uiTools/uiToolsHandler.js";
 
 
 export function Onload(){

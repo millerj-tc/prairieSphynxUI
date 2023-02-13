@@ -10,7 +10,9 @@ export function OutputTextDivWithNounImages(string){
     
     let returnString = string;
     
-    const gh = window.gameHandler
+    const gh = window.gameHandler;
+    
+    const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
     
     const returnDOM = document.createElement("div");
     
@@ -44,11 +46,15 @@ export function OutputTextDivWithNounImages(string){
             attachName = true;
         }
         
-        const replacementSpan = GetSpanListOfCharImageNameTeam(nounGroupsArr[i],gh.narrOutputArtist.imageSize,teamBar,attachName);
+        const replacementString = _GetStringListingNounsBasedOnNumber(nounGroupsArr[i],gh.narrOutputArtist.imageSize,teamBar,attachName);
         
-        console.log(replacementSpan);
+        console.log(replacementString);
         
-        returnString = returnString.replace(regex,replacementSpan);
+        console.log(returnString);
+        
+        returnString = returnString.replace("[arg0[]]",replacementString);
+        
+        console.log(returnString);
     }
     
 //    for (let i = 0; i < nounGroupsArr.length; i++){
@@ -58,7 +64,7 @@ export function OutputTextDivWithNounImages(string){
 //        string.replace(regex,GetSpanListOfCharImageNameTeam(nounGroupsArr[i]),gh.narrOutputArtist.imageSize,)
 //    }
     
-    return returnString
+    return utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(returnString);
 
 }
 
@@ -105,11 +111,18 @@ export function GetSpanListOfCharImageNameTeam(charArr,size,team = true,name = t
     
     const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
     
-    const taggedArr = ReplaceNounNamesWithImageTagTeamNameAtSize(charArr,size,team,name);
-    
-    const stringBasedOnNumber = utilityArtist.ReturnStringOfNounsBasedOnNumber(taggedArr);
+    const stringBasedOnNumber = _GetStringListingNounsBasedOnNumber(charArr,size,team,name);
     
     return utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(stringBasedOnNumber);
+}
+
+function _GetStringListingNounsBasedOnNumber(nounArr,size,team,name){
+    
+    const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
+    
+    const taggedArr = ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size,team,name);
+    
+    return utilityArtist.ReturnStringOfNounsBasedOnNumber(taggedArr);
 }
 
 export function AddDebugInfoToCards(cardArr){
