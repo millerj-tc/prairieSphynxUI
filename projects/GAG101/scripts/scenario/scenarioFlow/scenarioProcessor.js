@@ -1,6 +1,3 @@
-// scenarioProcessor.AddPhase("dupeConk",DupeConk);
-// phaseName/function
-
 import {uiToolsHandler} from "/utils/uiTools/uiToolsHandler.js";
 
 export class scenarioProcessor
@@ -46,11 +43,28 @@ export class scenarioProcessor
         this.currentRunProcessor.RunNextPhase();
     }
     
+    
+    GetCurrentRunProcessor(){
+        
+        return this.currentRunProcessor
+    }
+    
     GetCurrentPhase(){
         
         const rp = this.currentRunProcessor;
         
         return rp.phases[rp.currentPhaseInd];
+    }
+    
+    GetCurrentRunPhaseByName(name){
+        
+        for const(ph of this.currentRunProcessor.phases){
+            
+            if(ph.phaseName == name){
+                
+                return ph
+            }
+        }
     }
 }
 
@@ -64,9 +78,7 @@ class scenarioProcessorRun
     }
     
     RunNextPhase(){
-        
-        this.currentPhaseInd++;
-        
+                
         if(this.currentPhaseInd >= this.phases.length) return
         
         const phase = this.phases[this.currentPhaseInd];
@@ -103,10 +115,10 @@ class scenarioPhase
     
     Run(){ //can set pause within phase with by manipulating this.pause
         
-        this.func.apply(this,this.arguments);
+        this.scenarioProcessorRun.currentPhaseInd++; //move to the next one if linear
         
-//        this.func();
-        
+        this.func.apply(this,this.arguments); //phase func can set alternate phase ind to jump somewhere else
+                
         if(!this.pause) this.scenarioProcessorRun.RunNextPhase();
     }
 }

@@ -1,11 +1,7 @@
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
-import {DupeConkLosers,RemoveDupeConkStatuses} from "./scripts/scenario/scenarioPhases/DupeConk.js";
-import {GenericScenarioPrepWithAI} from "./scripts/scenario/scenarioFlow/genericScenarioPrep.js";
-import * as cardInfoPhaseUtils from "./scripts/scenario/scenarioPhases/cardInfoPhaseUtils.js";
-import * as uiPhaseUtils from "./scripts/scenario/scenarioPhases/uiPhaseUtils.js";
-import {scenarioProcessor} from "./scripts/scenario/scenarioFlow/scenarioProcessor.js";
-import {SubsequentRunReset} from "./scripts/scenario/scenarioPhases/scenarioMaintenance.js";
+
+
 
 
 export function onload(){
@@ -15,30 +11,7 @@ export function onload(){
     const gh = window.gameHandler;
     
     _LoadCollectionCards();
-    
-    const koalas = gh.scenarioHandler.AddScenario("Time Koalas");
-    
-    gh.scenarioHandler.SetCurrentScenarioByName("Time Koalas");
-    
-    koalas.AddPhase("Subsequent Reset", SubsequentRunReset);
 
-    
-    koalas.AddPhase("DupeConk Loser Dupes", DupeConkLosers);
-
-    
-    // phase: dig up a Vigonian Crystal
-    
-    // find highest speed + str
-    
-    koalas.AddPhase("Remove DupeConk Statuses", RemoveDupeConkStatuses)
-        
-    //window.gameHandler.scenarioHandler.GotoNextPeriod();
-    
-    console.log(gh.scenarioHandler);
-    
-    GenericScenarioPrepWithAI();
-    
-    const testCharObj = charData[0];
 }
 
 function _LoadCollectionCards(){
