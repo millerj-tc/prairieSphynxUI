@@ -33,8 +33,6 @@ export function OutputTextDivWithNounImages(string){
         let teamBar = false;
     
         let attachName = false;
-        
-        console.log(match);
 
         if(match.includes("]team")){
 
@@ -46,25 +44,15 @@ export function OutputTextDivWithNounImages(string){
             attachName = true;
         }
         
-        console.log(regex);
-        
-        console.log(returnString.match(regex));
-        
-        console.log(nounGroupsArr[i]);
-        
         const replacementString = _GetStringListingNounsBasedOnNumber(nounGroupsArr[i],gh.narrOutputArtist.imageSize,teamBar,attachName);
         
-        console.log(replacementString);
-        
-        console.log(returnString);
-        
         returnString = returnString.replace(regex,replacementString); //for some reason replace was removing one "$" at either end so they have been forced in manually
-        
-        console.log(returnString);
         
         returnString = utilityArtist.ReplaceWordsBasedOnPluralSubjects(nounGroupsArr[i],returnString,i);
         
         returnString = utilityArtist.ReplacePronouns(nounGroupsArr[i],returnString,i);
+        
+        returnString = utilityArtist.CapitalizeLettersAfterAppropriatePunctuation(returnString);
     }
 
     

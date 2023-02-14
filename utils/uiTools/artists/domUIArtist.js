@@ -32,6 +32,17 @@ export class domUIArtist
     
     }
     
+    InsertHTMLAdjacentToDOM(location,html,dom = this.authorizedDOMs[0]){
+        
+        const $dom = this._ConvertSingleDOMtoArray(dom);
+        
+        for(const a of $dom){
+            
+            a.insertAdjacentHTML(location,html);
+
+        }
+    }
+    
     SetCustomArtistPropToValue(prop,value){
         
         this[prop] = value;

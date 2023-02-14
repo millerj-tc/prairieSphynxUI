@@ -97,57 +97,37 @@ function _DupeContestOutput(contestLoserArr){
     
     const neitherDOM = document.createElement("div");
     
-    const doubleDupeConkersSpan = uiPhaseUtils.GetSpanListOfCharImageNameTeam(doubleDupeConkers,artist.imageSize,false);
     
-    neitherDOM.append(doubleDupeConkersSpan);
+    if(doubleDupeConkers.length > 0){
+        
+        uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]name] can't decide who to side with! ~s0~[p0[they]]/they~~ [p0[are]] sitting this one out.",doubleDupeConkers);
+        
+        artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>")
+        
+    }
     
-    const neitherUnpluralizedString = ` can't decide who to side with! [p[[they]/they]p] [p[is/are]p] sitting this one out.`;
-    
-    let neitherPluralizedString = utilityUIArtist.ReplaceWordsBasedOnPluralSubjects(doubleDupeConkers,neitherUnpluralizedString);
-    
-    if(doubleDupeConkers.length == 1) neitherPluralizedString = utilityUIArtist.ReplacePronouns(doubleDupeConkers[0],neitherPluralizedString);
-    
-    const neitherCapitalizedString = utilityUIArtist.CapitalizeLettersAfterAppropriatePunctuation(neitherPluralizedString);
-    
-    neitherDOM.append(neitherCapitalizedString);
-    
-    if(doubleDupeConkers.length > 0) artist.AppendElementWithinDOM(neitherDOM);
-    
-    ///
-    
-    const playerDOM = document.createElement("div");
     
     const playerControlledLosers = singleDupeConkers.filter(c => c.owner == window.gameHandler.playerId);
     
-    const playerControlledLosersSpan = uiPhaseUtils.GetSpanListOfCharImageNameTeam(playerControlledLosers,artist.imageSize);
     
-    playerDOM.append(playerControlledLosersSpan);
-    
-    const playerUnpluralizedString = ` [p[decides/decide]p] to side with the left team.`;
-    
-    const playerPluralizedString = utilityUIArtist.ReplaceWordsBasedOnPluralSubjects(playerControlledLosers,playerUnpluralizedString);
-    
-    playerDOM.append(playerPluralizedString);
-    
-    if(playerControlledLosers.length > 0) artist.AppendElementWithinDOM(playerDOM);
+    if(playerControlledLosers.length > 0){
+        
+        uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] ~s0~decides/decide~~ to side with the left team!",playerControlledLosers);
+        
+         artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>")
+    }
     
     ///
     
-    const nonPlayerDOM = document.createElement("div");
     
     const nonPlayerControlledLosers = singleDupeConkers.filter(c => c.owner != window.gameHandler.playerId);
         
-    const nonPlayerControlledLosersSpan = uiPhaseUtils.GetSpanListOfCharImageNameTeam(nonPlayerControlledLosers,artist.imageSize);
+    if(nonPlayerControlledLosers.length > 0){ 
     
-    nonPlayerDOM.append(nonPlayerControlledLosersSpan);
-    
-    const nonPlayerUnpluralizedString = ` [p[decides/decide]p] to side with the right team.`;
-    
-    const nonPlayerPluralizedString = utilityUIArtist.ReplaceWordsBasedOnPluralSubjects(nonPlayerControlledLosers,nonPlayerUnpluralizedString);
-    
-    nonPlayerDOM.append(nonPlayerPluralizedString);
+        uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] ~s0~decides/decide~~ to side with the right team!",nonPlayerControlledLosers);
         
-    if(nonPlayerControlledLosers.length > 0) artist.AppendElementWithinDOM(nonPlayerDOM);
+         artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>")
+    }
     
 }
 

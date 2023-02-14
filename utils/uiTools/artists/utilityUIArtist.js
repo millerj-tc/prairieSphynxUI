@@ -81,28 +81,34 @@ export class utilityUIArtist
             themself = "themselves";
         }
         
-        else if(Array.isArray(obj) == obj.length == 1){
+        else {
             
-            console.log(obj[0]);
+            if(Array.isArray(obj) && obj.length == 1){
             
-            they = obj[0].GetPronouns().they;
-            them = obj[0].GetPronouns().them;
-            their = obj[0].GetPronouns().their;
-            theirs = obj[0].GetPronouns().theirs;
-            themself = obj[0].GetPronouns().themself;
-        }
-        
-        else{
-            
-            they = pronounObj.GetPronouns().they;
-            them = pronounObj.GetPronouns().them;
-            their = pronounObj.GetPronouns().their;
-            theirs = pronounObj.GetPronouns().theirs;
-            themself = pronounObj.GetPronouns().themself;
-        }
-        
-        // you could improve this by letting the coder type [1-they] / [2-they] for two different characters who might use different pronoun sets
+                pronounObj = obj[0];
+            }
 
+            if(pronounObj.GetPronouns == null){
+
+                console.log(pronounObj);
+
+                they = pronounObj.pronouns.they;
+                them = pronounObj.pronouns.them;
+                their = pronounObj.pronouns.their;
+                theirs = pronounObj.pronouns.theirs;
+                themself = pronounObj.pronouns.themself;
+            }
+
+            else{
+
+                they = pronounObj.GetPronouns().they;
+                them = pronounObj.GetPronouns().them;
+                their = pronounObj.GetPronouns().their;
+                theirs = pronounObj.GetPronouns().theirs;
+                themself = pronounObj.GetPronouns().themself;
+            }
+        }
+        
         $returnString = $returnString.replaceAll("[p" + pIndex + "[they]]",they);
 
         $returnString = $returnString.replaceAll("[p" + pIndex + "[them]]",them);
@@ -117,13 +123,17 @@ export class utilityUIArtist
 
             $returnString = $returnString.replaceAll("[p" + pIndex + "[are]]","is");
         }
+        else{
+            
+            $returnString = $returnString.replaceAll("[p" + pIndex + "[are]]","are");
+        }
 
         return $returnString
     }
     
     ReplaceWordsBasedOnPluralSubjects(arrayOfSubjects,string,pIndex){ 
         //arrayOfSubjects could be any array that represents the subjects in the sentence (objects, strings, etc.), all this cares about is counting the number to determine if there's more than 1 
-        //string ex: " [p[manages/manage]p] to capture "
+        //string ex: " [s[manages/manage]s] to capture "
     
         let $returnString = string;
         
@@ -132,7 +142,7 @@ export class utilityUIArtist
         if(pIndex == null) pInd = "";
         else pInd = pIndex
         
-        const regex = new RegExp(`\\[s` + pInd + `\\[(.*?)\\](.*?)\\]`,"gm");
+        const regex = new RegExp(`\\~s` + pInd + `\\~(.*?)\\~(.*?)\\~`,"gm");
         
         console.log($returnString.match(regex));
 
@@ -158,7 +168,7 @@ export class utilityUIArtist
         
         console.log(match);
         
-        const regex = new RegExp(`(?<=\\[s(.*?)\\[)(.*?)(?=\\](.*?)\\])`,"gm");
+        const regex = new RegExp(`(?<=\\~s(.*?)\\~)(.*?)(?=\\~(.*?)\\~)`,"gm");
         
         const internalMatch = match.match(regex)[0];
 
@@ -167,7 +177,7 @@ export class utilityUIArtist
 
     _PluralSubjectsReplacer(match){
 
-        const regex = new RegExp(`(?<=\\[s(.*?)\\[)(.*?)(?=\\](.*?)\\])`,"gm");
+        const regex = new RegExp(`(?<=\\~s(.*?)\\~)(.*?)(?=\\~(.*?)\\~)`,"gm");
         
         const internalMatch = match.match(regex)[0];
 
