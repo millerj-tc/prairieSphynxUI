@@ -14,26 +14,26 @@ export function GenericScenarioPrepWithAI(){ //only run this once when the scena
     gh.narrOutputArtist.ClearAllChildren();
             
     console.warn("display card choice tray here");
-    _CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(scenario.playerCardSlots,gh.playerId,2);
+    CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(scenario.playerCardSlots,gh.playerId,2);
 
-    _CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(scenario.otherPlayerCardSlots,"AI",3);
+    CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(scenario.otherPlayerCardSlots,"AI",3);
 
-    _RandomizePlayerIdCardChoicesForScenario();
+    RandomizePlayerIdCardChoicesForScenario();
 
-    _RandomizePlayerIdCardChoicesForScenario("AI");
+    RandomizePlayerIdCardChoicesForScenario("AI");
 
-    _CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(gh.playerId,1);
+    CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(gh.playerId,1);
 
-    _CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart("AI",4);
+    CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart("AI",4);
 
-    _AttachOnClickCardChoiceToDOMs();
+    AttachOnClickCardChoiceToDOMs();
 
-    _AddScenarioRunButton();
+    AddScenarioRunButton();
 }
 
 
 
-function _CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridColumnStart){
+export function CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridColumnStart){
     
     const gh = window.gameHandler;
 
@@ -59,7 +59,7 @@ function _CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridColumnS
 
 }
     
- function _CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(playerId,gridColumnStart){
+ export function CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(playerId,gridColumnStart){
      
     const gh = window.gameHandler;
 
@@ -98,7 +98,7 @@ function _CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridColumnS
     }
 }
     
-function _RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.playerId){ //called in begin period
+export function RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.playerId){ //called in begin period
         
     const gh = window.gameHandler;
 
@@ -125,7 +125,7 @@ function _RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.playerId
 }
 
     
-function _AttachOnClickCardChoiceToDOMs(){
+export function AttachOnClickCardChoiceToDOMs(){
     
     const gh = window.gameHandler;
 
@@ -155,7 +155,7 @@ function _AttachOnClickCardChoiceToDOMs(){
     }  
 }
     
-function _AddScenarioRunButton(){
+export function AddScenarioRunButton(){
     
     const gh = window.gameHandler;
 
