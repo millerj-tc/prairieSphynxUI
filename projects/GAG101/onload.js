@@ -24,11 +24,7 @@ export function onload(){
 
     
     koalas.AddPhase("DupeConk Loser Dupes", DupeConkLosers);
-    
-    
-    // assess dupe prefs: deactiveate losing dupes at phase & scenario level
-    
-    // dupe resolution output
+
     
     // phase: dig up a Vigonian Crystal
     
@@ -43,9 +39,6 @@ export function onload(){
     GenericScenarioPrepWithAI();
     
     const testCharObj = charData[0];
-    
-    //console.log(uiPhaseUtils.OutputTextDivWithNounImages(`[argN[Yetelu]]: Welcome [arg0[]] to the Dance of Riddles, [arg1[]], [arg2[]] arg 0 [p0[are]] [s0[an individual/a group]] and [p0[their]] pronoun is this, arg 1 [p1[are]] [s1[an individual/a group]] and [p1[their]] pronoun is this [s1[singular/plural]] arg 2 [p2[are]] [s2[an individual/a group]] and [p2[their]] pronoun is this`,[testCharObj],[charData[1]],[charData[2],charData[3]]));
-
 }
 
 function _LoadCollectionCards(){

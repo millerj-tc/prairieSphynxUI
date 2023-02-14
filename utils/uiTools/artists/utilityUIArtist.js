@@ -133,7 +133,7 @@ export class utilityUIArtist
     
     ReplaceWordsBasedOnPluralSubjects(arrayOfSubjects,string,pIndex){ 
         //arrayOfSubjects could be any array that represents the subjects in the sentence (objects, strings, etc.), all this cares about is counting the number to determine if there's more than 1 
-        //string ex: " [s[manages/manage]s] to capture "
+        //string ex: " ~s~manages/manage~~ to capture "
     
         let $returnString = string;
         
