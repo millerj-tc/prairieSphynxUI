@@ -8,8 +8,6 @@ import {CollapseButtonOnClick} from "../../../../utils/uiTools/artists/trayArtis
 import {GenerateCombinations} from "../../../../utils/mathAndLogicUtils/miscUtils.js";
 import {charData} from "../data/charData.js";
 
-// need something to trigger GenericScenarioPrepWithAI to prep scenario
-
 export function BuildDanceOfRiddlesPvEScenario(){
     
     const gh = window.gameHandler;
@@ -156,6 +154,12 @@ export function DanceOfRiddlesPvEPrep(){
     
     const teamIterations = GenerateCombinations(validChars,playerCardSlots);
     
+    let playerWins = 0;
+    
+    let otherPlayerWins = 0;
+    
+    let playerTies = 0;
+    
     for(let i = 0; i < teamIterations.length; i++){
         
         for(const c of validChars){ //only reset for changing characters, not feys
@@ -192,11 +196,15 @@ export function DanceOfRiddlesPvEPrep(){
         //scenarioPrepUtils.SetCardForSlot(playerCard3,gh.playerId,3);
         
         scenario.BeginProcess();
+                
+        if(scenario.GetCurrentRunProcessorProp("winnerArr").filter(c => c.owner != gh.playerId).length == 0) playerWins++;
+        else if(scenario.GetCurrentRunProcessorProp("winnerArr").filter(c => c.owner != gh.otherPlayerId).length == 0) otherPlayerWins++;
+        else playerTies++;
         
     }
     
-    console.log(`Player wins: ${gh.playerWins}`);
-    console.log(`Other player wins: ${gh.otherPlayerWins}`);
-    console.log(`Ties: ${gh.playerTies}`);
+    console.log(`Player wins: ${playerWins}`);
+    console.log(`Other player wins: ${otherPlayerWins}`);
+    console.log(`Ties: ${playerTies}`);
     
 }

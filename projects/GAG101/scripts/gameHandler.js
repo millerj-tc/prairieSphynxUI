@@ -42,12 +42,9 @@ export class gameHandler
         
         this.playerId = "player";
         
+        this.otherPlayerId = "AI";
+        
         console.warn("above should be their unique player ID");
-        
-        //debug
-        
-        this.playerWins = 0;
-        this.otherPlayerWins = 0;
-        this.playerTies = 0;
+
     }
 }
