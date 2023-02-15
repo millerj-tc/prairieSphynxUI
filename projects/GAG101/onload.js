@@ -1,6 +1,6 @@
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
-import {permutationsOf} from "../../utils/mathAndLogicUtils/miscUtils.js";
+import {GenerateCombinations} from "../../utils/mathAndLogicUtils/miscUtils.js";
 import {DanceOfRiddlesPvEPrep, BuildDanceOfRiddlesPvEScenario} from "./scripts/scenario/danceOfRiddles.js";
 
 
@@ -17,7 +17,6 @@ export function onload(){
     BuildDanceOfRiddlesPvEScenario();
     
     GotoHomeMenu();
-
 }
 
 function _LoadCollectionCards(){

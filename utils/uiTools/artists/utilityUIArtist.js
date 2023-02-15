@@ -143,9 +143,6 @@ export class utilityUIArtist
         else pInd = pIndex
         
         const regex = new RegExp(`\\~s` + pInd + `\\~(.*?)\\~(.*?)\\~`,"gm");
-        
-        console.log($returnString.match(regex));
-
 
         if($returnString.match(regex) == null) return $returnString
 

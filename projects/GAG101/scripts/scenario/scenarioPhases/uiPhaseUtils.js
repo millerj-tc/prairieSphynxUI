@@ -128,14 +128,10 @@ export function ReplaceNounNamesWithImageTagTeamNameAtSize(nounArr,size="M",team
     
     const returnArr = [];
     
-    console.log(nounArr);
-    
     for(const n of nounArr){
                 
         returnArr.push(GetNounUtilArtistImageTagAtSize(n,size,team,name));
     }
-    
-    console.log(returnArr);
     
     return returnArr
 }
@@ -217,8 +213,6 @@ export function UpdateCardSlotArtist(artist,card,size="M"){
         artist.associatedCard.selectedForTeam = false;
         artist.servantArtist.SetDOMInnerTextTo(card.name);
     }
-    
-    console.log(artist);
 
     artist.ClearAllChildren();
 

@@ -19,13 +19,9 @@ export function BuildDanceOfRiddlesPvEScenario(){
     
     DOR.AddPhase("Subsequent Reset", SubsequentRunReset);
     
-    DOR.AddPhase("Intro",uiPhaseUtils.OutputTextDivWithNounImages)
-        .SetArguments([`[argN[Holy Fey]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?`]);
+    DOR.AddPhase("Get Winners",_GetDanceofRiddlesWinners);
     
-    const winners = DOR.AddPhase("Get Winners",_GetDanceofRiddlesWinners);
-    
-    DOR.AddPhase("Dance Output",_DanceOfRiddlesOutput)
-        .SetArguments([winners]);
+    DOR.AddPhase("Dance Output",_DanceOfRiddlesOutput);
     
     console.warn("winning dance of riddles should have some kind of game effect");
 
@@ -47,22 +43,32 @@ function _GetDanceofRiddlesWinners(){
     
     for(const char of playerCards){
         
-        playerScore += (char.GetProp("speed") + char.GetProp("cunning") + char.GetProp("charisma"))/3
+        playerScore += (char.GetProp("speed") + char.GetProp("cunning") + char.GetProp("charisma"));
     }
+    
+    playerScore = playerScore/playerCards.length;
     
     let otherPlayerScore = 0;
     
     for(const char of otherPlayerCards){
         
-        otherPlayerScore += (char.GetProp("speed") + char.GetProp("cunning") + char.GetProp("charisma"))/3
+        otherPlayerScore += (char.GetProp("speed") + char.GetProp("cunning") + char.GetProp("charisma"));
     }
     
-    if(playerScore > otherPlayerScore) return playerCards
-    else if(otherPlayerScore > playerScore) return otherPlayerCards
-    else return playerCards.concat(otherPlayerCards)
+    otherPlayerScore = otherPlayerScore/otherPlayerCards.length;
+    
+    if(playerScore > otherPlayerScore) gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards);
+    else if(otherPlayerScore > playerScore) gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",otherPlayerCards);
+    else  gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards.concat(otherPlayerCards));
 }
 
-function _DanceOfRiddlesOutput(winnerArr){
+function _DanceOfRiddlesOutput(){
+    
+    const winnerArr = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessorProp("winnerArr");
+    
+    const artist = window.gameHandler.narrOutputArtist;
+    
+    artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
     if(winnerArr.length > 4){
         
@@ -72,6 +78,15 @@ function _DanceOfRiddlesOutput(winnerArr){
         
        uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] wriggle, strut, flounce, and prance. They dip and spin, they bend and twist. They pose a question with their bodies, an unanswerable enigma of form and motion.",winnerArr); 
     }
+    
+    let consoleString = "";
+    
+    for(const char of winnerArr){
+        
+        consoleString += char.name + " ";
+    }
+    
+    console.log(consoleString);
 }
 
 export function DanceOfRiddlesPvEPrep(){
@@ -86,7 +101,7 @@ export function DanceOfRiddlesPvEPrep(){
     
     gh.cardChoiceTrayArtist.SetDOMDisplayTo("block");
     
-    CollapseButtonOnClick(gh.cardChoiceTrayArtist);
+    //CollapseButtonOnClick(gh.cardChoiceTrayArtist);
     
     scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(4,gh.playerId,2);
     
@@ -111,6 +126,8 @@ export function DanceOfRiddlesPvEPrep(){
     scenarioPrepUtils.AttachOnClickCardChoiceToDOMs();
     
     scenarioPrepUtils.AddScenarioRunButton();
+    
+    uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
     
     
 }

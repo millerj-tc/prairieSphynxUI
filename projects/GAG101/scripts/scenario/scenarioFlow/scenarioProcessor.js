@@ -1,4 +1,6 @@
 import {uiToolsHandler} from "/utils/uiTools/uiToolsHandler.js";
+import {GenerateCombinations} from "../../../../../utils/mathAndLogicUtils/miscUtils.js";
+import {charData} from "../../data/charData.js";
 
 export class scenarioProcessor
 {
@@ -49,6 +51,16 @@ export class scenarioProcessor
         return this.currentRunProcessor
     }
     
+    SetCurrentRunProcessorProp(prop,value){
+        
+        this.currentRunProcessor[prop] = value;
+    }
+    
+    GetCurrentRunProcessorProp(prop){
+        
+        return this.currentRunProcessor[prop];
+    }
+    
     GetCurrentPhase(){
         
         const rp = this.currentRunProcessor;
@@ -80,8 +92,6 @@ class scenarioProcessorRun
     RunNextPhase(){
                 
         if(this.currentPhaseInd >= this.phases.length) return
-        
-        console.log(this.phases);
         
         const phase = this.phases[this.currentPhaseInd];
         
