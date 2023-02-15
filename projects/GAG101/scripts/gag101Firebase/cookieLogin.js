@@ -37,14 +37,7 @@ function _GetCookie(){
      onValue(users, (snapshot) => {
         const data = snapshot.val();
 
-        console.log(data);
     });
-    
-    
-    
-    
-    
-    console.log(uid);
         
     return uid
 }
