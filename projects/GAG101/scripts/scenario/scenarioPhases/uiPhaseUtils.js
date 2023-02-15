@@ -211,7 +211,7 @@ function _OnClickCardSelect(card){
     
 }
 
-export function UpdateCardSlotArtist(artist,card,size="L"){
+export function UpdateCardSlotArtist(artist,card,size="M"){
         
     if(artist.associatedCard != null){
         artist.associatedCard.selectedForTeam = false;

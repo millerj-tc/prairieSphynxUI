@@ -57,7 +57,7 @@
     top: 5%;
     left:-75%;
     position:relative;
-    
+    overflow-y: auto;
 }
 
 .cardChoiceTrayGrid{
@@ -68,7 +68,6 @@
     gap: 5%;
     align-items: center;
     justify-content: center;
-    overflow-y: auto;
     width:80%;
     height:100%;
     align-items: center;

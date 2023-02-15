@@ -14,18 +14,21 @@ export function BuildDanceOfRiddlesPvEScenario(){
     const gh = window.gameHandler;
     
     const DOR = gh.scenarioHandler.AddScenario("Dance of Riddles");
-    
-    DOR.playerCardSlots = 4;
-    
+
     gh.scenarioHandler.SetCurrentScenarioByName("Dance of Riddles");
     
     DOR.AddPhase("Subsequent Reset", SubsequentRunReset);
     
     DOR.AddPhase("Intro",uiPhaseUtils.OutputTextDivWithNounImages)
-        .SetArguments([`[argN[Holy Fey]]: Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?`]);
+        .SetArguments([`[argN[Holy Fey]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?`]);
     
     
 
+}
+
+function _GetDanceofRiddlesWinners(){
+    
+    //highest average across team: speed, charisma, cunning) (Doran can whisper into people's ear for an additional +2)
 }
 
 export function DanceOfRiddlesPvEPrep(){
@@ -42,9 +45,9 @@ export function DanceOfRiddlesPvEPrep(){
     
     CollapseButtonOnClick(gh.cardChoiceTrayArtist);
     
-    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(scenario.playerCardSlots,gh.playerId,2);
+    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(4,gh.playerId,2);
     
-    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(scenario.otherPlayerCardSlots,"AI",3);
+    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(2,"AI",3);
     
     scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario();
     

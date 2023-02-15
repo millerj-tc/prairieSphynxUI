@@ -12,3 +12,23 @@ export function GetCardSelectedTeammates(card,enemies = "false"){
     
     return returnArr
 }
+
+export function GetSelectedCardsFor(owner = "any"){
+    
+    const cardHandler = window.gameHandler.collectionCardHandler;
+    
+    const returnArr = [];
+    
+    for(const c of cardHandler.GetCards()){
+                
+        if(c.selectedForTeam){
+            
+            if(owner != "any" && c.owner != owner) continue
+
+            returnArr.push(c);
+        }
+        
+    }
+    
+    return returnArr
+}
