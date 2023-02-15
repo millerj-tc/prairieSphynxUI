@@ -2,6 +2,7 @@ import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
 import {GenerateCombinations} from "../../utils/mathAndLogicUtils/miscUtils.js";
 import {DanceOfRiddlesPvEPrep, BuildDanceOfRiddlesPvEScenario} from "./scripts/scenario/danceOfRiddles.js";
+import {LoginWithCookie} from "./scripts/gag101Firebase/cookieLogin.js";
 
 
 
@@ -9,6 +10,8 @@ import {DanceOfRiddlesPvEPrep, BuildDanceOfRiddlesPvEScenario} from "./scripts/s
 export function onload(){
     
     window.gameHandler = new gameHandler();
+    
+    LoginWithCookie();
     
     const gh = window.gameHandler;
     

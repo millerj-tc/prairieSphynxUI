@@ -4,8 +4,6 @@ import { getDatabase, ref, set, child, push, update } from "https://www.gstatic.
 
 import {LoginFlow} from "./loginFlow.js";
 
-import {GetElementById} from "./../ui.js";
-
 export function Register(){
     
     SignOut(false);
@@ -32,23 +30,23 @@ export function Register(){
       });
     }
 
-function _PushCharacterNameAndOptOutToDatabase(){
-    
-    const db = getDatabase();
-    
-    const optOutValue = GetElementById("optOutCheckbox").checked;
+//function _PushCharacterNameAndOptOutToDatabase(){
+//    
+//    const db = getDatabase();
+//    
+//    const optOutValue = GetElementById("optOutCheckbox").checked;
+//
+//    const name = GetElementById("newUserChar").value
+//    
+//    set(ref(db, 'users/' + window.uid), {
+//        name: name,
+//        optOut: optOutValue,
+//        poems: {}
+//  });
+//
+//}
 
-    const name = GetElementById("newUserChar").value
-    
-    set(ref(db, 'users/' + window.uid), {
-        name: name,
-        optOut: optOutValue,
-        poems: {}
-  });
-
-}
-
-export function Login(){
+export function Login(){ //this is what gets called by a Login button or similar
     
     const email = GetElementById("existingUserEmail").value;
     const pass = GetElementById("existingPass").value;
@@ -69,7 +67,7 @@ export function Login(){
 
 }
 
-export function EstablishSession(){
+export function EstablishSession(){ //this is only necessary if using actionLogger
     
     const db = getDatabase();
 
@@ -83,8 +81,8 @@ export function EstablishSession(){
   // Get a key for a new Post.
   const newSessionKey = push(child(ref(db), 'sessions ')).key;
     
-  window.gameHandler.actionLogger.SetSessionKey(newSessionKey);
-
+    if(window.actionLogger != null) window.actionLogger.SetSessionKey(newSessionKey);
+    
   // Write the new post's data simultaneously in the posts list and the user's post list.
   const updates = {};
   updates[`/sessions/` + newSessionKey + `/` ] = postData;

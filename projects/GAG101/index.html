@@ -8,3 +8,62 @@
 <div id="dimmer" class="dimmer"><div id="cardChoiceGrid" class="cardChoiceGrid"></div></div>
 <div id="narrativeOutput" class="narrativeOutput"></div>
 <div id="cardChoiceTray" class="cardChoiceTray"><div id="cardChoiceTrayGrid" class="cardChoiceTrayGrid"></div>
+    
+<script type="module">
+
+// Import the functions you need from the SDKs you need
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js";
+
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
+
+// Your web app's Firebase configuration
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBvjgVPY_ZOM0hoEYc4ewSXFIdw17cFZCE",
+
+authDomain: "griot-games.firebaseapp.com",
+
+projectId: "griot-games",
+
+databaseURL: "https://griot-games-default-rtdb.firebaseio.com/",
+
+storageBucket: "griot-games.appspot.com",
+
+messagingSenderId: "225872980699",
+
+appId: "1:225872980699:web:5a2f4ee4f30bcde76cbafe",
+
+measurementId: "G-KZQ8J7P5E4"
+
+};
+
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+
+const analytics = getAnalytics(app);
+
+const db = getDatabase(app);
+
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    window.uid = user.uid;
+    LoginFlow();
+    //EstablishSession();
+  } else {
+    // User is signed out
+    // ...
+  }
+});
+
+</script>
