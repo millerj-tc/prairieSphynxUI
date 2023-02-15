@@ -20,6 +20,8 @@ export function BuildDanceOfRiddlesPvEScenario(){
     
     DOR.AddPhase("Get Winners",_GetDanceofRiddlesWinners);
     
+    console.warn("clues for who is shit at this");
+    
     DOR.AddPhase("Dance Output",_DanceOfRiddlesOutput);
     
     console.warn("winning dance of riddles should have some kind of game effect");
@@ -115,9 +117,9 @@ export function DanceOfRiddlesPvEPrep(){
     
     //scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario("AI");
     
-    const holyFey = cardHandler.GetCardByName("Holy Fey","any",false);
+    const holyFey = cardHandler.GetCardByName("Holy Fey Upa","any",false);
     
-    const holyFey2 = cardHandler.GetCardByName("Lesser Holy Fey","any",false);
+    const holyFey2 = cardHandler.GetCardByName("Holy Fey Kupo","any",false);
     
     scenarioPrepUtils.SetCardForSlot(holyFey,"AI",0);
     
@@ -131,57 +133,53 @@ export function DanceOfRiddlesPvEPrep(){
     
     scenarioPrepUtils.AddScenarioRunButton();
     
-    uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
+    console.warn("what about framing text like the intro that shouldn't be cleared on subsequent runs?");
+    
+    uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey Upa]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
     
     // below is debug
     
-    const validChars = charData.filter(c => c.unlockedForPlayer);
-    
-    const teamIterations = GenerateCombinations(validChars,4);
-    
-    for(let i = 0; i < teamIterations.length; i++){
-        
-        const iterationArr = teamIterations[i];
-        
-        const slot0Name = iterationArr[0].name
-              
-        const slot1Name = iterationArr[1].name
-            
-        const slot2Name = iterationArr[2].name
-            
-        const slot3Name = iterationArr[3].name
-        
-        console.log(`testing ${slot0Name} ${slot1Name} ${slot2Name} ${slot3Name}`);
-        
-        const playerCard0 = cardHandler.GetCardByName(slot0Name,gh.playerId);
-        
-        const playerCard1 = cardHandler.GetCardByName(slot1Name,gh.playerId);
-        
-        const playerCard2 = cardHandler.GetCardByName(slot2Name,gh.playerId);
-        
-        const playerCard3 = cardHandler.GetCardByName(slot3Name,gh.playerId);
-        
-        scenarioPrepUtils.SetCardForSlot(playerCard0,gh.playerId,0);
-        
-        scenarioPrepUtils.SetCardForSlot(playerCard1,gh.playerId,1);
-        
-        scenarioPrepUtils.SetCardForSlot(playerCard2,gh.playerId,2);
-        
-        scenarioPrepUtils.SetCardForSlot(playerCard3,gh.playerId,3);
-        
-        console.log(slot0Name);
-        
-        console.log(playerCard0);
-        
-        console.log(slot1Name);
-        
-        console.log(playerCard1);
-        
-        console.log(cardInfoPhaseUtils.GetSelectedCardsFor(gh.playerId));
-        
-        scenario.BeginProcess();
-        
-        break
-    }
+//    const validChars = cardHandler.GetCards().filter(c => (c.unlockedForPlayer && c.owner == gh.playerId));
+//    
+//    const teamIterations = GenerateCombinations(validChars,4);
+//    
+//    for(let i = 0; i < teamIterations.length; i++){
+//        
+//        for(const c of validChars){ //only reset for changing characters, not feys
+//        
+//            c.selectedForTeam = false;
+//        }
+//
+//        const iterationArr = teamIterations[i];
+//        
+//        const slot0Name = iterationArr[0].name
+//              
+//        const slot1Name = iterationArr[1].name
+//            
+//        const slot2Name = iterationArr[2].name
+//            
+//        const slot3Name = iterationArr[3].name
+//        
+//        console.log(`testing ${slot0Name} ${slot1Name} ${slot2Name} ${slot3Name}`);
+//        
+//        const playerCard0 = cardHandler.GetCardByName(slot0Name,gh.playerId);
+//        
+//        const playerCard1 = cardHandler.GetCardByName(slot1Name,gh.playerId);
+//        
+//        const playerCard2 = cardHandler.GetCardByName(slot2Name,gh.playerId);
+//        
+//        const playerCard3 = cardHandler.GetCardByName(slot3Name,gh.playerId);
+//        
+//        scenarioPrepUtils.SetCardForSlot(playerCard0,gh.playerId,0);
+//        
+//        scenarioPrepUtils.SetCardForSlot(playerCard1,gh.playerId,1);
+//        
+//        scenarioPrepUtils.SetCardForSlot(playerCard2,gh.playerId,2);
+//        
+//        scenarioPrepUtils.SetCardForSlot(playerCard3,gh.playerId,3);
+//        
+//        scenario.BeginProcess();
+//        
+//    }
     
 }

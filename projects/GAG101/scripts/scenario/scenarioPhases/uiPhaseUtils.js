@@ -200,6 +200,11 @@ function _OnClickCardSelect(card){
     
     const artist = scenario.lastClickedCardSlotArtist;
     
+    if(artist.associatedCard != null){
+        artist.associatedCard.selectedForTeam = false;
+        artist.servantArtist.SetDOMInnerTextTo(card.name);
+    }
+    
     UpdateCardSlotArtist(artist,card);
     
     card.selectedForTeam = true;
@@ -209,10 +214,7 @@ function _OnClickCardSelect(card){
 
 export function UpdateCardSlotArtist(artist,card,size="M"){
         
-    if(artist.associatedCard != null){
-        artist.associatedCard.selectedForTeam = false;
-        artist.servantArtist.SetDOMInnerTextTo(card.name);
-    }
+    
 
     artist.ClearAllChildren();
 
