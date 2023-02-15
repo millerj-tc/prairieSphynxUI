@@ -50,6 +50,14 @@ export class cardHandler
         return this.cards
     }
     
+    GetCardByName(name){
+        
+        for(const c of this.cards){
+            
+            if(c.name == name) return c
+        }
+    }
+    
     EmptyCards(){
         
         this.cards = [];

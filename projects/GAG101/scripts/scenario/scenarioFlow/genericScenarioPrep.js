@@ -111,8 +111,6 @@ export function RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.pl
     
     const playerCards = cardHandler.GetCards().filter(c => (c.owner == id && c.unlockedForPlayer == true));
     
-    console.log(playerCards);
-
     const shuffledAvailableCards = ShuffleArray(playerCards);
 
     const playerSlotArtistsArr = scenario.uiToolsHandler.tools.filter(t => t.GetAuthorizedDOMs().id.includes(id + "CardSlot"));
@@ -125,6 +123,19 @@ export function RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.pl
 
         card.selectedForTeam = true;
     }
+}
+
+export function SetCardForSlot(card,owner,slotNum){
+    
+    const gh = window.gameHandler;
+
+    const scenario = gh.scenarioHandler.GetCurrentScenario();
+    
+    const artist = scenario.uiToolsHandler.tools.filter(t => t.GetAuthorizedDOMs().id.includes(owner + "CardSlot" + slotNum))[0];
+    
+    UpdateCardSlotArtist(artist,card);
+    
+    card.selectedForTeam = true;
 }
 
     

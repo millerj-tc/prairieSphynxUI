@@ -217,6 +217,8 @@ export function UpdateCardSlotArtist(artist,card,size="M"){
         artist.associatedCard.selectedForTeam = false;
         artist.servantArtist.SetDOMInnerTextTo(card.name);
     }
+    
+    console.log(artist);
 
     artist.ClearAllChildren();
 
