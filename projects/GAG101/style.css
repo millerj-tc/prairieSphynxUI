@@ -50,12 +50,12 @@
 .cardChoiceTray{
     
     display:none;
-    width: 80%;
+    width: 50%;
     height: min-content;
     max-height: 80%;
     background-color: azure;
     top: 5%;
-    left:-75%;
+    left:-45%;
     position:relative;
     overflow-y: auto;
 }
@@ -80,7 +80,7 @@
     
     text-align: center;
     margin:10px;
-    
+    width: 125px;
     font-size: 18px;
 }
 
@@ -89,5 +89,7 @@
     margin:10%;
     position:fixed;
     font-size: 25px;
+    width: 80%;
+    margin:10%;
 }
 
