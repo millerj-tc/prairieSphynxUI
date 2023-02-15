@@ -58,7 +58,7 @@ export class scenarioProcessor
     
     GetCurrentRunPhaseByName(name){
         
-        for const(ph of this.currentRunProcessor.phases){
+        for (const ph of this.currentRunProcessor.phases){
             
             if(ph.phaseName == name){
                 
@@ -73,13 +73,15 @@ class scenarioProcessorRun
     constructor(runId){
         
         this.phases = [];
-        this.currentPhaseInd = -1;
+        this.currentPhaseInd = 0;
         this.runId;
     }
     
     RunNextPhase(){
                 
         if(this.currentPhaseInd >= this.phases.length) return
+        
+        console.log(this.phases);
         
         const phase = this.phases[this.currentPhaseInd];
         

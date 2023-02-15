@@ -1,5 +1,7 @@
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
+import {permutationsOf} from "../../utils/mathAndLogicUtils/miscUtils.js";
+import {DanceOfRiddlesPvEPrep, BuildDanceOfRiddlesPvEScenario} from "./scripts/scenario/danceOfRiddles.js";
 
 
 
@@ -11,6 +13,10 @@ export function onload(){
     const gh = window.gameHandler;
     
     _LoadCollectionCards();
+    
+    BuildDanceOfRiddlesPvEScenario();
+    
+    GotoHomeMenu();
 
 }
 
@@ -35,4 +41,19 @@ function _LoadCollectionCards(){
         card2.owner = "AI";
         
     }
+}
+
+export function GotoHomeMenu(){
+    
+    const gh = window.gameHandler;
+    
+    gh.narrOutputArtist.ClearAllChildren();
+    
+    const dorButton = document.createElement("button");
+    
+    dorButton.innerText = "Dance of Riddles";
+    
+    dorButton.onclick = DanceOfRiddlesPvEPrep;
+    
+    gh.narrOutputArtist.AppendElementWithinDOM(dorButton);
 }

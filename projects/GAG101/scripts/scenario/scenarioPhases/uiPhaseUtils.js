@@ -2,10 +2,6 @@ import {charData} from "../../data/charData.js";
 
 export function OutputTextDivWithNounImages(string){
     
-    //what if it could take any number of arguments (including 0) and did different things if they were arrays or single objects? That way you could include different groups, etc.
-    
-    //Also build in all the steps of dupeCunk output (replace based on plural subjects, specify pronouns, etc.)
-    
     //"[argNN[name (for image)]team]: Welcome to the Dance of Riddles, [arg01[(use GetSpanList)/team/name]]
     
     let returnString = string;
@@ -24,38 +20,40 @@ export function OutputTextDivWithNounImages(string){
     
     let matchArr = returnString.match(/\[arg\d\[(.*?)\](.*?)\]/gm);
     
-    for(let i = 0; i < matchArr.length; i++){
-        
-        const match = matchArr[i];
-        
-        const regex = new RegExp(`\\[arg` + i + `\\[(.*?)\\](.*?)\\]`,"gm");
-        
-        let teamBar = false;
+    if(matchArr != null){
     
-        let attachName = false;
+        for(let i = 0; i < matchArr.length; i++){
 
-        if(match.includes("]team")){
+            const match = matchArr[i];
 
-            teamBar = true;
+            const regex = new RegExp(`\\[arg` + i + `\\[(.*?)\\](.*?)\\]`,"gm");
+
+            let teamBar = false;
+
+            let attachName = false;
+
+            if(match.includes("]team")){
+
+                teamBar = true;
+            }
+
+            if(match.includes("name]")){
+
+                attachName = true;
+            }
+
+            const replacementString = _GetStringListingNounsBasedOnNumber(nounGroupsArr[i],gh.narrOutputArtist.imageSize,teamBar,attachName);
+
+            returnString = returnString.replace(regex,replacementString); //for some reason replace was removing one "$" at either end so they have been forced in manually
+
+            returnString = utilityArtist.ReplaceWordsBasedOnPluralSubjects(nounGroupsArr[i],returnString,i);
+
+            returnString = utilityArtist.ReplacePronouns(nounGroupsArr[i],returnString,i);
+
+            returnString = utilityArtist.CapitalizeLettersAfterAppropriatePunctuation(returnString);
         }
 
-        if(match.includes("name]")){
-
-            attachName = true;
-        }
-        
-        const replacementString = _GetStringListingNounsBasedOnNumber(nounGroupsArr[i],gh.narrOutputArtist.imageSize,teamBar,attachName);
-        
-        returnString = returnString.replace(regex,replacementString); //for some reason replace was removing one "$" at either end so they have been forced in manually
-        
-        returnString = utilityArtist.ReplaceWordsBasedOnPluralSubjects(nounGroupsArr[i],returnString,i);
-        
-        returnString = utilityArtist.ReplacePronouns(nounGroupsArr[i],returnString,i);
-        
-        returnString = utilityArtist.CapitalizeLettersAfterAppropriatePunctuation(returnString);
     }
-
-    
      
     gh.narrOutputArtist.AppendElementWithinDOM(utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(returnString));
 
@@ -213,7 +211,7 @@ function _OnClickCardSelect(card){
     
 }
 
-export function UpdateCardSlotArtist(artist,card){
+export function UpdateCardSlotArtist(artist,card,size="L"){
         
     if(artist.associatedCard != null){
         artist.associatedCard.selectedForTeam = false;
@@ -226,7 +224,7 @@ export function UpdateCardSlotArtist(artist,card){
 
     const img = document.createElement("img");
 
-    img.src = card.imageL;
+    img.src = card["image" + size];
 
     artist.AppendElementWithinDOM(img);
 }

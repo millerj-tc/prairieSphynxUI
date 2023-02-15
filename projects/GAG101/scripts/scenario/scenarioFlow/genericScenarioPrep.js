@@ -12,8 +12,11 @@ export function GenericScenarioPrepWithAI(){ //only run this once when the scena
     const scenario = gh.scenarioHandler.GetCurrentScenario();
     
     gh.narrOutputArtist.ClearAllChildren();
+    
+    gh.cardChoiceTrayArtist.SetDOMDisplayTo("block");
+    
+    CollapseButtonOnClick(gh.cardChoiceTrayArtist);
             
-    console.warn("display card choice tray here");
     CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(scenario.playerCardSlots,gh.playerId,2);
 
     CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(scenario.otherPlayerCardSlots,"AI",3);

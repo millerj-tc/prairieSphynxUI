@@ -49,19 +49,23 @@
 
 .cardChoiceTray{
     
+    display:none;
     width: 80%;
-    height:60%;
+    height: min-content;
+    max-height: 80%;
     background-color: azure;
     top: 5%;
     left:-75%;
     position:relative;
+    
 }
 
 .cardChoiceTrayGrid{
     
     display:grid;
     grid-template-columns: auto auto auto auto;
-    gap: 1%;
+    grid-auto-rows: min-content;
+    gap: 5%;
     align-items: center;
     justify-content: center;
     overflow-y: auto;
@@ -70,6 +74,7 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    padding-bottom: 100px;
 }
 
 .cardChoiceTrayGrid .nameSlot{
@@ -84,5 +89,6 @@
     
     margin:10%;
     position:fixed;
+    font-size: 25px;
 }
 
