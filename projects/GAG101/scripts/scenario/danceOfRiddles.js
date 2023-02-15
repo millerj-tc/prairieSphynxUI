@@ -61,9 +61,18 @@ function _GetDanceofRiddlesWinners(){
     
     console.log(`${playerScore} vs ${otherPlayerScore}`);
     
-    if(playerScore > otherPlayerScore) gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards);
-    else if(otherPlayerScore > playerScore) gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",otherPlayerCards);
-    else  gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards.concat(otherPlayerCards));
+    if(playerScore > otherPlayerScore){
+        gh.playerWins++;
+        gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards);
+    }
+    else if(otherPlayerScore > playerScore){
+        gh.otherPlayerWins++;
+        gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",otherPlayerCards);
+    }
+    else{
+        gh.playerTies++;
+        gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards.concat(otherPlayerCards));
+    }
 }
 
 function _DanceOfRiddlesOutput(){
@@ -80,7 +89,7 @@ function _DanceOfRiddlesOutput(){
     }
     else{
         
-       uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] wriggle, strut, flounce, and prance. They dip and spin, they bend and twist. They pose a question with their bodies, an unanswerable enigma of form and motion.",winnerArr); 
+       uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] wriggle, strut, flounce, and prance. They dip and spin, they bend and twist. They pose questions with their bodies, unanswerable enigmas of form and motion.",winnerArr); 
     }
     
     let consoleString = "";
@@ -94,6 +103,10 @@ function _DanceOfRiddlesOutput(){
 }
 
 export function DanceOfRiddlesPvEPrep(){
+    
+    const playerCardSlots = 3;
+    
+    const otherPlayerCardSlots = 2;
     
     const gh = window.gameHandler;
 
@@ -109,9 +122,9 @@ export function DanceOfRiddlesPvEPrep(){
     
     //CollapseButtonOnClick(gh.cardChoiceTrayArtist);
     
-    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(4,gh.playerId,2);
+    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(playerCardSlots,gh.playerId,2);
     
-    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(2,"AI",3);
+    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(otherPlayerCardSlots,"AI",3);
     
     scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario();
     
@@ -139,47 +152,51 @@ export function DanceOfRiddlesPvEPrep(){
     
     // below is debug
     
-//    const validChars = cardHandler.GetCards().filter(c => (c.unlockedForPlayer && c.owner == gh.playerId));
-//    
-//    const teamIterations = GenerateCombinations(validChars,4);
-//    
-//    for(let i = 0; i < teamIterations.length; i++){
-//        
-//        for(const c of validChars){ //only reset for changing characters, not feys
-//        
-//            c.selectedForTeam = false;
-//        }
-//
-//        const iterationArr = teamIterations[i];
-//        
-//        const slot0Name = iterationArr[0].name
-//              
-//        const slot1Name = iterationArr[1].name
-//            
-//        const slot2Name = iterationArr[2].name
-//            
-//        const slot3Name = iterationArr[3].name
-//        
-//        console.log(`testing ${slot0Name} ${slot1Name} ${slot2Name} ${slot3Name}`);
-//        
-//        const playerCard0 = cardHandler.GetCardByName(slot0Name,gh.playerId);
-//        
-//        const playerCard1 = cardHandler.GetCardByName(slot1Name,gh.playerId);
-//        
-//        const playerCard2 = cardHandler.GetCardByName(slot2Name,gh.playerId);
-//        
-//        const playerCard3 = cardHandler.GetCardByName(slot3Name,gh.playerId);
-//        
-//        scenarioPrepUtils.SetCardForSlot(playerCard0,gh.playerId,0);
-//        
-//        scenarioPrepUtils.SetCardForSlot(playerCard1,gh.playerId,1);
-//        
-//        scenarioPrepUtils.SetCardForSlot(playerCard2,gh.playerId,2);
-//        
-//        scenarioPrepUtils.SetCardForSlot(playerCard3,gh.playerId,3);
-//        
-//        scenario.BeginProcess();
-//        
-//    }
+    const validChars = cardHandler.GetCards().filter(c => (c.unlockedForPlayer && c.owner == gh.playerId));
+    
+    const teamIterations = GenerateCombinations(validChars,playerCardSlots);
+    
+    for(let i = 0; i < teamIterations.length; i++){
+        
+        for(const c of validChars){ //only reset for changing characters, not feys
+        
+            c.selectedForTeam = false;
+        }
+
+        const iterationArr = teamIterations[i];
+        
+        const slot0Name = iterationArr[0].name
+              
+        const slot1Name = iterationArr[1].name
+            
+        const slot2Name = iterationArr[2].name
+            
+        //const slot3Name = iterationArr[3].name
+        
+        console.log(`testing ${slot0Name} ${slot1Name} ${slot2Name}`)// ${slot3Name}`);
+        
+        const playerCard0 = cardHandler.GetCardByName(slot0Name,gh.playerId);
+        
+        const playerCard1 = cardHandler.GetCardByName(slot1Name,gh.playerId);
+        
+        const playerCard2 = cardHandler.GetCardByName(slot2Name,gh.playerId);
+        
+        //const playerCard3 = cardHandler.GetCardByName(slot3Name,gh.playerId);
+        
+        scenarioPrepUtils.SetCardForSlot(playerCard0,gh.playerId,0);
+        
+        scenarioPrepUtils.SetCardForSlot(playerCard1,gh.playerId,1);
+        
+        scenarioPrepUtils.SetCardForSlot(playerCard2,gh.playerId,2);
+        
+        //scenarioPrepUtils.SetCardForSlot(playerCard3,gh.playerId,3);
+        
+        scenario.BeginProcess();
+        
+    }
+    
+    console.log(`Player wins: ${gh.playerWins}`);
+    console.log(`Other player wins: ${gh.otherPlayerWins}`);
+    console.log(`Ties: ${gh.playerTies}`);
     
 }
