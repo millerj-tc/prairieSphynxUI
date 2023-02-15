@@ -50,9 +50,13 @@ export class cardHandler
         return this.cards
     }
     
-    GetCardByName(name){
+    GetCardByName(name,owner = "any",unlockedForPlayer = true){
         
         for(const c of this.cards){
+            
+            if(c.owner != owner && owner != "any") continue
+  
+            if(!c.unlockedForPlayer && unlockedForPlayer) continue
             
             if(c.name == name) return c
         }

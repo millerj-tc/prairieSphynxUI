@@ -128,6 +128,8 @@ export function RandomizePlayerIdCardChoicesForScenario(id=window.gameHandler.pl
 export function SetCardForSlot(card,owner,slotNum){
     
     const gh = window.gameHandler;
+    
+    card.owner = owner; 
 
     const scenario = gh.scenarioHandler.GetCurrentScenario();
     

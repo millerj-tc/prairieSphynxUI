@@ -5,7 +5,8 @@ import * as uiPhaseUtils from "./scenarioPhases/uiPhaseUtils.js";
 import {scenarioProcessor} from "./scenarioFlow/scenarioProcessor.js";
 import * as scenarioPrepUtils from "./scenarioFlow/genericScenarioPrep.js";
 import {CollapseButtonOnClick} from "../../../../utils/uiTools/artists/trayArtistTrayMovement.js";
-
+import {GenerateCombinations} from "../../../../utils/mathAndLogicUtils/miscUtils.js";
+import {charData} from "../data/charData.js";
 
 // need something to trigger GenericScenarioPrepWithAI to prep scenario
 
@@ -14,8 +15,6 @@ export function BuildDanceOfRiddlesPvEScenario(){
     const gh = window.gameHandler;
     
     const DOR = gh.scenarioHandler.AddScenario("Dance of Riddles");
-
-    gh.scenarioHandler.SetCurrentScenarioByName("Dance of Riddles");
     
     DOR.AddPhase("Subsequent Reset", SubsequentRunReset);
     
@@ -24,6 +23,7 @@ export function BuildDanceOfRiddlesPvEScenario(){
     DOR.AddPhase("Dance Output",_DanceOfRiddlesOutput);
     
     console.warn("winning dance of riddles should have some kind of game effect");
+    
 
 }
 
@@ -57,6 +57,8 @@ function _GetDanceofRiddlesWinners(){
     
     otherPlayerScore = otherPlayerScore/otherPlayerCards.length;
     
+    console.log(`${playerScore} vs ${otherPlayerScore}`);
+    
     if(playerScore > otherPlayerScore) gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards);
     else if(otherPlayerScore > playerScore) gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",otherPlayerCards);
     else  gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards.concat(otherPlayerCards));
@@ -86,7 +88,7 @@ function _DanceOfRiddlesOutput(){
         consoleString += char.name + " ";
     }
     
-    console.log(consoleString);
+    console.error(consoleString);
 }
 
 export function DanceOfRiddlesPvEPrep(){
@@ -94,6 +96,8 @@ export function DanceOfRiddlesPvEPrep(){
     const gh = window.gameHandler;
 
     const cardHandler = gh.collectionCardHandler;
+    
+    gh.scenarioHandler.SetCurrentScenarioByName("Dance of Riddles")
 
     const scenario = gh.scenarioHandler.GetCurrentScenario();
     
@@ -111,9 +115,9 @@ export function DanceOfRiddlesPvEPrep(){
     
     //scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario("AI");
     
-    const holyFey = cardHandler.GetCardByName("Holy Fey");
+    const holyFey = cardHandler.GetCardByName("Holy Fey","any",false);
     
-    const holyFey2 = cardHandler.GetCardByName("Lesser Holy Fey");
+    const holyFey2 = cardHandler.GetCardByName("Lesser Holy Fey","any",false);
     
     scenarioPrepUtils.SetCardForSlot(holyFey,"AI",0);
     
@@ -129,5 +133,55 @@ export function DanceOfRiddlesPvEPrep(){
     
     uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
     
+    // below is debug
+    
+    const validChars = charData.filter(c => c.unlockedForPlayer);
+    
+    const teamIterations = GenerateCombinations(validChars,4);
+    
+    for(let i = 0; i < teamIterations.length; i++){
+        
+        const iterationArr = teamIterations[i];
+        
+        const slot0Name = iterationArr[0].name
+              
+        const slot1Name = iterationArr[1].name
+            
+        const slot2Name = iterationArr[2].name
+            
+        const slot3Name = iterationArr[3].name
+        
+        console.log(`testing ${slot0Name} ${slot1Name} ${slot2Name} ${slot3Name}`);
+        
+        const playerCard0 = cardHandler.GetCardByName(slot0Name,gh.playerId);
+        
+        const playerCard1 = cardHandler.GetCardByName(slot1Name,gh.playerId);
+        
+        const playerCard2 = cardHandler.GetCardByName(slot2Name,gh.playerId);
+        
+        const playerCard3 = cardHandler.GetCardByName(slot3Name,gh.playerId);
+        
+        scenarioPrepUtils.SetCardForSlot(playerCard0,gh.playerId,0);
+        
+        scenarioPrepUtils.SetCardForSlot(playerCard1,gh.playerId,1);
+        
+        scenarioPrepUtils.SetCardForSlot(playerCard2,gh.playerId,2);
+        
+        scenarioPrepUtils.SetCardForSlot(playerCard3,gh.playerId,3);
+        
+        console.log(slot0Name);
+        
+        console.log(playerCard0);
+        
+        console.log(slot1Name);
+        
+        console.log(playerCard1);
+        
+        console.log(cardInfoPhaseUtils.GetSelectedCardsFor(gh.playerId));
+        
+        scenario.BeginProcess();
+        
+        break
+    }
     
 }
