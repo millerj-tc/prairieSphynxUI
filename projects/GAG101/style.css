@@ -87,9 +87,25 @@
 .narrativeOutput{
     
     margin:10%;
-    position:fixed;
+    position:absolute;
     font-size: 25px;
     width: 80%;
     margin:10%;
+    position:relative;
+    z-index: 0;
+}
+
+.loginWrapper{
+    
+    position: absolute;
+    background-color: lightgray;
+    padding:20px;
+    z-index: 2;
+}
+
+.loginOptionsWrapper{
+    
+    display:grid;
+    grid-template-columns: auto auto;
 }
 

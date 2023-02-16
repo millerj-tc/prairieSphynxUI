@@ -7,32 +7,38 @@
 <link rel="stylesheet" type="text/css" href="style.css"/>
 <div id="dimmer" class="dimmer"><div id="cardChoiceGrid" class="cardChoiceGrid"></div></div>
 <div id="narrativeOutput" class="narrativeOutput"></div>
-<div id="cardChoiceTray" class="cardChoiceTray"><div id="cardChoiceTrayGrid" class="cardChoiceTrayGrid"></div>
+<div id="cardChoiceTray" class="cardChoiceTray"><div id="cardChoiceTrayGrid" class="cardChoiceTrayGrid"></div></div>
     
 <div class="loginWrapper" id="loginWrapper">  
-    
-    <div class="loginExisting">
-        <strong>POIETAI ONLINE BETA 0.18</strong><br><br>
-        Existing User Login<br><br>
-        <label for="existingUserEmail">Email:</label>
-        <input type="text" id="existingUserEmail" name="existingUserEmail"><br><br>
-        <label for="existingPass">Password:</label>
-        <input type="password" id="existingPass" name="existingPass"><br><br>
-        <button class="cssLoginButton" onclick="Login()">Login</button>
-        <br><br><br><br>
-    </div>
-    <div class="registerNew">
-        Register New User<br><br>
-        <label for="newUserEmail">Email:</label>
-        <input type="text" id="newUserEmail" name="newUserEmail"><br><br>
-        <label for="newUserPass">Password:</label>
-        <input type="password" id="newUserPass" name="newUserPass"><br><br>
-        <label for="newUserChar">Character name:</label>
-        <input type="text" id="newUserChar" name="newUserChar"><br><br>
-        <input type="checkbox" id="optOutCheckbox" name="optOutCheckbox" value="optOut">
-        <label for="optOutCheckbox">Opt out of anonymized data collection (collected data is game actions only and is not tied to specific users)</label><br><br>
-        <button class="cssRegisterButton" onclick="Register()">Register</button>
+    <strong>GRAND ADVENTURE GAMES #101 0.1</strong><br><br>
+    <div class="loginOptionsWrapper">
         
+        
+        <div class="loginExisting">
+            
+            Existing User Login<br><br>
+            <label for="existingUserEmail">Email:</label>
+            <input type="text" id="existingUserEmail" name="existingUserEmail"><br><br>
+            <label for="existingPass">Password:</label>
+            <input type="password" id="existingPass" name="existingPass"><br><br>
+            <button class="cssLoginButton" onclick="Login()">Login</button>
+            <br><br><br><br>
+        </div>
+        <div class="registerNew">
+            Register New User<br><br>
+            <label for="newUserEmail">Email:</label>
+            <input type="text" id="newUserEmail" name="newUserEmail"><br><br>
+            <label for="newUserPass">Password:</label>
+            <input type="password" id="newUserPass" name="newUserPass"><br><br>
+            <label for="newUserChar">Character name:</label>
+            <input type="text" id="newUserChar" name="newUserChar"><br><br>
+<!--
+            <input type="checkbox" id="optOutCheckbox" name="optOutCheckbox" value="optOut">
+            <label for="optOutCheckbox">Opt out of anonymized data collection (collected data is game actions only and is not tied to specific users)</label><br><br>
+-->
+            <button class="cssRegisterButton" onclick="Register()">Register</button>
+
+        </div>
     </div>
 </div>
     
