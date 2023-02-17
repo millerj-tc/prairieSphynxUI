@@ -16,6 +16,9 @@ export function onload(){
     BuildDanceOfRiddlesPvEScenario();
     
     GotoHomeMenu();
+    
+    console.log(gh.playerId)
+    console.log(gh.playerUsername);
 }
 
 function _LoadCollectionCards(){

@@ -2,8 +2,8 @@
     <script type="module">
         import {onload} from "./onload.js";
         window.onload = onload;
-        import {Login} from "../../utils/firebase/firebaseAuth.js";
-        window.Login = Login;
+        import {GAG101Login} from "./scripts/gag101Firebase/gag101Login.js";
+        window.GAG101Login = GAG101Login;
     </script>
 </head>
 <link rel="stylesheet" type="text/css" href="style.css"/>
@@ -23,7 +23,7 @@
             <input type="text" id="existingUserEmail" name="existingUserEmail"><br><br>
             <label for="existingPass">Password:</label>
             <input type="password" id="existingPass" name="existingPass"><br><br>
-            <button class="cssLoginButton" onclick="Login()">Login</button>
+            <button class="cssLoginButton" onclick="GAG101Login()">Login</button>
             <br><br><br><br>
         </div>
         <div class="registerNew">
@@ -92,10 +92,9 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
-    window.uid = user.uid;
+    window.gameHandler.playerId = user.uid;
     console.warn("get user's collection");
     console.warn("get timestamp of last user submission");
-    console.warn("set player id to uid");
     //EstablishSession();
   } else {
     // User is signed out
