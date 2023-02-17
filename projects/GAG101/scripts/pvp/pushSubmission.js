@@ -8,7 +8,7 @@ export function PushSubmissionToFirebase(){
     
     const username = window.gameHandler.playerUsername;
     
-    const playerCards = GetSelectedCardsFor(username);
+    const playerCards = GetSelectedCardsFor(window.gameHandler.playerId);
     
     for(const c of playerCards){
         
@@ -16,6 +16,8 @@ export function PushSubmissionToFirebase(){
     }
     
     const db = getDatabase();
+    
+    console.log(playerCards);
 
   // A post entry.
   const postData = {
