@@ -97,15 +97,19 @@
 
 .loginWrapper{
     
-    position: absolute;
+    position: fixed;
     background-color: lightgray;
     padding:20px;
     z-index: 2;
+    text-align: center;
 }
 
 .loginOptionsWrapper{
     
     display:grid;
     grid-template-columns: auto auto;
+    text-align: right;
+    gap: 35px;
+    
 }
 

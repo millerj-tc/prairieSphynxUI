@@ -2,6 +2,8 @@
     <script type="module">
         import {onload} from "./onload.js";
         window.onload = onload;
+        import {Login} from "../../utils/firebase/firebaseAuth.js";
+        window.Login = Login;
     </script>
 </head>
 <link rel="stylesheet" type="text/css" href="style.css"/>
@@ -30,8 +32,8 @@
             <input type="text" id="newUserEmail" name="newUserEmail"><br><br>
             <label for="newUserPass">Password:</label>
             <input type="password" id="newUserPass" name="newUserPass"><br><br>
-            <label for="newUserChar">Character name:</label>
-            <input type="text" id="newUserChar" name="newUserChar"><br><br>
+            <label for="newUserName">Username:</label>
+            <input type="text" id="newUserName" name="newUserName"><br><br>
 <!--
             <input type="checkbox" id="optOutCheckbox" name="optOutCheckbox" value="optOut">
             <label for="optOutCheckbox">Opt out of anonymized data collection (collected data is game actions only and is not tied to specific users)</label><br><br>
@@ -91,7 +93,9 @@ onAuthStateChanged(auth, (user) => {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     window.uid = user.uid;
-    LoginFlow();
+    console.warn("get user's collection");
+    console.warn("get timestamp of last user submission");
+    console.warn("set player id to uid");
     //EstablishSession();
   } else {
     // User is signed out

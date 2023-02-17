@@ -2,14 +2,12 @@ import { getAuth,createUserWithEmailAndPassword, signInWithEmailAndPassword, sig
 
 import { getDatabase, ref, set, child, push, update } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
 
-import {LoginFlow} from "./loginFlow.js";
-
 export function Register(){
     
     SignOut(false);
     
-    const email = GetElementById("newUserEmail").value;
-    const pass = GetElementById("newUserPass").value;
+    const email = document.getElementById("newUserEmail").value;
+    const pass = document.getElementById("newUserPass").value;
     
     if(pass.length < 7) window.alert("Password is too few characters :(");
 
@@ -20,7 +18,7 @@ export function Register(){
         // Signed in 
         const user = userCredential.user;
         
-        _PushCharacterNameAndOptOutToDatabase();
+        _PushUserNameToDatabase();
         _EstablishSession();
       })
       .catch((error) => {
@@ -30,26 +28,23 @@ export function Register(){
       });
     }
 
-//function _PushCharacterNameAndOptOutToDatabase(){
-//    
-//    const db = getDatabase();
-//    
-//    const optOutValue = GetElementById("optOutCheckbox").checked;
-//
-//    const name = GetElementById("newUserChar").value
-//    
-//    set(ref(db, 'users/' + window.uid), {
-//        name: name,
-//        optOut: optOutValue,
-//        poems: {}
-//  });
-//
-//}
+function _PushUserNameToDatabase(){
+    
+    const db = getDatabase();
+    
+
+    const name = document.getElementById("newUserName").value
+    
+    set(ref(db, 'users/' + window.uid), {
+        name: name
+  });
+
+}
 
 export function Login(){ //this is what gets called by a Login button or similar
     
-    const email = GetElementById("existingUserEmail").value;
-    const pass = GetElementById("existingPass").value;
+    const email = document.getElementById("existingUserEmail").value;
+    const pass = document.getElementById("existingPass").value;
     const auth = getAuth();
         signInWithEmailAndPassword(auth, email, pass)
   .then((userCredential) => {
