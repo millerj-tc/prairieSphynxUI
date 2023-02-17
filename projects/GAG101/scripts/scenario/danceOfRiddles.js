@@ -7,6 +7,7 @@ import * as scenarioPrepUtils from "./scenarioFlow/genericScenarioPrep.js";
 import {CollapseButtonOnClick} from "../../../../utils/uiTools/artists/trayArtistTrayMovement.js";
 import {GenerateCombinations} from "../../../../utils/mathAndLogicUtils/miscUtils.js";
 import {charData} from "../data/charData.js";
+import {PushSubmissionToFirebase} from "../pvp/pushSubmission.js";
 
 export function BuildDanceOfRiddlesPvEScenario(){
     
@@ -76,6 +77,10 @@ function _GetDanceofRiddlesWinners(){
 function _DanceOfRiddlesOutput(){
     
     const winnerArr = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessorProp("winnerArr");
+    
+    PushSubmissionToFirebase();
+    
+    console.warn("remove PushSubmission from PvE");
     
     const artist = window.gameHandler.narrOutputArtist;
     
@@ -148,63 +153,63 @@ export function DanceOfRiddlesPvEPrep(){
     
     uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey Upa]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
     
-    // below is debug
+    // below is balance testing
     
-    const validChars = cardHandler.GetCards().filter(c => (c.unlockedForPlayer && c.owner == gh.playerId));
-    
-    const teamIterations = GenerateCombinations(validChars,playerCardSlots);
-    
-    let playerWins = 0;
-    
-    let otherPlayerWins = 0;
-    
-    let playerTies = 0;
-    
-    for(let i = 0; i < teamIterations.length; i++){
-        
-        for(const c of validChars){ //only reset for changing characters, not feys
-        
-            c.selectedForTeam = false;
-        }
-
-        const iterationArr = teamIterations[i];
-        
-        const slot0Name = iterationArr[0].name
-              
-        const slot1Name = iterationArr[1].name
-            
-        const slot2Name = iterationArr[2].name
-            
-        //const slot3Name = iterationArr[3].name
-        
-        console.log(`testing ${slot0Name} ${slot1Name} ${slot2Name}`)// ${slot3Name}`);
-        
-        const playerCard0 = cardHandler.GetCardByName(slot0Name,gh.playerId);
-        
-        const playerCard1 = cardHandler.GetCardByName(slot1Name,gh.playerId);
-        
-        const playerCard2 = cardHandler.GetCardByName(slot2Name,gh.playerId);
-        
-        //const playerCard3 = cardHandler.GetCardByName(slot3Name,gh.playerId);
-        
-        scenarioPrepUtils.SetCardForSlot(playerCard0,gh.playerId,0);
-        
-        scenarioPrepUtils.SetCardForSlot(playerCard1,gh.playerId,1);
-        
-        scenarioPrepUtils.SetCardForSlot(playerCard2,gh.playerId,2);
-        
-        //scenarioPrepUtils.SetCardForSlot(playerCard3,gh.playerId,3);
-        
-        scenario.BeginProcess();
-                
-        if(scenario.GetCurrentRunProcessorProp("winnerArr").filter(c => c.owner != gh.playerId).length == 0) playerWins++;
-        else if(scenario.GetCurrentRunProcessorProp("winnerArr").filter(c => c.owner != gh.otherPlayerId).length == 0) otherPlayerWins++;
-        else playerTies++;
-        
-    }
-    
-    console.log(`Player wins: ${playerWins}`);
-    console.log(`Other player wins: ${otherPlayerWins}`);
-    console.log(`Ties: ${playerTies}`);
+//    const validChars = cardHandler.GetCards().filter(c => (c.unlockedForPlayer && c.owner == gh.playerId));
+//    
+//    const teamIterations = GenerateCombinations(validChars,playerCardSlots);
+//    
+//    let playerWins = 0;
+//    
+//    let otherPlayerWins = 0;
+//    
+//    let playerTies = 0;
+//    
+//    for(let i = 0; i < teamIterations.length; i++){
+//        
+//        for(const c of validChars){ //only reset for changing characters, not feys
+//        
+//            c.selectedForTeam = false;
+//        }
+//
+//        const iterationArr = teamIterations[i];
+//        
+//        const slot0Name = iterationArr[0].name
+//              
+//        const slot1Name = iterationArr[1].name
+//            
+//        const slot2Name = iterationArr[2].name
+//            
+//        //const slot3Name = iterationArr[3].name
+//        
+//        console.log(`testing ${slot0Name} ${slot1Name} ${slot2Name}`)// ${slot3Name}`);
+//        
+//        const playerCard0 = cardHandler.GetCardByName(slot0Name,gh.playerId);
+//        
+//        const playerCard1 = cardHandler.GetCardByName(slot1Name,gh.playerId);
+//        
+//        const playerCard2 = cardHandler.GetCardByName(slot2Name,gh.playerId);
+//        
+//        //const playerCard3 = cardHandler.GetCardByName(slot3Name,gh.playerId);
+//        
+//        scenarioPrepUtils.SetCardForSlot(playerCard0,gh.playerId,0);
+//        
+//        scenarioPrepUtils.SetCardForSlot(playerCard1,gh.playerId,1);
+//        
+//        scenarioPrepUtils.SetCardForSlot(playerCard2,gh.playerId,2);
+//        
+//        //scenarioPrepUtils.SetCardForSlot(playerCard3,gh.playerId,3);
+//        
+//        scenario.BeginProcess();
+//                
+//        if(scenario.GetCurrentRunProcessorProp("winnerArr").filter(c => c.owner != gh.playerId).length == 0) playerWins++;
+//        else if(scenario.GetCurrentRunProcessorProp("winnerArr").filter(c => c.owner != gh.otherPlayerId).length == 0) otherPlayerWins++;
+//        else playerTies++;
+//        
+//    }
+//    
+//    console.log(`Player wins: ${playerWins}`);
+//    console.log(`Other player wins: ${otherPlayerWins}`);
+//    console.log(`Ties: ${playerTies}`);
     
 }

@@ -10,6 +10,7 @@
 // adjust leaderboard
 
 //firebase scenario structure:
+//gag101scenarios
 //-scenario name
 //--leaderboard
 //---username

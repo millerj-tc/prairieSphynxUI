@@ -99,6 +99,8 @@
     
     position: fixed;
     background-color: lightgray;
+    top: 500px;
+    left:500px;
     padding:20px;
     z-index: 2;
     text-align: center;
