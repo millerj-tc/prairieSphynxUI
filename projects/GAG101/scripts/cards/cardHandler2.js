@@ -9,6 +9,15 @@ export class cardHandler
         this.cardCount = 0;
     }
     
+    AddCard(card){
+        
+        const c = card;
+        
+        this.cards.push(c);
+        
+        return c
+    }
+    
     
     MakeCardFromJSON(jsonString,owner){
         

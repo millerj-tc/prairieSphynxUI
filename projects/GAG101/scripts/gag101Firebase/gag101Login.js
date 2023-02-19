@@ -97,26 +97,30 @@ export function LoadLocalCollectionCards(){
     
     const ghCCH = window.gameHandler.collectionCardHandler;
     
-    let fromCookies = false
-    
-    if(localStorage.getItem("playerDoran") != null) fromCookies = true
-    
     for(const c of charData){
+        
+        let fromCookies = false
         
         let cString;
         
+        if(localStorage.getItem("player" + c.name) != null) fromCookies = true
+        
         if(fromCookies) cString = localStorage.getItem("player" + c.name);
-        else {
+       
+        else if(c.unlockedForPlayer) {
             
+            
+            //only store a local copy of cards that are unlocked
             UpdateCardForUser(c);
-            cString = JSON.stringify(c)
+            
         }
         
-        ghCCH.MakeCardFromJSON(cString, "AI");
-            
-        if(c.unlockedForPlayer == false) continue
+        cString = JSON.stringify(c);
         
-        ghCCH.MakeCardFromJSON(cString,window.gameHandler.playerId);
+        const aiCopy = ghCCH.MakeCardFromJSON(cString, "AI");
+            
+        if(aiCopy.unlockedForPlayer) ghCCH.MakeCardFromJSON(cString,window.gameHandler.playerId)        
+        
 
         
     }

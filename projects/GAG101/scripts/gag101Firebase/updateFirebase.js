@@ -7,7 +7,7 @@ export function UpdateCardForUser(card){
     card.cardHandler = null;
     
     card.owner = window.gameHandler.playerId;
-    
+        
     localStorage.setItem("player" + card.name,JSON.stringify(card));
     
     const db = getDatabase();
