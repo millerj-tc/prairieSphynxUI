@@ -46,7 +46,7 @@ export class gameHandler
         
         this.cacheHandler = new cacheHandler();
         
-        this.playerId = "player";
+        this.playerId = "player"; //this is changed by auth in index.html on login 
         
         this.playerUsername = "Player";
         

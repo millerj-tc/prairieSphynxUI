@@ -3,6 +3,10 @@ import { getAuth,createUserWithEmailAndPassword, signInWithEmailAndPassword, sig
 
 import { getDatabase, ref, child, get, onValue } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
 
+import {UpdateCardForUser} from "./updateFirebase.js";
+
+import {charData} from "../data/charData.js";
+
 ///
 ///// IMPORTANT: Rather than having a "flow" subsequent functions are called within the callback/promise/whatever to makes sure that each step completes before moving on 
 ///
@@ -17,7 +21,7 @@ export function GAG101Login(){ //this is what gets called by a Login button or s
     // Signed in 
     const user = userCredential.user;
 
-    _RetrieveUsername()
+    _RetrieveUserData()
     window.gameHandler.loginWrapperArtist.SetDOMDisplayTo("none");
     
   })
@@ -29,33 +33,80 @@ export function GAG101Login(){ //this is what gets called by a Login button or s
 
 }
 
-function _RetrieveUsername(loginCallback=false){
-    const dbRef = ref(getDatabase());
-    get(child(dbRef, `users/` + window.gameHandler.playerId + `/name`)).then((snapshot) => {
+function _RetrieveUserData(loginCallback=false){
+    const db = getDatabase();
+    const dbRef = ref(db);
+    const uid = window.gameHandler.playerId;
+    get(child(dbRef, `users/` + uid + `/name`)).then((snapshot) => {
       if (snapshot.exists()) {
-         window.gameHandler.playerUsername = snapshot.val();
+         
+          
+          window.gameHandler.playerUsername = snapshot.val();
           
           console.log(window.gameHandler.playerUsername);
           console.log(window.gameHandler.playerId);
-
+          
       } else {
         console.log("No data available");
       }
     }).catch((error) => {
       console.error(error);
     });
+        
+    const cardRef = ref(db, 'users/' + uid + '/cards');
+    onValue(cardRef, (snapshot) => {
+        const data = snapshot.val();
+        
+        // if it's the first time logging in, upload each owned card
+
+        
+        if(data == null){
+             for (const c of window.gameHandler.collectionCardHandler.GetCards()){
+            
+                UpdateCardForUser(c);
+            }    
+            
+        }
+        
+        else{
+            
+            window.gameHandler.collectionCardHandler.EmptyCards();
+
+        
+            // otherwise, download the user's collection
+
+            for(const cardKey in data){ //MUST BE "IN" NOT "OF" BECAUSE DATA IS TECHNICALLY NOT ARR
+
+                window.gameHandler.collectionCardHandler.MakeCardFromJSON(data[cardKey].card,uid);
+            }
+        }
+        
+
+
+    });
 }
 
-
-//function GetUserDomeWords(){
-//    
-//    const db = getDatabase();
-//    const domeWords = ref(db, 'users/' + window.uid + '/domeWords');
-//    onValue(domeWords, (snapshot) => {
-//        const data = snapshot.val();
-//
-//        PullDomeWordsFromDBIntoMindFlow(data);
-//        
-//        if(window.gameHandler.loggingIn) GetUserPoems(3);
-//    });
-//}
+export function LoadCollectionCards(){
+    
+    // check firebase, then cookies, then load from charData
+    
+    console.warn("player collections data should be housed on firebase so they can be retrieved if the player clears their cookies");
+    
+    const ghCCH = window.gameHandler.collectionCardHandler;
+    
+    for(const c of charData){
+        
+        const cString = JSON.stringify(c)
+        
+        const card = ghCCH.MakeCardFromJSON(cString);
+        
+        if(card.unlockedForPlayer == false) continue
+        
+        const card2 = ghCCH.MakeCardFromJSON(cString);
+        
+        card.owner = window.gameHandler.playerId;
+        
+        card2.owner = "AI";
+        
+    }
+}

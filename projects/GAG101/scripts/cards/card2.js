@@ -92,10 +92,6 @@ class cardPropValue //for values that fall off, decrement a prop whose key is th
 {
     constructor(value,phaseName){
         
-//        if(typeof value == "number") this.value = Number(value)
-//        else if(typeof value == "boolean") this.value = Boolean(value)
-//        else this.value = String(value)
-        
         this.value = value
         
         this.phaseName = phaseName;

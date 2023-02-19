@@ -7,7 +7,7 @@ import * as scenarioPrepUtils from "./scenarioFlow/genericScenarioPrep.js";
 import {CollapseButtonOnClick} from "../../../../utils/uiTools/artists/trayArtistTrayMovement.js";
 import {GenerateCombinations} from "../../../../utils/mathAndLogicUtils/miscUtils.js";
 import {charData} from "../data/charData.js";
-import {PushSubmissionToFirebase} from "../pvp/pushSubmission.js";
+import {PushCurrentScenarioSubmissionToFirebase} from "../pvp/pushSubmission.js";
 
 export function BuildDanceOfRiddlesPvEScenario(){
     
@@ -78,7 +78,7 @@ function _DanceOfRiddlesOutput(){
     
     const winnerArr = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessorProp("winnerArr");
     
-    PushSubmissionToFirebase();
+    PushCurrentScenarioSubmissionToFirebase();
     
     console.warn("remove PushSubmission from PvE");
     
