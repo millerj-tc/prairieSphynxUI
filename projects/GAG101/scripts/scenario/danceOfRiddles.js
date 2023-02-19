@@ -78,10 +78,6 @@ function _DanceOfRiddlesOutput(){
     
     const winnerArr = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessorProp("winnerArr");
     
-    PushCurrentScenarioSubmissionToFirebase();
-    
-    console.warn("remove PushSubmission from PvE");
-    
     const artist = window.gameHandler.narrOutputArtist;
     
     artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
@@ -105,11 +101,11 @@ function _DanceOfRiddlesOutput(){
     console.error(consoleString);
 }
 
-export function DanceOfRiddlesPvEPrep(){
+export function DanceOfRiddlesPrep(mode){
     
-    const playerCardSlots = 3;
-    
-    const otherPlayerCardSlots = 2;
+//    const playerCardSlots = 3;
+//    
+//    const otherPlayerCardSlots = 2;
     
     const gh = window.gameHandler;
 
@@ -125,33 +121,33 @@ export function DanceOfRiddlesPvEPrep(){
     
     //CollapseButtonOnClick(gh.cardChoiceTrayArtist);
     
+    const scenarioConfig = _GetCardSlotsAndOtherPlayerUsernameForMode(mode)
+    
+    const playerCardSlots = scenarioConfig.playerCardSlots;
+    
+    const otherPlayerCardSlots = scenarioConfig.otherPlayerCardSlots;
+    
+    const otherPlayerUsername = scenarioConfig.otherPlayerUsername;
+    
     scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(playerCardSlots,gh.playerId,2);
     
-    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(otherPlayerCardSlots,"AI",3);
+    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(otherPlayerCardSlots,otherPlayerUsername,3);
     
     scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario();
     
     //scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario("AI");
     
-    const holyFey = cardHandler.GetCardByName("Holy Fey Upa","any",false);
-    
-    const holyFey2 = cardHandler.GetCardByName("Holy Fey Kupo","any",false);
-    
-    scenarioPrepUtils.SetCardForSlot(holyFey,"AI",0);
-    
-    scenarioPrepUtils.SetCardForSlot(holyFey2,"AI",1);
-    
     scenarioPrepUtils. CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(gh.playerId,1);
     
-    scenarioPrepUtils.CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart("AI",4);
+    scenarioPrepUtils.CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(otherPlayerUsername,4);
     
     scenarioPrepUtils.AttachOnClickCardChoiceToDOMs();
     
     scenarioPrepUtils.AddScenarioRunButton();
     
-    console.warn("what about framing text like the intro that shouldn't be cleared on subsequent runs?");
+    _GetTeamAndOutputForMode(mode);
     
-    uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey Upa]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
+    console.warn("what about framing text like the intro that shouldn't be cleared on subsequent runs?");
     
     // below is balance testing
     
@@ -212,4 +208,30 @@ export function DanceOfRiddlesPvEPrep(){
 //    console.log(`Other player wins: ${otherPlayerWins}`);
 //    console.log(`Ties: ${playerTies}`);
     
+}
+
+function _GetCardSlotsAndOtherPlayerUsernameForMode(mode){
+    
+    if(mode == "story"){
+        
+        return {playerCardSlots: 3, otherPlayerCardSlots:2, otherPlayerUsername:"AI", }
+    }
+}
+
+function _GetTeamAndOutputForMode(mode){
+    
+    const cardHandler = window.gameHandler.collectionCardHandler;
+    
+    if(mode == "story"){
+        
+        const holyFey = cardHandler.GetCardByName("Holy Fey Upa","any",false);
+    
+        const holyFey2 = cardHandler.GetCardByName("Holy Fey Kupo","any",false);
+
+        scenarioPrepUtils.SetCardForSlot(holyFey,"AI",0);
+
+        scenarioPrepUtils.SetCardForSlot(holyFey2,"AI",1);
+            
+        uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey Upa]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
+    }
 }
