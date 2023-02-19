@@ -36,11 +36,9 @@ export class gameHandler
         
         this.collectionCardHandler = new cardHandler("collection");
         
-        console.warn("load cards into master and collection, but only if it's the first time playing");
-        
         console.warn("all changes to journal, collection, etc. should be pushed to firebase & cookie");
         
-        console.warn("all changes to card collection should update and replace existing collection in case player made multiple changes while doing cookie-only");
+        console.warn("make sure that multiple cookie level changes get propogated to database post registration");
         
         this.scenarioHandler = new scenarioProcessorHandler();
         
@@ -51,8 +49,6 @@ export class gameHandler
         this.playerUsername = "Player";
         
         this.otherPlayerId = "AI";
-        
-        console.warn("above should be their unique player ID");
 
     }
 }

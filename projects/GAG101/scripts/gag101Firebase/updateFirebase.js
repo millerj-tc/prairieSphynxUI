@@ -8,6 +8,8 @@ export function UpdateCardForUser(card){
     
     card.owner = window.gameHandler.playerId;
     
+    localStorage.setItem("player" + card.name,JSON.stringify(card));
+    
     const db = getDatabase();
     
   // A post entry.

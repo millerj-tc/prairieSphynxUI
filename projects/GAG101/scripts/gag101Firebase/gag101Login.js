@@ -11,6 +11,10 @@ import {charData} from "../data/charData.js";
 ///// IMPORTANT: Rather than having a "flow" subsequent functions are called within the callback/promise/whatever to makes sure that each step completes before moving on 
 ///
 
+///
+///// IMPORTANT: Currently only updates cards owned by user. NPCS (Fey, etc.) not udpated 
+///
+
 export function GAG101Login(){ //this is what gets called by a Login button or similar
     
     const email = document.getElementById("existingUserEmail").value;
@@ -21,8 +25,8 @@ export function GAG101Login(){ //this is what gets called by a Login button or s
     // Signed in 
     const user = userCredential.user;
 
-    _RetrieveUserData()
-    window.gameHandler.loginWrapperArtist.SetDOMDisplayTo("none");
+    //RetrieveUserData()
+    
     
   })
   .catch((error) => {
@@ -33,7 +37,7 @@ export function GAG101Login(){ //this is what gets called by a Login button or s
 
 }
 
-function _RetrieveUserData(loginCallback=false){
+export function RetrieveUserData(loginCallback=false){
     const db = getDatabase();
     const dbRef = ref(db);
     const uid = window.gameHandler.playerId;
@@ -42,9 +46,7 @@ function _RetrieveUserData(loginCallback=false){
          
           
           window.gameHandler.playerUsername = snapshot.val();
-          
-          console.log(window.gameHandler.playerUsername);
-          console.log(window.gameHandler.playerId);
+
           
       } else {
         console.log("No data available");
@@ -61,7 +63,8 @@ function _RetrieveUserData(loginCallback=false){
 
         
         if(data == null){
-             for (const c of window.gameHandler.collectionCardHandler.GetCards()){
+            
+             for (const c of window.gameHandler.collectionCardHandler.GetCards("player")){
             
                 UpdateCardForUser(c);
             }    
@@ -70,7 +73,7 @@ function _RetrieveUserData(loginCallback=false){
         
         else{
             
-            window.gameHandler.collectionCardHandler.EmptyCards();
+            window.gameHandler.collectionCardHandler.EmptyCards(uid);
 
         
             // otherwise, download the user's collection
@@ -86,27 +89,35 @@ function _RetrieveUserData(loginCallback=false){
     });
 }
 
-export function LoadCollectionCards(){
+export function LoadLocalCollectionCards(){
     
-    // check firebase, then cookies, then load from charData
+    // check cookies, then load from charData
     
-    console.warn("player collections data should be housed on firebase so they can be retrieved if the player clears their cookies");
+    console.warn("make sure that onload LoadLocalCollection doesn't override retrieving user cards from Firebase if getAuth fires before onload?");
     
     const ghCCH = window.gameHandler.collectionCardHandler;
     
+    let fromCookies = false
+    
+    if(localStorage.getItem("playerDoran") != null) fromCookies = true
+    
     for(const c of charData){
         
-        const cString = JSON.stringify(c)
+        let cString;
         
-        const card = ghCCH.MakeCardFromJSON(cString);
+        if(fromCookies) cString = localStorage.getItem("player" + c.name);
+        else {
+            
+            UpdateCardForUser(c);
+            cString = JSON.stringify(c)
+        }
         
-        if(card.unlockedForPlayer == false) continue
+        ghCCH.MakeCardFromJSON(cString, "AI");
+            
+        if(c.unlockedForPlayer == false) continue
         
-        const card2 = ghCCH.MakeCardFromJSON(cString);
-        
-        card.owner = window.gameHandler.playerId;
-        
-        card2.owner = "AI";
+        ghCCH.MakeCardFromJSON(cString,window.gameHandler.playerId);
+
         
     }
 }

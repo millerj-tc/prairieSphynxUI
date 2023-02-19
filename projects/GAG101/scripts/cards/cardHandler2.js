@@ -45,9 +45,14 @@ export class cardHandler
         
     }
     
-    GetCards(){ //"true" not true because it is JSON-ified -- treat all prop values as strings
+    GetCards(owner){
         
-        return this.cards
+        let returnArr = [];
+        
+        if(owner == null) returnArr = this.cards
+        else returnArr = this.cards.filter(c => c.owner == owner);
+        
+        return returnArr
     }
     
     GetCardByName(name,owner = "any",unlockedForPlayer = true){
@@ -62,8 +67,9 @@ export class cardHandler
         }
     }
     
-    EmptyCards(){
+    EmptyCards(owner){
         
-        this.cards = [];
+        if(owner == null) this.cards = [];
+        else this.cards = this.cards.filter(c => c.owner != owner);
     }
 }

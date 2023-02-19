@@ -4,6 +4,12 @@
         window.onload = onload;
         import {GAG101Login} from "./scripts/gag101Firebase/gag101Login.js";
         window.GAG101Login = GAG101Login;
+        import {RetrieveUserData} from "./scripts/gag101Firebase/gag101Login.js";
+        window.RetrieveUserData = RetrieveUserData;
+        import {SignOut} from "../../utils/firebase/firebaseAuth.js";
+        window.SignOut = SignOut;
+        import {Register} from "../../utils/firebase/firebaseAuth.js";
+        window.Register = SignOut;
     </script>
 </head>
 <link rel="stylesheet" type="text/css" href="style.css"/>
@@ -43,6 +49,8 @@
         </div>
     </div>
 </div>
+
+<div class="signOutButtonWrapper"><button onclick="SignOut()" class="signOutButton">🚪</button></div>
     
 <script type="module">
 
@@ -90,12 +98,15 @@ const db = getDatabase(app);
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
   if (user) {
+      
     // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
     window.gameHandler.playerId = user.uid;
-    console.warn("get user's collection");
+    RetrieveUserData();
     console.warn("get timestamp of last user submission");
+    window.gameHandler.loginWrapperArtist.SetDOMDisplayTo("none");
     //EstablishSession();
+      
+      
   } else {
     // User is signed out
     // ...
