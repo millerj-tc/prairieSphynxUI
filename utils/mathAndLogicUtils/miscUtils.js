@@ -32,16 +32,17 @@ export function StandardDeviation(arr){
     return Math.sqrt(total / arr.length)
 }
 
-export function PermutationsOf(inputArr) {
+export function PermutationsOf(inputArr,start=0,maxResults) {
   var results = [];
 
   function permute(arr, memo) {
     var cur, memo = memo || [];
 
-    for (var i = 0; i < arr.length; i++) {
+    for (var i = start; i < arr.length; i++) {
       cur = arr.splice(i, 1);
       if (arr.length === 0) {
         results.push(memo.concat(cur));
+        if(maxResults != null && results.length > maxResults) break
       }
       permute(arr.slice(), memo.concat(cur));
       arr.splice(i, 0, cur[0]);
