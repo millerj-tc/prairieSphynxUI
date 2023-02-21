@@ -247,3 +247,38 @@ export function AnnounceOtherPlayer(){
     
     artist.InsertHTMLAdjacentToDOM("beforeend",`<br><br>`);
 }
+
+export function AnnounceTournamentResults(){
+    
+    const th = window.gameHandler.tournamentHandler;
+    
+    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
+    
+    const uiTH = window.gameHandler.uiToolsHandler;
+    
+    const runP = scenario.GetCurrentRunProcessor();
+    
+    const artist = window.gameHandler.narrOutputArtist;
+    
+    const defeatedArr = [];
+    
+    const defeatedByArr = [];
+    
+    if(th.matches.length == 0) return
+        
+    for(const match of th.matches){
+        
+        if(match.winner == "player") defeatedArr.push(match.otherPlayerUsername);
+        else defeatedByArr.push(match.otherPlayerUsername);
+    }
+    
+    const defeatedString = uiTH.utilityUIArtist.ReturnStringOfNounsBasedOnNumber(defeatedArr);
+    
+    const defeatedByString = uiTH.utilityUIArtist.ReturnStringOfNounsBasedOnNumber(defeatedByArr);
+    
+    OutputTextDivWithNounImages(`You defeated: ${defeatedString}`);
+    
+    artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+    
+    OutputTextDivWithNounImages(`You were defeated by: ${defeatedByString}`);
+}

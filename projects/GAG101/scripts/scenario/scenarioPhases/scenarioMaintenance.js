@@ -1,3 +1,5 @@
+import {AnnounceTournamentResults} from "./uiPhaseUtils.js";
+
 export function SubsequentRunReset(){
     
     const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
@@ -6,7 +8,7 @@ export function SubsequentRunReset(){
     
     console.log(scenario.runProcessors);
     
-    if(scenario.runProcessors.length > 1 && scenario.queuedProcessors.length == 0){
+    if(scenario.runProcessors.length > 1 && window.gameHandler.tournamentHandler.matches.length == 0){
         
         window.gameHandler.narrOutputArtist.ClearAllChildren();
 
@@ -43,7 +45,15 @@ export function PauseAtEndOfScenarioForPvP(){
         
         button.remove();
         
+        if(scenario.queuedProcessors.length == 0){
+            
+            _EndTournament();
+        }
+        else{
+        
         scenario.ProcessNextInQueue();
+        
+        }
         
         
     }
@@ -63,5 +73,16 @@ export function MarkWinnerForPvP(string){
     
     rp.match.winner = string;
     
+    console.log(rp.match);
     
+    console.log(window.gameHandler.tournamentHandler);
+    
+    
+}
+
+function _EndTournament(){
+    
+    AnnounceTournamentResults();
+            
+    window.gameHandler.tournamentHandler.EmptyMatches();
 }

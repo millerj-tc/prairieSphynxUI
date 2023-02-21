@@ -29,6 +29,8 @@ export function BuildDanceOfRiddlesScenario(){
     
     DOR.AddPhase("Dance Output",_DanceOfRiddlesOutput);
     
+    DOR.AddPhase("Mark PvP Winner", _DanceOfRiddlesMarkWinner);
+    
     DOR.AddPhase("Wait for PVP continnue", PauseAtEndOfScenarioForPvP,true);
     
     console.warn("winning dance of riddles should have some kind of game effect");
@@ -138,11 +140,11 @@ function _DanceOfRiddlesOutput(){
     
 }
 
-function DanceOfRiddlesMarkWinner(){
+function _DanceOfRiddlesMarkWinner(){
     
     const winnerArr = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessorProp("winnerArr");
     
-    if(winnerArr[0].owner = window.gameHandler.playerId) MarkWinnerForPvP("player")
+    if(winnerArr[0].owner == window.gameHandler.playerId) MarkWinnerForPvP("player")
     else MarkWinnerForPvP("server");
 }
 

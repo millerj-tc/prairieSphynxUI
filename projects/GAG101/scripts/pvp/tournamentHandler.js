@@ -15,7 +15,7 @@ class match
     }
 }
 
-export class tournamentHandler{
+export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
     
     constructor(){
         

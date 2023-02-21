@@ -44,6 +44,8 @@ export class utilityUIArtist
     
     ReturnStringOfNounsBasedOnNumber(nounArr){
         
+        // nounArr must be strings
+        
         let $returnString = "";
         
         for(let i = 0; i < nounArr.length; i++){
