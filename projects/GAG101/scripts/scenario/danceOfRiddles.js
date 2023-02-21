@@ -67,9 +67,11 @@ function _GetDanceofRiddlesWinners(){
     
     const gh = window.gameHandler;
     
+    const otherPlayerId = gh.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor().otherPlayerId;
+    
     const playerCards = cardInfoPhaseUtils.GetSelectedCardsFor(gh.playerId);
     
-    const otherPlayerCards = cardInfoPhaseUtils.GetSelectedCardsFor("AI");
+    const otherPlayerCards = cardInfoPhaseUtils.GetSelectedCardsFor(otherPlayerId);
     
     let playerScore = 0;
     

@@ -17,8 +17,6 @@ export function PushCurrentScenarioSubmissionToFirebase(dummyUser = ""){
     }
     
     const db = getDatabase();
-    
-    console.log(playerCards);
 
   // A post entry.
   const postData = {
@@ -27,8 +25,6 @@ export function PushCurrentScenarioSubmissionToFirebase(dummyUser = ""){
     team: {}
 
   };
-    
-    console.log(postData);
     
   for(let i = 0; i < playerCards.length; i++){
       
