@@ -61,24 +61,24 @@ export function PauseAtEndOfScenarioForPvP(){
     artist.AppendElementWithinDOM(button);
 }
 
-export function MarkWinnerForPvP(string){
-    
-    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
-    
-    const rp = scenario.GetCurrentRunProcessor();
-    
-    if(rp.match.serverCards == null) return
-    
-    if(string != "server" && string != "player") console.error("Mark Winner must be passed 'server' or 'player'");
-    
-    rp.match.winner = string;
-    
-    console.log(rp.match);
-    
-    console.log(window.gameHandler.tournamentHandler);
-    
-    
-}
+//export function MarkWinnerForPvP(string){
+//    
+//    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
+//    
+//    const rp = scenario.GetCurrentRunProcessor();
+//    
+//    if(rp.match.serverCards == null) return
+//    
+//    if(string != "server" && string != "player") console.error("Mark Winner must be passed 'server' or 'player'");
+//    
+//    rp.match.winner = string;
+//    
+//    console.log(rp.match);
+//    
+//    console.log(window.gameHandler.tournamentHandler);
+//    
+//    
+//}
 
 function _EndTournament(){
     

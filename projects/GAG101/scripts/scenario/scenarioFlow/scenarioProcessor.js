@@ -40,7 +40,7 @@ export class scenarioProcessor
         
         this.queuedProcessors.push(rp);
         
-        for(let i = 0; i < contenderArr.length i++){
+        for(let i = 0; i < contenderArr.length; i++){
             
             rp["player" + i + "Id"] = contenderArr[i].playerId;
             rp["player" + i + "Username"] = contenderArr[i].playerUsername
@@ -122,6 +122,7 @@ class scenarioProcessorRun
         this.phases = [];
         this.currentPhaseInd = 0;
         this.otherPlayerId;
+        this.contenders = [];
     }
     
     RunNextPhase(){

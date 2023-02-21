@@ -24,6 +24,8 @@ class contender
         this.playerUsername = playerUsername;
         this.playerId = playerId;
         this.wins;
+        this.ties;
+        this.defeats;
         this.matches;
     }
 }

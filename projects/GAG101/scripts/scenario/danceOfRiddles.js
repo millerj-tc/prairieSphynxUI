@@ -1,4 +1,4 @@
-import {SubsequentRunReset,PauseAtEndOfScenarioForPvP,MarkWinnerForPvP} from "./scenarioPhases/scenarioMaintenance.js";
+import {SubsequentRunReset,PauseAtEndOfScenarioForPvP} from "./scenarioPhases/scenarioMaintenance.js";
 import {DupeConkLosers,RemoveDupeConkStatuses} from "./scenarioPhases/DupeConk.js";
 import * as cardInfoPhaseUtils from "./scenarioPhases/cardInfoPhaseUtils.js";
 import * as uiPhaseUtils from "./scenarioPhases/uiPhaseUtils.js";
@@ -29,8 +29,6 @@ export function BuildDanceOfRiddlesScenario(){
     
     DOR.AddPhase("Dance Output",_DanceOfRiddlesOutput);
     
-    DOR.AddPhase("Mark PvP Winner", _DanceOfRiddlesMarkWinner);
-    
     DOR.AddPhase("Wait for PVP continnue", PauseAtEndOfScenarioForPvP,true);
     
     console.warn("winning dance of riddles should have some kind of game effect");
@@ -40,27 +38,31 @@ export function BuildDanceOfRiddlesScenario(){
 
 function _ReplaceRandomPracticeCardsWithSubmissionCards(){
     
+    console.warn("could probably generalize this to scenario maintenance or similar");
+    
     const cardHandler = window.gameHandler.collectionCardHandler;
     
     const runProcessor = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor();
     
-    if(runProcessor.otherPlayerId == "AI") return
-    
-    const otherPlayerUserId = runProcessor.otherPlayerId;
+    for(let contenderIndex = 0; contenderIndex < runProcessor.contenders.length; contenderIndex ++){
         
-    const otherPlayerCards = cardHandler.GetCards(otherPlayerUserId);
-
-    const card0 = otherPlayerCards[0];
-
-    const card1 = otherPlayerCards[1];
-
-    const card2 = otherPlayerCards[2];
-
-    scenarioPrepUtils.SetCardForSlot(card0,otherPlayerUserId,0);
-
-    scenarioPrepUtils.SetCardForSlot(card1,otherPlayerUserId,1);
-
-    scenarioPrepUtils.SetCardForSlot(card2,otherPlayerUserId,2);
+        const contender = runProcessor.contenders[contenderIndex];
+        
+        if(contender.getCardsFromCollectionCardHandler) continue
+        
+        const userId = contender.playerId;
+        
+        const userCards = cardHandler.GetCards(userId);
+        
+        for(let contenderCardIndex = 0; contenderCardIndex < userCards.length; contenderCardIndex++){
+            
+            const card = userCards[contenderCardIndex];
+            
+            scenarioPrepUtils.SetCardForSlot(card,userId,contenderCardIndex);
+        }
+        
+        
+    }
 }
 
 function _GetDanceofRiddlesWinners(){
@@ -69,11 +71,15 @@ function _GetDanceofRiddlesWinners(){
     
     const gh = window.gameHandler;
     
-    const otherPlayerId = gh.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor().otherPlayerId;
+    const rp = gh.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor();
     
-    const playerCards = cardInfoPhaseUtils.GetSelectedCardsFor(gh.playerId);
+    const contender0 = rp.contenders[0];
     
-    const otherPlayerCards = cardInfoPhaseUtils.GetSelectedCardsFor(otherPlayerId);
+    const contender1 = rp.contenders[1];
+    
+    const playerCards = cardInfoPhaseUtils.GetSelectedCardsFor(contender0.playerId);
+    
+    const otherPlayerCards = cardInfoPhaseUtils.GetSelectedCardsFor(contender1.playerId);
     
     let playerScore = 0;
     
@@ -98,15 +104,29 @@ function _GetDanceofRiddlesWinners(){
     console.log(`${playerScore} vs ${otherPlayerScore}`);
     
     if(playerScore > otherPlayerScore){
-        gh.playerWins++;
+       
+        contender0.wins++;
+        contender1.defeats++;
+        contender0.matches++;
+        contender1.matches++;
         gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards);
     }
     else if(otherPlayerScore > playerScore){
-        gh.otherPlayerWins++;
+       
+        contender1.wins++;
+        contender0.defeats++;
+        contender0.matches++;
+        contender1.matches++;
+        
+        console.warn("are the wins and defeats getting tallied on separate instances or on the same object that's getting passed around? In other words will it add right?");
         gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",otherPlayerCards);
     }
     else{
-        gh.playerTies++;
+       
+        contender0.ties++;
+        contender1.ties++;
+        contender0.matches++;
+        contender1.matches++;
         gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards.concat(otherPlayerCards));
     }
 }
@@ -138,14 +158,6 @@ function _DanceOfRiddlesOutput(){
     console.error(consoleString);
     
     
-}
-
-function _DanceOfRiddlesMarkWinner(){
-    
-    const winnerArr = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessorProp("winnerArr");
-    
-    if(winnerArr[0].owner == window.gameHandler.playerId) MarkWinnerForPvP("player")
-    else MarkWinnerForPvP("server");
 }
 
 export function DanceOfRiddlesPrep(mode){
