@@ -18,6 +18,7 @@
 //---submission (numbered)
 //----timestamp
 //----username
+//----winrate
 //----team
 //-----member01,etc. (MAKE SAME AS CARDS IN USER PROFILES)
 
@@ -93,9 +94,13 @@ function _RunSubmissionVsLeaderboard(leaderboardArrAsJSON){
 
         }
         
+        console.warn("all cards getting loaded in at outset, then slowly removed as you proceed through scenarios. should be loaded in as part of the tournament handler")
+        
        scenario.QueueProcess(otherPlayerId,submission.username);
        
     }
+    
+    console.log(cardHandler);
     
     scenario.ProcessNextInQueue();
     
