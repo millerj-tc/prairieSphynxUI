@@ -85,4 +85,7 @@ function _EndTournament(){
     AnnounceTournamentResults();
             
     window.gameHandler.tournamentHandler.EmptyMatches();
+    
+    console.warn("figure out player winrate, compare with server winrates, etc.")
+
 }
