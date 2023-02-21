@@ -28,7 +28,11 @@ export class scenarioProcessor
         return p
     }
     
-    QueueProcess(match = {otherPlayerId:window.gameHandler.otherPlayerId, otherPlayerUsername:"AI", serverCards:null}){
+    QueueProcess(contenderArr = [{getCardsFromCollectionCardHandler:true,
+        playerUsername:window.gameHandler.playerUsername,
+        playerId:window.gameHandler.playerId}, {getCardsFromCollectionCardHandler:true,
+        playerUsername:"AI",
+        playerId:"AI"}]){
         
         const rp = new scenarioProcessorRun();
         
@@ -36,13 +40,13 @@ export class scenarioProcessor
         
         this.queuedProcessors.push(rp);
         
-        console.log(match);
-        
-        rp.otherPlayerId = match.otherPlayerId;
-        
-        rp.otherPlayerUsername = match.otherPlayerUsername;
-        
-        rp.match = match;
+        for(let i = 0; i < contenderArr.length i++){
+            
+            rp["player" + i + "Id"] = contenderArr[i].playerId;
+            rp["player" + i + "Username"] = contenderArr[i].playerUsername
+            
+            rp.contenders.push(contenderArr[i]);
+        }
         
         
     }
@@ -57,13 +61,16 @@ export class scenarioProcessor
         
         this.currentRunProcessor = rp;
         
-        if(rp.match.serverCards != null){
+        for(const contender of rp.contenders){
             
-            for(const JSONCard of rp.match.serverCards){
+            if(contender.getCardsFromCollectionCardHandler) continue
             
-            const card = cardHandler.MakeCardFromJSON(JSONCard,rp.match.otherPlayerId);
+            for(const JSONCard of contender.cardsAsJSON){
+            
+                cardHandler.MakeCardFromJSON(JSONCard,contender.playerId);
             }
         }
+        
         
         rp.RunNextPhase();
     }

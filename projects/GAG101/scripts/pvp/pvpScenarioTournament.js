@@ -2,7 +2,7 @@
 // display leaderboard
 // allow player to choose from their collection
 // warn if submission within the last 24 hours and do not submit (get from user profile, not from gag101scenarios)
-// retrieve top 10 submissions
+// retrieve top 5 submissions
 // run each match, pausing between w/"continue" button to keep going
 // if new deck did better than any existing deck, adjust win rates
 // some kind of overall tournament result message
@@ -25,6 +25,8 @@
 import { getDatabase, ref, child, get, onValue } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
 
 import {PushCurrentScenarioSubmissionToFirebase} from "./pushSubmission.js";
+
+import {GenerateCombinations} from "/utils/mathAndLogicUtils/miscUtils.js";
 
 export function RunPvPTournament(){
     
@@ -59,7 +61,7 @@ function _GetScenarioLeaderboardSubmissionsAsJSON(){
             
             console.log(userSubmissionObj);
             
-            returnArr.push({teamAsJSONArr:submissionTeamArr, username:userSubmissionObj["submittingUser"],userId:"server" + userSubmission, winrate:userSubmissionObj["winrate"]});
+            returnArr.push({teamAsJSONArr:submissionTeamArr, username:userSubmissionObj["submittingUser"],userId:"server" + userSubmission});
                   
         }
           
@@ -88,15 +90,29 @@ function _RunSubmissionVsLeaderboard(leaderboardArrAsJSON){
         
         console.log(submission);
             
-       const newMatch =  gh.tournamentHandler.AddMatch(submission.teamAsJSONArr,submission.userId,submission.username);
-        
-        newMatch.SetServerCardsWinrate(submission.winrate);
-        
-        scenario.QueueProcess(newMatch);
+       const newContender =  gh.tournamentHandler.AddContender(submission.teamAsJSONArr,submission.userId,submission.username);
        
     }
     
+    const playerContender = gh.tournamentHandler.AddContender(false,gh.playerId,gh.playerUsername);
+    
+    for(const serverContender of gh.tournamentHandler.contenders){
+        
+        scenario.QueueProcess([playerContender,serverContender]);
+    }
+    
+    const matchesArr = GenerateCombinations(gh.tournamentHandler.contenders,2)
+    
+    for(const match of matchesArr){
+        
+        scenario.QueueProcess(match);
+    }
+        
+    
+    
     console.log(cardHandler);
+    
+    gh.cardChoiceGridArtist.SetDOMDisplayTo("none");
     
     scenario.ProcessNextInQueue();
     
