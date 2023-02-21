@@ -1,8 +1,7 @@
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
 import {GenerateCombinations} from "../../utils/mathAndLogicUtils/miscUtils.js";
-import {DanceOfRiddlesPvEPrep, BuildDanceOfRiddlesPvEScenario} from "./scripts/scenario/danceOfRiddles.js";
-import {DanceOfRiddlesPvPPrep, BuildDanceOfRiddlesPvPScenario} from "./scripts/scenario/danceOfRiddlesPvP.js";
+import {DanceOfRiddlesPrep, BuildDanceOfRiddlesScenario} from "./scripts/scenario/danceOfRiddles.js";
 import {UpdateCardForUser} from "./scripts/gag101Firebase/updateFirebase.js";
 import {LoadLocalCollectionCards} from "./scripts/gag101Firebase/gag101Login.js";
 
@@ -16,9 +15,7 @@ export function onload(){
     
     LoadLocalCollectionCards();
         
-    BuildDanceOfRiddlesPvEScenario();
-    
-    BuildDanceOfRiddlesPvPScenario
+    BuildDanceOfRiddlesScenario();
     
     GotoHomeMenu();
 }
@@ -33,17 +30,19 @@ export function GotoHomeMenu(){
     
     dorButton.innerText = "Dance of Riddles (Story Mode)";
     
-    dorButton.onclick = DanceOfRiddlesPvEPrep;
+    dorButton.onclick = function(){DanceOfRiddlesPrep("story")};
     
     gh.narrOutputArtist.AppendElementWithinDOM(dorButton);
     
-    if(gh.playerId ~= "player"){
+    console.log(gh.playerId);
+    
+    if(gh.playerId != "player"){
         
-         const dorPButton = document.createElement("button");
+        const dorPButton = document.createElement("button");
     
         dorPButton.innerText = "Dance of Riddles (Competitive Mode)";
 
-        dorPButton.onclick = DanceOfRiddlesPvPPrep;
+        dorPButton.onclick = function(){DanceOfRiddlesPrep("pvp")};
 
         gh.narrOutputArtist.AppendElementWithinDOM(dorPButton);
     }

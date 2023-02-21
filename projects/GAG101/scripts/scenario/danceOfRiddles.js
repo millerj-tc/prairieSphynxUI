@@ -7,9 +7,9 @@ import * as scenarioPrepUtils from "./scenarioFlow/genericScenarioPrep.js";
 import {CollapseButtonOnClick} from "../../../../utils/uiTools/artists/trayArtistTrayMovement.js";
 import {GenerateCombinations} from "../../../../utils/mathAndLogicUtils/miscUtils.js";
 import {charData} from "../data/charData.js";
-import {PushCurrentScenarioSubmissionToFirebase} from "../pvp/pushSubmission.js";
+import {RunPvPTournament} from "../pvp/pvpScenarioTournament.js";
 
-export function BuildDanceOfRiddlesPvEScenario(){
+export function BuildDanceOfRiddlesScenario(){
     
     const gh = window.gameHandler;
     
@@ -99,6 +99,12 @@ function _DanceOfRiddlesOutput(){
     }
     
     console.error(consoleString);
+    
+    console.warn("remove below from here");
+    
+    RunPvPTournament();
+    
+    
 }
 
 export function DanceOfRiddlesPrep(mode){
@@ -135,17 +141,15 @@ export function DanceOfRiddlesPrep(mode){
     
     scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario();
     
-    //scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario("AI");
-    
-    scenarioPrepUtils. CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(gh.playerId,1);
-    
-    scenarioPrepUtils.CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(otherPlayerUsername,4);
-    
     scenarioPrepUtils.AttachOnClickCardChoiceToDOMs();
     
     scenarioPrepUtils.AddScenarioRunButton();
     
-    _GetTeamAndOutputForMode(mode);
+    _GetTeamAndOutputForMode(mode,scenarioConfig);
+    
+    scenarioPrepUtils. CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(gh.playerId,1);
+    
+    scenarioPrepUtils.CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(otherPlayerUsername,4);
     
     console.warn("what about framing text like the intro that shouldn't be cleared on subsequent runs?");
     
@@ -214,11 +218,17 @@ function _GetCardSlotsAndOtherPlayerUsernameForMode(mode){
     
     if(mode == "story"){
         
-        return {playerCardSlots: 3, otherPlayerCardSlots:2, otherPlayerUsername:"AI", }
+        return {playerCardSlots: 3, otherPlayerCardSlots:2, otherPlayerUsername:"AI"}
+    }
+    else if (mode == "pvp"){
+        
+        console.warn("get other player username from scenario processor");
+        
+        return {playerCardSlots: 3, otherPlayerCardSlots:3, otherPlayerUsername:"AI"}
     }
 }
 
-function _GetTeamAndOutputForMode(mode){
+function _GetTeamAndOutputForMode(mode,scenarioConfig){
     
     const cardHandler = window.gameHandler.collectionCardHandler;
     
@@ -233,5 +243,9 @@ function _GetTeamAndOutputForMode(mode){
         scenarioPrepUtils.SetCardForSlot(holyFey2,"AI",1);
             
         uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey Upa]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
+    }
+    else if(mode == "pvp"){
+        
+        scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario(scenarioConfig.otherPlayerUsername);
     }
 }

@@ -117,7 +117,7 @@
 
 .signOutButtonWrapper{
     
-    position:absolute;
+    position:fixed;
     top: 95%;
     left: 94%;
 }
