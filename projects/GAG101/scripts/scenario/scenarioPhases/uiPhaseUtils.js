@@ -2,7 +2,7 @@ import {charData} from "../../data/charData.js";
 
 export function OutputTextDivWithNounImages(string){
     
-    //"[argNN[name (for image)]team]: Welcome to the Dance of Riddles, [arg01[(use GetSpanList)/team/name]]
+    //"[argNN[name (for image)]team]: Welcome to the Dance of Riddles, [arg0[(use GetSpanList)/team/name]]
     
     let returnString = string;
     
@@ -225,4 +225,25 @@ export function UpdateCardSlotArtist(artist,card,size="M"){
     img.src = card["image" + size];
 
     artist.AppendElementWithinDOM(img);
+}
+
+export function AnnounceOtherPlayer(){
+    
+    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
+    
+    const runP = scenario.GetCurrentRunProcessor();
+    
+    const otherPlayerUsername = runP.otherPlayerUsername;
+    
+    const otherPlayerUserId = runP.otherPlayerId;
+    
+    const otherPlayerCards = window.gameHandler.collectionCardHandler.GetCards(otherPlayerUserId);
+    
+    if(otherPlayerUsername == null) return
+    
+    const artist = window.gameHandler.narrOutputArtist;
+    
+    OutputTextDivWithNounImages(`VS ${otherPlayerUsername} [arg0[]]`,otherPlayerCards)
+    
+    artist.InsertHTMLAdjacentToDOM("beforeend",`<br><br>`);
 }

@@ -1,4 +1,4 @@
-import {SubsequentRunReset} from "./scenarioPhases/scenarioMaintenance.js";
+import {SubsequentRunReset,PauseAtEndOfScenarioForPvP} from "./scenarioPhases/scenarioMaintenance.js";
 import {DupeConkLosers,RemoveDupeConkStatuses} from "./scenarioPhases/DupeConk.js";
 import * as cardInfoPhaseUtils from "./scenarioPhases/cardInfoPhaseUtils.js";
 import * as uiPhaseUtils from "./scenarioPhases/uiPhaseUtils.js";
@@ -17,15 +17,48 @@ export function BuildDanceOfRiddlesScenario(){
     
     DOR.AddPhase("Subsequent Reset", SubsequentRunReset);
     
+    DOR.AddPhase("Replace card slot DOM", scenarioPrepUtils.RenameCardSlotDOMsToSubmissionUserId)
+    
+    DOR.AddPhase("Replace Randomized AI Cards with Submission cards", _ReplaceRandomPracticeCardsWithSubmissionCards);
+    
+    DOR.AddPhase("Announce other player", uiPhaseUtils.AnnounceOtherPlayer);
+    
     DOR.AddPhase("Get Winners",_GetDanceofRiddlesWinners);
     
     console.warn("clues for who is shit at this");
     
     DOR.AddPhase("Dance Output",_DanceOfRiddlesOutput);
     
+    DOR.AddPhase("Wait for PVP continnue", PauseAtEndOfScenarioForPvP,true);
+    
     console.warn("winning dance of riddles should have some kind of game effect");
     
 
+}
+
+function _ReplaceRandomPracticeCardsWithSubmissionCards(){
+    
+    const cardHandler = window.gameHandler.collectionCardHandler;
+    
+    const runProcessor = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor();
+    
+    if(runProcessor.otherPlayerId == "AI") return
+    
+    const otherPlayerUserId = runProcessor.otherPlayerId;
+        
+    const otherPlayerCards = cardHandler.GetCards(otherPlayerUserId);
+
+    const card0 = otherPlayerCards[0];
+
+    const card1 = otherPlayerCards[1];
+
+    const card2 = otherPlayerCards[2];
+
+    scenarioPrepUtils.SetCardForSlot(card0,otherPlayerUserId,0);
+
+    scenarioPrepUtils.SetCardForSlot(card1,otherPlayerUserId,1);
+
+    scenarioPrepUtils.SetCardForSlot(card2,otherPlayerUserId,2);
 }
 
 function _GetDanceofRiddlesWinners(){
@@ -100,18 +133,10 @@ function _DanceOfRiddlesOutput(){
     
     console.error(consoleString);
     
-    console.warn("remove below from here");
-    
-    RunPvPTournament();
-    
     
 }
 
 export function DanceOfRiddlesPrep(mode){
-    
-//    const playerCardSlots = 3;
-//    
-//    const otherPlayerCardSlots = 2;
     
     const gh = window.gameHandler;
 
@@ -144,6 +169,8 @@ export function DanceOfRiddlesPrep(mode){
     scenarioPrepUtils.AttachOnClickCardChoiceToDOMs();
     
     scenarioPrepUtils.AddScenarioRunButton();
+    
+    if(mode == "pvp") scenarioPrepUtils.AddScenarioRunPvPButton();
     
     _GetTeamAndOutputForMode(mode,scenarioConfig);
     
@@ -221,8 +248,6 @@ function _GetCardSlotsAndOtherPlayerUsernameForMode(mode){
         return {playerCardSlots: 3, otherPlayerCardSlots:2, otherPlayerUsername:"AI"}
     }
     else if (mode == "pvp"){
-        
-        console.warn("get other player username from scenario processor");
         
         return {playerCardSlots: 3, otherPlayerCardSlots:3, otherPlayerUsername:"AI"}
     }

@@ -56,7 +56,7 @@
     background-color: azure;
     top: 5%;
     left:-45%;
-    position:relative;
+    position:fixed;
     overflow-y: auto;
 }
 

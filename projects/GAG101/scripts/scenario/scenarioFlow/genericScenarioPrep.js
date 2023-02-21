@@ -1,6 +1,7 @@
 import {ShuffleArray} from "/utils/mathAndLogicUtils/miscUtils.js";
 import {UpdateCardSlotArtist,DisplayUnselectedCardsAsChoices} from "../scenarioPhases/uiPhaseUtils.js";
 import {CollapseButtonOnClick} from "/utils/uiTools/artists/trayArtistTrayMovement.js";
+import {RunPvPTournament} from "/projects/GAG101/scripts/pvp/pvpScenarioTournament.js";
 
 
 export function GenericScenarioPrepWithAI(){ //only run this once when the scenario starts, not as a phase
@@ -56,6 +57,8 @@ export function CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridC
         artist.SetStylePropToValue("grid-row-start",(i+1).toString());
 
         const cardChoiceTrayArtist = window.gameHandler.uiToolsHandler.GetArtistsByAuthorizedDOMId("cardChoiceTrayGrid");
+        
+        if(id != gh.playerId) artist.right = true;
 
         cardChoiceTrayArtist.AppendElementWithinDOM(dom);
     }
@@ -140,6 +143,24 @@ export function SetCardForSlot(card,owner,slotNum){
     card.selectedForTeam = true;
 }
 
+export function RenameCardSlotDOMsToSubmissionUserId(){
+    
+    const gh = window.gameHandler;
+
+    const scenario = gh.scenarioHandler.GetCurrentScenario();
+    
+    const runProcessor = scenario.GetCurrentRunProcessor();
+    
+    if(runProcessor.otherPlayerId == "AI") return
+    
+    const artists = scenario.uiToolsHandler.tools.filter(t => t.right); //set in CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart 
+    
+    for(const artist of artists){
+        
+        artist.GetAuthorizedDOMs().id = runProcessor.otherPlayerId + "CardSlot" + artist.GetAuthorizedDOMs().id.slice(-1);
+    }
+}
+
     
 export function AttachOnClickCardChoiceToDOMs(){
     
@@ -185,7 +206,34 @@ export function AddScenarioRunButton(){
 
     but.onclick = function(){
 
-        scenario.BeginProcess();
+        scenario.QueueProcess();
+        
+        scenario.ProcessNextInQueue();
+        
+        CollapseButtonOnClick(gh.cardChoiceTrayArtist);
+
+    }
+
+    gh.cardChoiceTrayArtist.AppendElementWithinDOM(but);
+    
+
+}
+
+export function AddScenarioRunPvPButton(){
+    
+    const gh = window.gameHandler;
+
+    const cardHandler = gh.collectionCardHandler;
+
+    const scenario = gh.scenarioHandler.GetCurrentScenario();
+        
+    const but = document.createElement("button");
+
+    but.innerText = "Submit Team to PvP Tournament";
+
+    but.onclick = function(){
+
+        RunPvPTournament();
         
         CollapseButtonOnClick(gh.cardChoiceTrayArtist);
 

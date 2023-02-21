@@ -56,13 +56,13 @@ function _GetScenarioLeaderboardSubmissionsAsJSON(){
                 submissionTeamArr.push(memberObj.card);
             }
             
-            returnArr.push({teamAsJSONArr:submissionTeamArr, username:userSubmissionObj[submittingUser]});
+            console.log(userSubmissionObj);
+            
+            returnArr.push({teamAsJSONArr:submissionTeamArr, username:userSubmissionObj["submittingUser"],userId:"server" + userSubmission});
                   
         }
-        
-        console.log(returnArr);
           
-        PushCurrentScenarioSubmissionToFirebase("0");
+        PushCurrentScenarioSubmissionToFirebase("3");
         
         _RunSubmissionVsLeaderboard(returnArr);    
 
@@ -77,18 +77,27 @@ function _GetScenarioLeaderboardSubmissionsAsJSON(){
 
 function _RunSubmissionVsLeaderboard(leaderboardArrAsJSON){
     
+    const cardHandler = window.gameHandler.collectionCardHandler;
+    
+    const scenario =  window.gameHandler.scenarioHandler.GetCurrentScenario();
+    
     for(const submission of leaderboardArrAsJSON){
         
         let otherPlayerId;
         
         for(const JSONCard of submission.teamAsJSONArr){
             
-            const card = window.gameHandler.collectionCardHandler.MakeCardFromJSON(JSONCard);
+            const card = cardHandler.MakeCardFromJSON(JSONCard,submission.userId);
             
             otherPlayerId = card.owner;
 
         }
         
-        const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
+       scenario.QueueProcess(otherPlayerId,submission.username);
+       
     }
+    
+    scenario.ProcessNextInQueue();
+    
+    
 }

@@ -9,6 +9,7 @@ export class scenarioProcessor
         this.scenarioName = scenarioName;
         this.phases = [];
         this.runProcessors = [];
+        this.queuedProcessors = [];
         this.currentRunProcessor;
         this.playerCardSlots = 3;
         this.otherPlayerCardSlots = 3;
@@ -27,13 +28,22 @@ export class scenarioProcessor
         return p
     }
     
-    BeginProcess(runId){
+    QueueProcess(otherPlayId = window.gameHandler.otherPlayerId, otherPlayerUsername){
         
-        const rp = new scenarioProcessorRun(runId);
+        const rp = new scenarioProcessorRun();
         
         rp.phases = [...this.phases];
         
-        this.runProcessors.push(rp);
+        this.queuedProcessors.push(rp);
+        
+        rp.otherPlayerId = otherPlayId;
+        
+        rp.otherPlayerUsername = otherPlayerUsername;
+    }
+    
+    ProcessNextInQueue(){
+        
+        const rp = this.queuedProcessors.shift();
         
         this.currentRunProcessor = rp;
         
@@ -82,11 +92,11 @@ export class scenarioProcessor
 
 class scenarioProcessorRun
 {
-    constructor(runId){
+    constructor(){
         
         this.phases = [];
         this.currentPhaseInd = 0;
-        this.runId;
+        this.otherPlayerId;
     }
     
     RunNextPhase(){

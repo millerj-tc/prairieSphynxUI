@@ -35,15 +35,12 @@ export function GotoHomeMenu(){
     gh.narrOutputArtist.AppendElementWithinDOM(dorButton);
     
     console.log(gh.playerId);
-    
-    if(gh.playerId != "player"){
-        
-        const dorPButton = document.createElement("button");
-    
-        dorPButton.innerText = "Dance of Riddles (Competitive Mode)";
+       
+    const dorPButton = document.createElement("button");
 
-        dorPButton.onclick = function(){DanceOfRiddlesPrep("pvp")};
+    dorPButton.innerText = "Dance of Riddles (Competitive Mode)";
 
-        gh.narrOutputArtist.AppendElementWithinDOM(dorPButton);
-    }
+    dorPButton.onclick = function(){DanceOfRiddlesPrep("pvp")};
+
+    gh.narrOutputArtist.AppendElementWithinDOM(dorPButton);
 }
