@@ -239,7 +239,7 @@ export function AnnounceOtherPlayer(){
     
     const otherPlayerCards = window.gameHandler.collectionCardHandler.GetCards(otherPlayerUserId);
     
-    if(otherPlayerUsername == null) return
+    if(otherPlayerUsername == "AI") return
     
     const artist = window.gameHandler.narrOutputArtist;
     

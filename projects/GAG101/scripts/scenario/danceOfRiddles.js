@@ -1,4 +1,4 @@
-import {SubsequentRunReset,PauseAtEndOfScenarioForPvP} from "./scenarioPhases/scenarioMaintenance.js";
+import {SubsequentRunReset,PauseAtEndOfScenarioForPvP,MarkWinnerForPvP} from "./scenarioPhases/scenarioMaintenance.js";
 import {DupeConkLosers,RemoveDupeConkStatuses} from "./scenarioPhases/DupeConk.js";
 import * as cardInfoPhaseUtils from "./scenarioPhases/cardInfoPhaseUtils.js";
 import * as uiPhaseUtils from "./scenarioPhases/uiPhaseUtils.js";
@@ -136,6 +136,14 @@ function _DanceOfRiddlesOutput(){
     console.error(consoleString);
     
     
+}
+
+function DanceOfRiddlesMarkWinner(){
+    
+    const winnerArr = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessorProp("winnerArr");
+    
+    if(winnerArr[0].owner = window.gameHandler.playerId) MarkWinnerForPvP("player")
+    else MarkWinnerForPvP("server");
 }
 
 export function DanceOfRiddlesPrep(mode){

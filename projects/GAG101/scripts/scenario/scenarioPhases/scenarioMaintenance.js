@@ -4,7 +4,9 @@ export function SubsequentRunReset(){
     
     const cardHandler = window.gameHandler.collectionCardHandler;
     
-    if(scenario.runProcessors.length > 1){
+    console.log(scenario.runProcessors);
+    
+    if(scenario.runProcessors.length > 1 && scenario.queuedProcessors.length == 0){
         
         window.gameHandler.narrOutputArtist.ClearAllChildren();
 
@@ -23,7 +25,7 @@ export function PauseAtEndOfScenarioForPvP(){
     
     const cardHandler = window.gameHandler.collectionCardHandler;
     
-    if(otherPlayerId == null) return
+    if(otherPlayerId == "AI") return
     
     const button = document.createElement("button");
     
@@ -47,4 +49,19 @@ export function PauseAtEndOfScenarioForPvP(){
     }
     
     artist.AppendElementWithinDOM(button);
+}
+
+export function MarkWinnerForPvP(string){
+    
+    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
+    
+    const rp = scenario.GetCurrentRunProcessor();
+    
+    if(rp.match.serverCards == null) return
+    
+    if(string != "server" && string != "player") console.error("Mark Winner must be passed 'server' or 'player'");
+    
+    rp.match.winner = string;
+    
+    
 }

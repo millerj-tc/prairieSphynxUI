@@ -28,7 +28,7 @@ export class scenarioProcessor
         return p
     }
     
-    QueueProcess(match = {otherPlayId:window.gameHandler.otherPlayerId, otherPlayerUsername:"AI", serverCards:null}){
+    QueueProcess(match = {otherPlayerId:window.gameHandler.otherPlayerId, otherPlayerUsername:"AI", serverCards:null}){
         
         const rp = new scenarioProcessorRun();
         
@@ -51,11 +51,13 @@ export class scenarioProcessor
         
         const rp = this.queuedProcessors.shift();
         
+        this.runProcessors.push(rp);
+        
         const cardHandler = window.gameHandler.collectionCardHandler;
         
         this.currentRunProcessor = rp;
         
-        if(rp.match != null){
+        if(rp.match.serverCards != null){
             
             for(const JSONCard of rp.match.serverCards){
             
