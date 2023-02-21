@@ -37,4 +37,12 @@ export class tournamentHandler{
         
         this.matches = [];
     }
+    
+    GetMatchByOtherPlayerId(id){
+        
+        for(const match of this.matches){
+            
+            if(match.otherPlayerId == otherPlayerId) return match
+        }
+    }
 }

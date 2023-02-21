@@ -28,7 +28,7 @@ export class scenarioProcessor
         return p
     }
     
-    QueueProcess(otherPlayId = window.gameHandler.otherPlayerId, otherPlayerUsername){
+    QueueProcess(match = {otherPlayId:window.gameHandler.otherPlayerId, otherPlayerUsername:"AI", serverCards:null}){
         
         const rp = new scenarioProcessorRun();
         
@@ -36,16 +36,32 @@ export class scenarioProcessor
         
         this.queuedProcessors.push(rp);
         
-        rp.otherPlayerId = otherPlayId;
+        console.log(match);
         
-        rp.otherPlayerUsername = otherPlayerUsername;
+        rp.otherPlayerId = match.otherPlayerId;
+        
+        rp.otherPlayerUsername = match.otherPlayerUsername;
+        
+        rp.match = match;
+        
+        
     }
     
     ProcessNextInQueue(){
         
         const rp = this.queuedProcessors.shift();
         
+        const cardHandler = window.gameHandler.collectionCardHandler;
+        
         this.currentRunProcessor = rp;
+        
+        if(rp.match != null){
+            
+            for(const JSONCard of rp.match.serverCards){
+            
+            const card = cardHandler.MakeCardFromJSON(JSONCard,rp.match.otherPlayerId);
+            }
+        }
         
         rp.RunNextPhase();
     }

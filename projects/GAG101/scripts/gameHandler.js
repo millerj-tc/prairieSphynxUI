@@ -3,6 +3,7 @@ import {uiInputHandler} from "/utils/uiTools/uiInputHandler.js";
 import {cardHandler} from "./cards/cardHandler2.js";
 import {cacheHandler} from "/utils/cacheHandler/cacheHandler.js";
 import {scenarioProcessorHandler} from "./scenario/scenarioFlow/scenarioProcessorHandler.js";
+import {tournamentHandler} from "./pvp/tournamentHandler.js";
 
 export class gameHandler
 {
@@ -35,6 +36,8 @@ export class gameHandler
         this.masterCardHandler = new cardHandler("master");
         
         this.collectionCardHandler = new cardHandler("collection");
+        
+        this.tournamentHandler = new tournamentHandler();
         
         console.warn("all changes to journal, collection, etc. should be pushed to firebase & cookie");
         

@@ -59,7 +59,7 @@ function _GetScenarioLeaderboardSubmissionsAsJSON(){
             
             console.log(userSubmissionObj);
             
-            returnArr.push({teamAsJSONArr:submissionTeamArr, username:userSubmissionObj["submittingUser"],userId:"server" + userSubmission});
+            returnArr.push({teamAsJSONArr:submissionTeamArr, username:userSubmissionObj["submittingUser"],userId:"server" + userSubmission, winrate:userSubmissionObj["winrate"]});
                   
         }
           
@@ -78,25 +78,21 @@ function _GetScenarioLeaderboardSubmissionsAsJSON(){
 
 function _RunSubmissionVsLeaderboard(leaderboardArrAsJSON){
     
-    const cardHandler = window.gameHandler.collectionCardHandler;
+    const gh = window.gameHandler;
     
-    const scenario =  window.gameHandler.scenarioHandler.GetCurrentScenario();
+    const cardHandler = gh.collectionCardHandler;
+    
+    const scenario =  gh.scenarioHandler.GetCurrentScenario();
     
     for(const submission of leaderboardArrAsJSON){
         
-        let otherPlayerId;
-        
-        for(const JSONCard of submission.teamAsJSONArr){
+        console.log(submission);
             
-            const card = cardHandler.MakeCardFromJSON(JSONCard,submission.userId);
-            
-            otherPlayerId = card.owner;
-
-        }
+       const newMatch =  gh.tournamentHandler.AddMatch(submission.teamAsJSONArr,submission.userId,submission.username);
         
-        console.warn("all cards getting loaded in at outset, then slowly removed as you proceed through scenarios. should be loaded in as part of the tournament handler")
+        newMatch.SetServerCardsWinrate(submission.winrate);
         
-       scenario.QueueProcess(otherPlayerId,submission.username);
+        scenario.QueueProcess(newMatch);
        
     }
     
