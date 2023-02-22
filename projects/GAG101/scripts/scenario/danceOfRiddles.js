@@ -1,4 +1,4 @@
-import {SubsequentRunReset,PauseAtEndOfScenarioForPvP,SetPlayer1Username} from "./scenarioPhases/scenarioMaintenance.js";
+import * as scenarioMaintenance from "./scenarioPhases/scenarioMaintenance.js";
 import {DupeConkLosers,RemoveDupeConkStatuses} from "./scenarioPhases/DupeConk.js";
 import * as cardInfoPhaseUtils from "./scenarioPhases/cardInfoPhaseUtils.js";
 import * as uiPhaseUtils from "./scenarioPhases/uiPhaseUtils.js";
@@ -15,11 +15,9 @@ export function BuildDanceOfRiddlesScenario(){
     
     const DOR = gh.scenarioHandler.AddScenario("Dance of Riddles");
     
-    DOR.AddPhase("Subsequent Reset", SubsequentRunReset);
+    DOR.AddPhase("Subsequent Reset", scenarioMaintenance.SubsequentRunReset);
     
-    DOR.AddPhase("Replace card slot DOM", scenarioPrepUtils.RenameCardSlotDOMsToSubmissionUserId)
-    
-    DOR.AddPhase("Replace Randomized AI Cards with Submission cards", _ReplaceRandomPracticeCardsWithSubmissionCards);
+    DOR.AddPhase("Insert submission cards", scenarioMaintenance.InsertSubmissionCardsIntoCardSlots);
     
     DOR.AddPhase("Set AI Username", _SetAIUsername)
     
@@ -33,40 +31,11 @@ export function BuildDanceOfRiddlesScenario(){
     
     DOR.AddPhase("Dance Output",_DanceOfRiddlesOutput);
     
-    DOR.AddPhase("Wait for PVP continnue", PauseAtEndOfScenarioForPvP,true);
+    DOR.AddPhase("Wait for PVP continnue", scenarioMaintenance.PauseAtEndOfScenarioForPvP,true);
     
     console.warn("winning dance of riddles should have some kind of game effect");
     
 
-}
-
-function _ReplaceRandomPracticeCardsWithSubmissionCards(){
-    
-    console.warn("could probably generalize this to scenario maintenance or similar");
-    
-    const cardHandler = window.gameHandler.collectionCardHandler;
-    
-    const runProcessor = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor();
-    
-    for(let contenderIndex = 0; contenderIndex < runProcessor.contenders.length; contenderIndex ++){
-        
-        const contender = runProcessor.contenders[contenderIndex];
-        
-        if(contender.getCardsFromCollectionCardHandler) continue
-        
-        const userId = contender.playerId;
-        
-        const userCards = cardHandler.GetCards(userId);
-        
-        for(let contenderCardIndex = 0; contenderCardIndex < userCards.length; contenderCardIndex++){
-            
-            const card = userCards[contenderCardIndex];
-            
-            scenarioPrepUtils.SetCardForSlot(card,userId,contenderCardIndex);
-        }
-        
-        
-    }
 }
 
 function _SetAIUsername(){
@@ -75,9 +44,9 @@ function _SetAIUsername(){
     
     const mode = scenario.GetMode();
     
-    if(mode == "story") SetPlayer1Username("The Holy Fey");
+    if(mode == "story") scenarioMaintenance.SetPlayer1Username("The Holy Fey");
     
-    if(mode == "story" && scenario.GetCurrentRunProcessor().contenders[1].playerUsername == "AI") SetPlayer1Username("Practice Player");
+    if(mode == "story" && scenario.GetCurrentRunProcessor().contenders[1].playerUsername == "AI") scenarioMaintenance.SetPlayer1Username("Practice Player");
     
     
 }

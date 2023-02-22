@@ -1,4 +1,5 @@
 import {AnnounceTournamentResults} from "./uiPhaseUtils.js";
+import {SetCardForContenderSlot} from "../scenarioFlow/genericScenarioPrep.js";
 
 export function SubsequentRunReset(){
     
@@ -15,6 +16,8 @@ export function PauseAtEndOfScenarioForPvP(){
     
     const runP = scenario.GetCurrentRunProcessor();
     
+    const player0Id = runP.contenders[0].playerId;
+    
     const player1Id = runP.contenders[1].playerId;
     
     const artist = window.gameHandler.narrOutputArtist;
@@ -29,7 +32,7 @@ export function PauseAtEndOfScenarioForPvP(){
     
     button.onclick = function(){
         
-        console.log(cardHandler.GetCards(player1Id));
+        cardHandler.EmptyCards(player0Id);
         
         cardHandler.EmptyCards(player1Id);
                 
@@ -39,7 +42,11 @@ export function PauseAtEndOfScenarioForPvP(){
         
         button.remove();
         
+        console.log(scenario.queuedProcessors);
+        
         if(scenario.queuedProcessors.length == 0){
+            
+            console.log("ending tournie");
             
             _EndTournament();
         }
@@ -53,6 +60,34 @@ export function PauseAtEndOfScenarioForPvP(){
     }
     
     artist.AppendElementWithinDOM(button);
+}
+
+export function InsertSubmissionCardsIntoCardSlots(){
+    
+    const cardHandler = window.gameHandler.collectionCardHandler;
+    
+    const runProcessor = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor();
+    
+    for(let contenderIndex = 0; contenderIndex < runProcessor.contenders.length; contenderIndex ++){
+        
+        const contender = runProcessor.contenders[contenderIndex];
+        
+        if(contender.getCardsFromCollectionCardHandler) continue
+        
+        const userId = contender.playerId;
+        
+        const userCards = cardHandler.GetCards(userId);
+        
+        for(let contenderCardIndex = 0; contenderCardIndex < userCards.length; contenderCardIndex++){
+            
+            const card = userCards[contenderCardIndex];
+            
+            console.warn("when you replace contender0 card slots with server stuff it erases the choices of the player -- can fix by running player scenarios first?");
+            SetCardForContenderSlot(card,userId,contenderIndex,contenderCardIndex);
+        }
+        
+        
+    }
 }
 
 //export function MarkWinnerForPvP(string){

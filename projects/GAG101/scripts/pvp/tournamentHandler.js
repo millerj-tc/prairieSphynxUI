@@ -23,10 +23,10 @@ class contender
         this.getCardsFromCollectionCardHandler = false;
         this.playerUsername = playerUsername;
         this.playerId = playerId;
-        this.wins;
-        this.ties;
-        this.defeats;
-        this.matches;
+        this.wins = 0;
+        this.ties = 0;
+        this.defeats = 0;
+        this.matches = 0;
     }
 }
 

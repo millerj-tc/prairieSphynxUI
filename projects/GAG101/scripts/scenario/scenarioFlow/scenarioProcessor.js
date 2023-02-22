@@ -64,6 +64,8 @@ export class scenarioProcessor
         
         for(const contender of rp.contenders){
             
+            console.log(contender);
+            
             if(contender.getCardsFromCollectionCardHandler) continue
             
             for(const JSONCard of contender.cardsAsJSON){

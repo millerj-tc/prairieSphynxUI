@@ -87,8 +87,6 @@ function _RunSubmissionVsLeaderboard(leaderboardArrAsJSON){
     const scenario =  gh.scenarioHandler.GetCurrentScenario();
     
     for(const submission of leaderboardArrAsJSON){
-        
-        console.log(submission);
             
        const newContender =  gh.tournamentHandler.AddContender(submission.teamAsJSONArr,submission.userId,submission.username);
        
@@ -109,12 +107,6 @@ function _RunSubmissionVsLeaderboard(leaderboardArrAsJSON){
         
         scenario.QueueProcess([playerContender,serverContender]);
     }
-        
-    
-    
-    console.log(gh.tournamentHandler);
-    
-    console.log(scenario);
     
     gh.cardChoiceTrayArtist.SetDOMDisplayTo("none");
     

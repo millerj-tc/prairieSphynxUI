@@ -59,11 +59,13 @@ export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,conten
     
     if(mode != "story") RandomizePlayerIdChoicesForContenderNum("AI",1);
     
-    AttachOnClickCardChoiceToDOMs();
+    AttachOnClickCardChoiceToDOMsForContenderNum(0);
+    
+    if(mode != "story") AttachOnClickCardChoiceToDOMsForContenderNum(1);
     
     AddScenarioRunButton();
     
-    if(mode == "pvp") AddScenarioRunButton();
+    if(mode == "pvp") AddScenarioRunPvPButton();
     
     
 }
@@ -234,13 +236,13 @@ export function RandomizePlayerIdChoicesForContenderNum(playerId,contenderNum){
 export function SetCardForContenderSlot(card,owner,contenderNum,slotNum){
     
     const gh = window.gameHandler;
-    
+        
     card.owner = owner; 
 
     const scenario = gh.scenarioHandler.GetCurrentScenario();
     
-    const artist = scenario.uiToolsHandler.tools.filter(t => t.GetAuthorizedDOMs().id.includes("contender" + contenderNum + "CardSlot" + slotNum))[0];
-    
+    const artist = scenario.uiToolsHandler.GetArtistsByAuthorizedDOMId("contender" + contenderNum + "CardSlot" + slotNum);
+
     UpdateCardSlotArtist(artist,card);
     
     card.selectedForTeam = true;
@@ -279,7 +281,7 @@ export function SetCardForContenderSlot(card,owner,contenderNum,slotNum){
 //}
 
     
-export function AttachOnClickCardChoiceToDOMs(){
+export function AttachOnClickCardChoiceToDOMsForContenderNum(num){
     
     const gh = window.gameHandler;
 
@@ -291,7 +293,7 @@ export function AttachOnClickCardChoiceToDOMs(){
 
         const dom = tool.GetAuthorizedDOMs();
 
-        if(dom.id.includes("CardSlot")){
+        if(dom.id.includes("contender" + num + "CardSlot")){
 
             dom.onclick = function(){
                 

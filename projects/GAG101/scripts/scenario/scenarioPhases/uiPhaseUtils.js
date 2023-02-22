@@ -202,7 +202,7 @@ function _OnClickCardSelect(card){
     
     if(artist.associatedCard != null){
         artist.associatedCard.selectedForTeam = false;
-        artist.servantArtist.SetDOMInnerTextTo(card.name);
+        artist.nameSlotArtist.SetDOMInnerTextTo(card.name);
     }
     
     UpdateCardSlotArtist(artist,card);
@@ -248,6 +248,10 @@ export function AnnounceOtherPlayer(){
     const player1Cards = window.gameHandler.collectionCardHandler.GetCards(player1Id).filter(c => c.selectedForTeam);
     
     const artist = window.gameHandler.narrOutputArtist;
+    
+    console.log(player0Cards);
+    
+    console.log(player1Cards);
     
     OutputTextDivWithNounImages(`${player0Username} [arg0[]] VS [arg1[]] ${player1Username} `,player0Cards,player1Cards);
     
