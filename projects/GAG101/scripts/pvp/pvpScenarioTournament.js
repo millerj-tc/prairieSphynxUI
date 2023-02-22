@@ -94,25 +94,29 @@ function _RunSubmissionVsLeaderboard(leaderboardArrAsJSON){
        
     }
     
-    const playerContender = gh.tournamentHandler.AddContender(false,gh.playerId,gh.playerUsername);
-    
-    for(const serverContender of gh.tournamentHandler.contenders){
-        
-        scenario.QueueProcess([playerContender,serverContender]);
-    }
-    
     const matchesArr = GenerateCombinations(gh.tournamentHandler.contenders,2)
     
     for(const match of matchesArr){
         
         scenario.QueueProcess(match);
     }
+    
+    const playerContender = gh.tournamentHandler.AddContender(false,gh.playerId,gh.playerUsername);
+    
+    for(const serverContender of gh.tournamentHandler.contenders){
+        
+        if(serverContender.playerId == playerContender.playerId) continue
+        
+        scenario.QueueProcess([playerContender,serverContender]);
+    }
         
     
     
-    console.log(cardHandler);
+    console.log(gh.tournamentHandler);
     
-    gh.cardChoiceGridArtist.SetDOMDisplayTo("none");
+    console.log(scenario);
+    
+    gh.cardChoiceTrayArtist.SetDOMDisplayTo("none");
     
     scenario.ProcessNextInQueue();
     

@@ -35,7 +35,7 @@ export function PauseAtEndOfScenarioForPvP(){
                 
         console.warn(`finished against ${player1Id}`);
         
-        artist.InsertHTMLAdjacentToDOM("beforeend",`<br><br>`);
+        artist.InsertHTMLAdjacentToDOM("beforeend",`<br><br><br><br>`);
         
         button.remove();
         

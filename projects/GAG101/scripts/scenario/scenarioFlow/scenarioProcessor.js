@@ -72,6 +72,8 @@ export class scenarioProcessor
             }
         }
         
+        console.log(`beginning ${rp.contenders[0].playerId} vs ${rp.contenders[1].playerId}`);
+        
         
         rp.RunNextPhase();
     }

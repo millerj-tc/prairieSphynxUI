@@ -59,6 +59,7 @@ export function CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridC
         const cardChoiceTrayArtist = window.gameHandler.uiToolsHandler.GetArtistsByAuthorizedDOMId("cardChoiceTrayGrid");
         
         if(id != gh.playerId) artist.right = true;
+        else artist.right = false;
 
         cardChoiceTrayArtist.AppendElementWithinDOM(dom);
     }
@@ -136,6 +137,8 @@ export function SetCardForSlot(card,owner,slotNum){
 
     const scenario = gh.scenarioHandler.GetCurrentScenario();
     
+    console.log(card);
+    
     const artist = scenario.uiToolsHandler.tools.filter(t => t.GetAuthorizedDOMs().id.includes(owner + "CardSlot" + slotNum))[0];
     
     UpdateCardSlotArtist(artist,card);
@@ -151,7 +154,19 @@ export function RenameCardSlotDOMsToSubmissionUserId(){
     
     const runProcessor = scenario.GetCurrentRunProcessor();
     
+    const player0Id = runProcessor.contenders[0].playerId;
+    
     const player1Id = runProcessor.contenders[1].playerId;
+    
+    if(player0Id != gh.playerId){
+        
+        const artists = scenario.uiToolsHandler.tools.filter(t => t.right == false); //set in CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart 
+    
+        for(const artist of artists){
+
+            artist.GetAuthorizedDOMs().id = player0Id + "CardSlot" + artist.GetAuthorizedDOMs().id.slice(-1);
+        }
+    }
     
     if(player1Id == "AI") return
     
