@@ -35,11 +35,11 @@ export function PauseAtEndOfScenarioForPvP(){
     
     button.onclick = function(){
         
-        console.log(cardHandler.GetCards(otherPlayerId));
+        console.log(cardHandler.GetCards(player1Id));
         
-        cardHandler.EmptyCards(otherPlayerId);
+        cardHandler.EmptyCards(player1Id);
                 
-        console.warn(`finished against ${otherPlayerId}`);
+        console.warn(`finished against ${player1Id}`);
         
         artist.InsertHTMLAdjacentToDOM("beforeend",`<br><br>`);
         

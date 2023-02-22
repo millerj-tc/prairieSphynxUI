@@ -58,8 +58,6 @@ export class cardHandler
         
         let returnArr = [];
         
-        console.log(owner);
-        
         if(owner == null) returnArr = this.cards
         else returnArr = this.cards.filter(c => c.owner == owner);
         

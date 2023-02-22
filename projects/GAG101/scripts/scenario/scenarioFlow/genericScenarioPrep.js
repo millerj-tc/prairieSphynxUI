@@ -178,17 +178,19 @@ export function AttachOnClickCardChoiceToDOMs(){
 
         const dom = tool.GetAuthorizedDOMs();
 
-        const associatedCard = tool.associatedCard;
-
         if(dom.id.includes("CardSlot")){
 
             dom.onclick = function(){
                 
                 if(gh.cardChoiceGridArtist.GetStyleProp("display") == "grid") return //otherwise you can "click through" the dimmer layer and mess up the lastClickedCardSlotArtist part and it gets ALLL fucked up
                 
-                console.log(associatedCard);
+                console.log(tool);
+                
+                console.log(tool.associatedCard);
+                
+                console.log(tool.associatedCard.owner);
 
-                DisplayUnselectedCardsAsChoices(associatedCard.owner);
+                DisplayUnselectedCardsAsChoices(tool.associatedCard.owner);
 
                 scenario.lastClickedCardSlotArtist = tool;
                 

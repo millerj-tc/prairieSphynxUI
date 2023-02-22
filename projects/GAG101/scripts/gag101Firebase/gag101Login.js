@@ -77,6 +77,8 @@ export function RetrieveUserData(loginCallback=false){
 
         
             // otherwise, download the user's collection
+            
+            console.warn("make sure it downloads new cards added in patches (apple helm)");
 
             for(const cardKey in data){ //MUST BE "IN" NOT "OF" BECAUSE DATA IS TECHNICALLY NOT ARR
 
