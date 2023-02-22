@@ -65,6 +65,11 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         this.matches = [];
     }
     
+    EmptyContenders(){
+        
+        this.contenders = [];
+    }
+    
     GetMatchByOtherPlayerId(id){
         
         for(const match of this.matches){

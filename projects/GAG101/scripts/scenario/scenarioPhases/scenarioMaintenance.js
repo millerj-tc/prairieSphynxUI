@@ -2,13 +2,7 @@ import {AnnounceTournamentResults} from "./uiPhaseUtils.js";
 
 export function SubsequentRunReset(){
     
-    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
-    
-    const cardHandler = window.gameHandler.collectionCardHandler;
-    
-    console.log(scenario.runProcessors);
-    
-    if(scenario.runProcessors.length > 1 && window.gameHandler.tournamentHandler.matches.length == 0){
+    if(window.gameHandler.tournamentHandler.contenders.length == 0){
         
         window.gameHandler.narrOutputArtist.ClearAllChildren();
 
@@ -84,7 +78,7 @@ function _EndTournament(){
     
     AnnounceTournamentResults();
             
-    window.gameHandler.tournamentHandler.EmptyMatches();
+    window.gameHandler.tournamentHandler.EmptyContenders();
     
     console.warn("figure out player winrate, compare with server winrates, etc.")
 
