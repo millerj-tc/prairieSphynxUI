@@ -78,11 +78,37 @@ export function RetrieveUserData(loginCallback=false){
         
             // otherwise, download the user's collection
             
-            console.warn("make sure it downloads new cards added in patches (apple helm)");
-
             for(const cardKey in data){ //MUST BE "IN" NOT "OF" BECAUSE DATA IS TECHNICALLY NOT ARR
 
                 window.gameHandler.collectionCardHandler.MakeCardFromJSON(data[cardKey].card,uid);
+            }
+            
+            
+            // add any new cards that were patched into the game by checking charData for any cards that don't exist in cardHandler after updating from server
+            
+            for(const card of charData){
+                
+                if(card.unlockedForPlayer){
+                    
+                    let match = false
+                    
+                    for(const downloadedCard of window.gameHandler.collectionCardHandler.GetCards(uid)){
+                        
+                        
+                        
+                        if(downloadedCard.name == card.name) match = true
+                        
+                    }
+                    
+                    if(!match) {
+                        
+                        const newCardJSON = JSON.stringify(card);
+                        
+                        const newCard = window.gameHandler.collectionCardHandler.MakeCardFromJSON(newCardJSON);
+                        
+                        UpdateCardForUser(newCard);
+                    }
+                }
             }
         }
         

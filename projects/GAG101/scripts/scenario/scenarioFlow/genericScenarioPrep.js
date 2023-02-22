@@ -166,8 +166,6 @@ export function RenameCardSlotDOMsToSubmissionUserId(){
     
 export function AttachOnClickCardChoiceToDOMs(){
     
-    console.warn("not working for pvp practice");
-    
     const gh = window.gameHandler;
 
     const cardHandler = gh.collectionCardHandler;
