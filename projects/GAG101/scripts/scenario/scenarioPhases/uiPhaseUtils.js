@@ -233,17 +233,21 @@ export function AnnounceOtherPlayer(){
     
     const runP = scenario.GetCurrentRunProcessor();
     
-    const otherPlayerUsername = runP.otherPlayerUsername;
+    const player0Username = runP.contenders[0].playerUsername;
     
-    const otherPlayerUserId = runP.otherPlayerId;
+    const player0Id = runP.contenders[0].playerId;
     
-    const otherPlayerCards = window.gameHandler.collectionCardHandler.GetCards(otherPlayerUserId);
+    const player1Username = runP.contenders[1].playerUsername;
     
-    if(otherPlayerUsername == "AI") return
+    const player1Id = runP.contenders[1].playerId;
+    
+    const player0Cards = window.gameHandler.collectionCardHandler.GetCards(player0Id).filter(c => c.selectedForTeam);
+    
+    const player1Cards = window.gameHandler.collectionCardHandler.GetCards(player1Id).filter(c => c.selectedForTeam);
     
     const artist = window.gameHandler.narrOutputArtist;
     
-    OutputTextDivWithNounImages(`VS ${otherPlayerUsername} [arg0[]]`,otherPlayerCards)
+    OutputTextDivWithNounImages(`${player0Username} [arg0[]] VS [arg1[]] ${player1Username} `,player0Cards,player1Cards);
     
     artist.InsertHTMLAdjacentToDOM("beforeend",`<br><br>`);
 }

@@ -14,6 +14,7 @@ export class scenarioProcessor
         this.playerCardSlots = 3;
         this.otherPlayerCardSlots = 3;
         this.uiToolsHandler = new uiToolsHandler();
+        this.mode = "story";
 
     }
     
@@ -90,6 +91,13 @@ export class scenarioProcessor
         
         this.currentRunProcessor[prop] = value;
     }
+    
+    SetMode(mode){
+        
+        this.mode = mode;
+    }
+    
+    GetMode(){ return this.mode}
     
     GetCurrentRunProcessorProp(prop){
         

@@ -1,4 +1,4 @@
-import {SubsequentRunReset,PauseAtEndOfScenarioForPvP} from "./scenarioPhases/scenarioMaintenance.js";
+import {SubsequentRunReset,PauseAtEndOfScenarioForPvP,SetPlayer1Username} from "./scenarioPhases/scenarioMaintenance.js";
 import {DupeConkLosers,RemoveDupeConkStatuses} from "./scenarioPhases/DupeConk.js";
 import * as cardInfoPhaseUtils from "./scenarioPhases/cardInfoPhaseUtils.js";
 import * as uiPhaseUtils from "./scenarioPhases/uiPhaseUtils.js";
@@ -20,6 +20,8 @@ export function BuildDanceOfRiddlesScenario(){
     DOR.AddPhase("Replace card slot DOM", scenarioPrepUtils.RenameCardSlotDOMsToSubmissionUserId)
     
     DOR.AddPhase("Replace Randomized AI Cards with Submission cards", _ReplaceRandomPracticeCardsWithSubmissionCards);
+    
+    DOR.AddPhase("Set AI Username", _SetAIUsername)
     
     DOR.AddPhase("Announce other player", uiPhaseUtils.AnnounceOtherPlayer);
     
@@ -65,6 +67,19 @@ function _ReplaceRandomPracticeCardsWithSubmissionCards(){
         
         
     }
+}
+
+function _SetAIUsername(){
+    
+    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
+    
+    const mode = scenario.GetMode();
+    
+    if(mode == "story") SetPlayer1Username("The Holy Fey");
+    
+    if(mode == "story" && scenario.GetCurrentRunProcessor().contenders[1].playerUsername == "AI") SetPlayer1Username("Practice Player");
+    
+    
 }
 
 function _GetDanceofRiddlesWinners(){
@@ -171,6 +186,8 @@ export function DanceOfRiddlesPrep(mode){
     gh.scenarioHandler.SetCurrentScenarioByName("Dance of Riddles")
 
     const scenario = gh.scenarioHandler.GetCurrentScenario();
+    
+    scenario.SetMode(mode);
     
     gh.narrOutputArtist.ClearAllChildren();
     
@@ -294,6 +311,8 @@ function _GetTeamAndOutputForMode(mode,scenarioConfig){
         scenarioPrepUtils.SetCardForSlot(holyFey2,"AI",1);
             
         uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey Upa]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
+        
+        window.gameHandler.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>")
     }
     else if(mode == "pvp"){
         

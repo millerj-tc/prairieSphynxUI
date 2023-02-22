@@ -21,13 +21,13 @@ export function PauseAtEndOfScenarioForPvP(){
     
     const runP = scenario.GetCurrentRunProcessor();
     
-    const otherPlayerId = runP.otherPlayerId;
+    const player1Id = runP.contenders[1].playerId;
     
     const artist = window.gameHandler.narrOutputArtist;
     
     const cardHandler = window.gameHandler.collectionCardHandler;
     
-    if(otherPlayerId == "AI") return
+    if(player1Id == "AI") return
     
     const button = document.createElement("button");
     
@@ -88,4 +88,9 @@ function _EndTournament(){
     
     console.warn("figure out player winrate, compare with server winrates, etc.")
 
+}
+
+export function SetPlayer1Username(username){
+    
+    window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor().contenders[1].playerUsername = username;
 }

@@ -151,18 +151,22 @@ export function RenameCardSlotDOMsToSubmissionUserId(){
     
     const runProcessor = scenario.GetCurrentRunProcessor();
     
-    if(runProcessor.otherPlayerId == "AI") return
+    const player1Id = runProcessor.contenders[1].playerId;
+    
+    if(player1Id == "AI") return
     
     const artists = scenario.uiToolsHandler.tools.filter(t => t.right); //set in CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart 
     
     for(const artist of artists){
         
-        artist.GetAuthorizedDOMs().id = runProcessor.otherPlayerId + "CardSlot" + artist.GetAuthorizedDOMs().id.slice(-1);
+        artist.GetAuthorizedDOMs().id = player1Id + "CardSlot" + artist.GetAuthorizedDOMs().id.slice(-1);
     }
 }
 
     
 export function AttachOnClickCardChoiceToDOMs(){
+    
+    console.warn("not working for pvp practice");
     
     const gh = window.gameHandler;
 
@@ -181,6 +185,8 @@ export function AttachOnClickCardChoiceToDOMs(){
             dom.onclick = function(){
                 
                 if(gh.cardChoiceGridArtist.GetStyleProp("display") == "grid") return //otherwise you can "click through" the dimmer layer and mess up the lastClickedCardSlotArtist part and it gets ALLL fucked up
+                
+                console.log(associatedCard);
 
                 DisplayUnselectedCardsAsChoices(associatedCard.owner);
 

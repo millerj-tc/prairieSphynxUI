@@ -45,7 +45,7 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         
         if(cardsAsJSON == false) c.getCardsFromCollectionCardHandler = true; //if you don't pass this JSON cards, it will get the cards from collection Card Handler by userid instead
         
-        this.contenders.push(m);
+        this.contenders.push(c);
         
         return c
         
