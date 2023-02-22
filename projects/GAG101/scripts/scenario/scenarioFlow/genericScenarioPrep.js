@@ -47,6 +47,8 @@ export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,conten
     
     scenario.SetMode(mode);
     
+    UnselectAllPlayerCards();
+    
     gh.narrOutputArtist.ClearAllChildren();
     
     gh.cardChoiceTrayArtist.SetDOMDisplayTo("block");
@@ -68,6 +70,18 @@ export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,conten
     if(mode == "pvp") AddScenarioRunPvPButton();
     
     
+}
+
+export function UnselectAllPlayerCards(){
+    
+    const cardHandler = window.gameHandler.collectionCardHandler;
+    
+    const playerCards = cardHandler.GetCards(window.gameHandler.playerId);
+    
+    for(const card of playerCards){
+        
+        card.selectedForTeam = false;
+    }
 }
 
 export function CreateNCardSlotsForContenderNumber(n,contenderNum,imgGridColumnStart,nameSlotGridColumnStart){

@@ -10,8 +10,6 @@ export function OutputTextDivWithNounImages(string){
     
     const utilityArtist = gameHandler.uiToolsHandler.utilityUIArtist;
     
-    const returnDOM = document.createElement("div");
-    
     const replacementArr = [];
     
     const nounGroupsArr = Array.from(arguments).slice(1);
@@ -54,8 +52,12 @@ export function OutputTextDivWithNounImages(string){
         }
 
     }
+    
+    const returnSpan = utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(returnString)
      
-    gh.narrOutputArtist.AppendElementWithinDOM(utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(returnString));
+    gh.narrOutputArtist.AppendElementWithinDOM(returnSpan);
+    
+    return returnSpan
 
 }
 
@@ -253,9 +255,11 @@ export function AnnounceOtherPlayer(){
     
     console.log(player1Cards);
     
-    OutputTextDivWithNounImages(`${player0Username} [arg0[]] VS [arg1[]] ${player1Username} `,player0Cards,player1Cards);
+    const announceSpan = OutputTextDivWithNounImages(`${player0Username} [arg0[]] VS [arg1[]] ${player1Username} `,player0Cards,player1Cards);
     
     artist.InsertHTMLAdjacentToDOM("beforeend",`<br><br>`);
+    
+    announceSpan.scrollIntoView({block: "start", inline: "nearest"});
 }
 
 export function AnnounceTournamentResults(){
@@ -274,19 +278,28 @@ export function AnnounceTournamentResults(){
     
     const defeatedByArr = [];
     
-    if(th.matches.length == 0) return
+    const tiedArr = [];
         
-    for(const match of th.matches){
+    for(const contender of th.contenders){
         
-        if(match.winner == "player") defeatedArr.push(match.otherPlayerUsername);
-        else defeatedByArr.push(match.otherPlayerUsername);
+        if(contender.defeatedByPlayer) defeatedArr.push(contender.playerUsername);
+        
+        if(contender.defeatedPlayer) defeatedByArr.push(contender.playerUsername);
+        
+        if(contender.tiedPlayer) tiedArr.push(contender.playerUsername);
     }
     
     const defeatedString = uiTH.utilityUIArtist.ReturnStringOfNounsBasedOnNumber(defeatedArr);
     
     const defeatedByString = uiTH.utilityUIArtist.ReturnStringOfNounsBasedOnNumber(defeatedByArr);
     
+    const tiedString = uiTH.utilityUIArtist.ReturnStringOfNounsBasedOnNumber(tiedArr);
+    
     OutputTextDivWithNounImages(`You defeated: ${defeatedString}`);
+    
+    artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+    
+    OutputTextDivWithNounImages(`You tied: ${tiedArr}`);
     
     artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     

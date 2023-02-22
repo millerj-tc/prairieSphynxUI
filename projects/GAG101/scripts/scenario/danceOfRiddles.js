@@ -57,6 +57,8 @@ function _GetDanceofRiddlesWinners(){
     
     const gh = window.gameHandler;
     
+    const playerId = gh.playerId;
+    
     const rp = gh.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor();
     
     const contender0 = rp.contenders[0];
@@ -95,6 +97,8 @@ function _GetDanceofRiddlesWinners(){
         contender1.defeats++;
         contender0.matches++;
         contender1.matches++;
+        
+        if(contender0.playerId == playerId) contender1.defeatedByPlayer = true;
         gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards);
     }
     else if(otherPlayerScore > playerScore){
@@ -103,6 +107,8 @@ function _GetDanceofRiddlesWinners(){
         contender0.defeats++;
         contender0.matches++;
         contender1.matches++;
+        
+        if(contender0.playerId == playerId) contender1.defeatedPlayer = true;
         
         console.warn("are the wins and defeats getting tallied on separate instances or on the same object that's getting passed around? In other words will it add right?");
         gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",otherPlayerCards);
@@ -113,6 +119,8 @@ function _GetDanceofRiddlesWinners(){
         contender1.ties++;
         contender0.matches++;
         contender1.matches++;
+        
+        if(contender0.playerId == playerId) contender1.tiedPlayer = true;
         gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards.concat(otherPlayerCards));
     }
 }

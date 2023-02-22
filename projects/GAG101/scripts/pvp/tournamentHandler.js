@@ -1,20 +1,3 @@
-class match
-{
-    constructor(cards,otherPlayerId,otherPlayerUsername){
-        
-        this.serverCards = cards;
-        this.serverCardsWinrate;
-        this.otherPlayerUsername = otherPlayerUsername;
-        this.otherPlayerId = otherPlayerId;
-        this.winner; //"server" or "player"
-    }
-    
-    SetServerCardsWinrate(winrate){
-        
-        this.serverCardsWinrate = winrate;
-    }
-}
-
 class contender
 {
     constructor(cardsAsJSON,playerId,playerUsername){
@@ -27,6 +10,9 @@ class contender
         this.ties = 0;
         this.defeats = 0;
         this.matches = 0;
+        this.defeatedByPlayer = false;
+        this.defeatedPlayer = false;
+        this.tiedPlayer = false;
     }
 }
 
@@ -34,7 +20,6 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
     
     constructor(){
         
-        this.matches = [];
         this.contenders = [];
         
     }
@@ -49,20 +34,6 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         
         return c
         
-    }
-    
-    AddMatch(cards,otherPlayerId,otherPlayerUsername){
-        
-        const m = new match(cards,otherPlayerId,otherPlayerUsername);
-        
-        this.matches.push(m);
-        
-        return m
-    }
-    
-    EmptyMatches(){
-        
-        this.matches = [];
     }
     
     EmptyContenders(){

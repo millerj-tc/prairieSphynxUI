@@ -3,9 +3,11 @@ import {SetCardForContenderSlot} from "../scenarioFlow/genericScenarioPrep.js";
 
 export function SubsequentRunReset(){
     
-    if(window.gameHandler.tournamentHandler.contenders.length == 0){
+    const gh = window.gameHandler;
+    
+    if(gh.tournamentHandler.contenders.length == 0){
         
-        window.gameHandler.narrOutputArtist.ClearAllChildren();
+        gh.narrOutputArtist.ClearAllChildren();
 
     }
 }
@@ -32,7 +34,7 @@ export function PauseAtEndOfScenarioForPvP(){
     
     button.onclick = function(){
         
-        cardHandler.EmptyCards(player0Id);
+        if(player0Id != window.gameHandler.playerId) cardHandler.EmptyCards(player0Id); //don't empty the cards if they belong to the actual player
         
         cardHandler.EmptyCards(player1Id);
                 
@@ -89,25 +91,6 @@ export function InsertSubmissionCardsIntoCardSlots(){
         
     }
 }
-
-//export function MarkWinnerForPvP(string){
-//    
-//    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
-//    
-//    const rp = scenario.GetCurrentRunProcessor();
-//    
-//    if(rp.match.serverCards == null) return
-//    
-//    if(string != "server" && string != "player") console.error("Mark Winner must be passed 'server' or 'player'");
-//    
-//    rp.match.winner = string;
-//    
-//    console.log(rp.match);
-//    
-//    console.log(window.gameHandler.tournamentHandler);
-//    
-//    
-//}
 
 function _EndTournament(){
     

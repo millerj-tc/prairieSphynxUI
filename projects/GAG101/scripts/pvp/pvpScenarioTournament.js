@@ -110,6 +110,10 @@ function _RunSubmissionVsLeaderboard(leaderboardArrAsJSON){
     
     gh.cardChoiceTrayArtist.SetDOMDisplayTo("none");
     
+    scenario.queuedProcessors.reverse(); // reverse so it runs the actual player scenarios first. Otherwise server matches will replace the player's choices in the card choice tray.
+    
+    console.log(scenario.queuedProcessors);
+    
     scenario.ProcessNextInQueue();
     
     
