@@ -225,6 +225,8 @@ export function UpdateCardSlotArtist(artist,card,size="M"){
     img.src = card["image" + size];
 
     artist.AppendElementWithinDOM(img);
+    
+    artist.nameSlotArtist.SetDOMInnerTextTo(card.name);
 }
 
 export function AnnounceOtherPlayer(){

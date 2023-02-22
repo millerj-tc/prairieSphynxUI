@@ -179,47 +179,26 @@ function _DanceOfRiddlesOutput(){
 
 export function DanceOfRiddlesPrep(mode){
     
-    const gh = window.gameHandler;
+    if(mode == "story") {
+        scenarioPrepUtils.GenericScenarioPrep("Dance of Riddles","story",3,2);
+        
+        const cardHandler = window.gameHandler.collectionCardHandler;
+        
+        const holyFey = cardHandler.GetCardByName("Holy Fey Upa","any",false);
+    
+        const holyFey2 = cardHandler.GetCardByName("Holy Fey Kupo","any",false);
 
-    const cardHandler = gh.collectionCardHandler;
-    
-    gh.scenarioHandler.SetCurrentScenarioByName("Dance of Riddles")
+        scenarioPrepUtils.SetCardForContenderSlot(holyFey,"AI",1,0);
 
-    const scenario = gh.scenarioHandler.GetCurrentScenario();
+        scenarioPrepUtils.SetCardForContenderSlot(holyFey2,"AI",1,1);
+            
+        uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey Upa]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
+        
+        window.gameHandler.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>")
+        
+    }
     
-    scenario.SetMode(mode);
-    
-    gh.narrOutputArtist.ClearAllChildren();
-    
-    gh.cardChoiceTrayArtist.SetDOMDisplayTo("block");
-    
-    //CollapseButtonOnClick(gh.cardChoiceTrayArtist);
-    
-    const scenarioConfig = _GetCardSlotsAndOtherPlayerUsernameForMode(mode)
-    
-    const playerCardSlots = scenarioConfig.playerCardSlots;
-    
-    const otherPlayerCardSlots = scenarioConfig.otherPlayerCardSlots;
-    
-    const otherPlayerUsername = scenarioConfig.otherPlayerUsername;
-    
-    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(playerCardSlots,gh.playerId,2);
-    
-    scenarioPrepUtils.CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(otherPlayerCardSlots,otherPlayerUsername,3);
-    
-    scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario();
-    
-    scenarioPrepUtils.AttachOnClickCardChoiceToDOMs();
-    
-    scenarioPrepUtils.AddScenarioRunButton();
-    
-    if(mode == "pvp") scenarioPrepUtils.AddScenarioRunPvPButton();
-    
-    _GetTeamAndOutputForMode(mode,scenarioConfig);
-    
-    scenarioPrepUtils. CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(gh.playerId,1);
-    
-    scenarioPrepUtils.CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(otherPlayerUsername,4);
+    if(mode == "pvp") scenarioPrepUtils.GenericScenarioPrep("Dance of Riddles","pvp",3,3);
     
     console.warn("what about framing text like the intro that shouldn't be cleared on subsequent runs?");
     
@@ -284,38 +263,38 @@ export function DanceOfRiddlesPrep(mode){
     
 }
 
-function _GetCardSlotsAndOtherPlayerUsernameForMode(mode){
-    
-    if(mode == "story"){
-        
-        return {playerCardSlots: 3, otherPlayerCardSlots:2, otherPlayerUsername:"AI"}
-    }
-    else if (mode == "pvp"){
-        
-        return {playerCardSlots: 3, otherPlayerCardSlots:3, otherPlayerUsername:"AI"}
-    }
-}
+//function _GetCardSlotsAndOtherPlayerUsernameForMode(mode){
+//    
+//    if(mode == "story"){
+//        
+//        return {playerCardSlots: 3, otherPlayerCardSlots:2, otherPlayerUsername:"AI"}
+//    }
+//    else if (mode == "pvp"){
+//        
+//        return {playerCardSlots: 3, otherPlayerCardSlots:3, otherPlayerUsername:"AI"}
+//    }
+//}
 
-function _GetTeamAndOutputForMode(mode,scenarioConfig){
-    
-    const cardHandler = window.gameHandler.collectionCardHandler;
-    
-    if(mode == "story"){
-        
-        const holyFey = cardHandler.GetCardByName("Holy Fey Upa","any",false);
-    
-        const holyFey2 = cardHandler.GetCardByName("Holy Fey Kupo","any",false);
-
-        scenarioPrepUtils.SetCardForSlot(holyFey,"AI",0);
-
-        scenarioPrepUtils.SetCardForSlot(holyFey2,"AI",1);
-            
-        uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey Upa]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
-        
-        window.gameHandler.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>")
-    }
-    else if(mode == "pvp"){
-        
-        scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario(scenarioConfig.otherPlayerUsername);
-    }
-}
+//function _GetTeamAndOutputForMode(mode,scenarioConfig){
+//    
+//    const cardHandler = window.gameHandler.collectionCardHandler;
+//    
+//    if(mode == "story"){
+//        
+//        const holyFey = cardHandler.GetCardByName("Holy Fey Upa","any",false);
+//    
+//        const holyFey2 = cardHandler.GetCardByName("Holy Fey Kupo","any",false);
+//
+//        scenarioPrepUtils.SetCardForSlot(holyFey,"AI",0);
+//
+//        scenarioPrepUtils.SetCardForSlot(holyFey2,"AI",1);
+//            
+//        uiPhaseUtils.OutputTextDivWithNounImages("[argN[Holy Fey Upa]] : Welcome to the Dance of Riddles. The fey dance most connivingly -- what of you?");
+//        
+//        window.gameHandler.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>")
+//    }
+//    else if(mode == "pvp"){
+//        
+//        scenarioPrepUtils.RandomizePlayerIdCardChoicesForScenario(scenarioConfig.otherPlayerUsername);
+//    }
+//}
