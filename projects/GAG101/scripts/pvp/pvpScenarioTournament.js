@@ -22,7 +22,42 @@ import {GenerateCombinations} from "/utils/mathAndLogicUtils/miscUtils.js";
 
 export function RunPvPTournament(){
     
-    _GetScenarioLeaderboardSubmissionsAsJSON();
+    _CheckLastSubmissionDate();
+    
+ }
+
+function _CheckLastSubmissionDate(){
+    
+    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
+    
+    const db = getDatabase();
+    const dbRef = ref(db);
+    
+    get(child(dbRef, `/users/` + window.gameHandler.playerId + `/` + scenario.scenarioName + `LastSubmissionTimestamp`)).then((snapshot) => {
+      if (snapshot.exists()) {
+          
+          const data = snapshot.val();
+          
+          if((data + 86400) < Number(Date.now())){ 
+              
+              _GetScenarioLeaderboardSubmissionsAsJSON();
+            }
+          
+          else{
+              
+              window.alert("Last submission was less than 24 hours ago");
+              return
+          }
+          
+          console.log("finish");
+
+          
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
 }
 
 function _GetScenarioLeaderboardSubmissionsAsJSON(){

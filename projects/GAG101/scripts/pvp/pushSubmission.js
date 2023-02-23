@@ -105,6 +105,8 @@ export function PushCurrentScenarioSubmissionToFirebase(dummyUser = "01"){
 
   const updates = {};
   updates['/GAG101Scenarios/' + scenario.scenarioName + `/submissions/` + window.gameHandler.playerId + dummyUser + `/` ] = postData;
+    
+  updates[`/users/` + window.gameHandler.playerId + `/` + scenario.scenarioName + `LastSubmissionTimestamp`] = serverTimestamp();
 
   return update(ref(db), updates);
     

@@ -23,8 +23,6 @@ export function BuildDanceOfRiddlesScenario(){
     
     DOR.AddPhase("Announce other player", uiPhaseUtils.AnnounceOtherPlayer);
     
-    console.warn("fix Anounce other player so it stops displaying every single card");
-    
     DOR.AddPhase("Get Winners",_GetDanceofRiddlesWinners);
     
     console.warn("clues for who is shit at this");

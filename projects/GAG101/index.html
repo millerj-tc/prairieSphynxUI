@@ -104,7 +104,6 @@ onAuthStateChanged(auth, (user) => {
     // User is signed in, see docs for a list of available properties
     window.gameHandler.playerId = user.uid // + "1"; console.error("remove");
     RetrieveUserData();
-    console.warn("get timestamp of last user submission");
     window.gameHandler.loginWrapperArtist.SetDOMDisplayTo("none");
       
     //EstablishSession();

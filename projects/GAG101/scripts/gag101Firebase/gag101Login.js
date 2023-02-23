@@ -121,8 +121,6 @@ export function LoadLocalCollectionCards(){
     
     // check cookies, then load from charData
     
-    console.warn("make sure that onload LoadLocalCollection doesn't override retrieving user cards from Firebase if getAuth fires before onload?");
-    
     const ghCCH = window.gameHandler.collectionCardHandler;
     
     for(const c of charData){

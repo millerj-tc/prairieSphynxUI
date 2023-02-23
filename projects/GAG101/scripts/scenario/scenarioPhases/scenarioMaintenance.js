@@ -1,5 +1,5 @@
 import {AnnounceTournamentResults} from "./uiPhaseUtils.js";
-import {SetCardForContenderSlot} from "../scenarioFlow/genericScenarioPrep.js";
+import {SetCardForContenderSlot, GetAndAnnouncePvPLeaderboard} from "../scenarioFlow/genericScenarioPrep.js";
 import {PlayerSubmissionToFirebaseFlow} from "../../pvp/pushSubmission.js";
 
 export function SubsequentRunReset(){
@@ -99,7 +99,7 @@ function _EndTournament(){
             
     th.EmptyContenders();
     
-    console.warn("figure out player winrate, compare with server winrates, etc.")
+    GetAndAnnouncePvPLeaderboard();
 
 }
 

@@ -232,10 +232,10 @@ export function GetAndAnnouncePvPLeaderboard(){
     const returnArr = [];
     
     const db = getDatabase();
+    const dbRef = ref(db);
     
-    const subRef = ref(db, 'GAG101Scenarios/' + window.gameHandler.scenarioHandler.GetCurrentScenario().scenarioName + '/submissions');
-    onValue(subRef, (snapshot) => {
-
+    get(child(dbRef, 'GAG101Scenarios/' + window.gameHandler.scenarioHandler.GetCurrentScenario().scenarioName + '/submissions')).then((snapshot) => {
+      if (snapshot.exists()) {
 
      const data = snapshot.val();
 
@@ -267,13 +267,26 @@ export function GetAndAnnouncePvPLeaderboard(){
         _AnnouncePvPLeaderboard(returnArr);    
 
 
-      });
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
 
 }
 
 function _AnnouncePvPLeaderboard(leaderboardJSONArr){
     
     const orderedArr = leaderboardJSONArr.sort(SortWinscoreThenDate);
+    
+    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
+    
+    const noArtist = window.gameHandler.narrOutputArtist;
+    
+    OutputTextDivWithNounImages(`${scenario.scenarioName} Leaderboard`);
+    
+    noArtist.InsertHTMLAdjacentToDOM("beforeend", "<br><br>");
     
     for(let leaderInd = 0; leaderInd < orderedArr.length; leaderInd++){
         
@@ -300,6 +313,12 @@ function _AnnouncePvPLeaderboard(leaderboardJSONArr){
         OutputTextDivWithNounImages(`${leaderInd + 1}. ${leader.username}: [arg0[]] (${subDate.toDateString()})`,genericCardArr);
         
         window.gameHandler.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend", "<br><br>");
+        
+        
     }
+    
+    OutputTextDivWithNounImages("You may only submit once per day for each adventure.");
+    
+    noArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
 }
