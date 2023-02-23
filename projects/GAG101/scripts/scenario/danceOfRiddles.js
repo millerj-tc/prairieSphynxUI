@@ -109,8 +109,6 @@ function _GetDanceofRiddlesWinners(){
         contender1.matches++;
         
         if(contender0.playerId == playerId) contender1.defeatedPlayer = true;
-        
-        console.warn("are the wins and defeats getting tallied on separate instances or on the same object that's getting passed around? In other words will it add right?");
         gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",otherPlayerCards);
     }
     else{

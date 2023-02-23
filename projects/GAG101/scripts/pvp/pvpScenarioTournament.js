@@ -22,7 +22,7 @@
 //----team
 //-----member01,etc. (MAKE SAME AS CARDS IN USER PROFILES)
 
-import { getDatabase, ref, child, get, onValue } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+import { getDatabase, ref, child, get, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
 
 import {PushCurrentScenarioSubmissionToFirebase} from "./pushSubmission.js";
 
@@ -44,6 +44,13 @@ function _GetScenarioLeaderboardSubmissionsAsJSON(){
          
           
      const data = snapshot.val();
+          
+        if(data == ""){
+            
+            PushCurrentScenarioSubmissionToFirebase();
+            return
+          
+        }
 
             
         for(const userSubmission in data){
@@ -61,11 +68,9 @@ function _GetScenarioLeaderboardSubmissionsAsJSON(){
             
             console.log(userSubmissionObj);
             
-            returnArr.push({teamAsJSONArr:submissionTeamArr, username:userSubmissionObj["submittingUser"],userId:"server" + userSubmission});
+            returnArr.push({teamAsJSONArr:submissionTeamArr, username:userSubmissionObj["submittingUser"],userId:"server" + userSubmission,submissionTimestamp: userSubmissionObj["submissionTimestamp"]});
                   
         }
-          
-        PushCurrentScenarioSubmissionToFirebase("3");
         
         _RunSubmissionVsLeaderboard(returnArr);    
 
@@ -88,7 +93,7 @@ function _RunSubmissionVsLeaderboard(leaderboardArrAsJSON){
     
     for(const submission of leaderboardArrAsJSON){
             
-       const newContender =  gh.tournamentHandler.AddContender(submission.teamAsJSONArr,submission.userId,submission.username);
+       const newContender =  gh.tournamentHandler.AddContender(submission.teamAsJSONArr,submission.userId,submission.username,submission.submissionTimestamp);
        
     }
     
@@ -99,7 +104,7 @@ function _RunSubmissionVsLeaderboard(leaderboardArrAsJSON){
         scenario.QueueProcess(match);
     }
     
-    const playerContender = gh.tournamentHandler.AddContender(false,gh.playerId,gh.playerUsername);
+    const playerContender = gh.tournamentHandler.AddContender(false,gh.playerId,gh.playerUsername,Date.now());
     
     for(const serverContender of gh.tournamentHandler.contenders){
         

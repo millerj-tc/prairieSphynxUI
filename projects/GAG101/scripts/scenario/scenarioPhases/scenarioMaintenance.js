@@ -1,5 +1,6 @@
 import {AnnounceTournamentResults} from "./uiPhaseUtils.js";
 import {SetCardForContenderSlot} from "../scenarioFlow/genericScenarioPrep.js";
+import {PlayerSubmissionToFirebaseFlow} from "../../pvp/pushSubmission.js";
 
 export function SubsequentRunReset(){
     
@@ -44,11 +45,7 @@ export function PauseAtEndOfScenarioForPvP(){
         
         button.remove();
         
-        console.log(scenario.queuedProcessors);
-        
         if(scenario.queuedProcessors.length == 0){
-            
-            console.log("ending tournie");
             
             _EndTournament();
         }
@@ -93,8 +90,14 @@ export function InsertSubmissionCardsIntoCardSlots(){
 function _EndTournament(){
     
     AnnounceTournamentResults();
+    
+    const th = window.gameHandler.tournamentHandler;
+    
+    th.SortContendersByWinscore(); //this is where .ws (winscore) is assigned for next step
+    
+    PlayerSubmissionToFirebaseFlow();
             
-    window.gameHandler.tournamentHandler.EmptyContenders();
+    th.EmptyContenders();
     
     console.warn("figure out player winrate, compare with server winrates, etc.")
 

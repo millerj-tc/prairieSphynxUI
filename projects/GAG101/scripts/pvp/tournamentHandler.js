@@ -1,11 +1,12 @@
 class contender
 {
-    constructor(cardsAsJSON,playerId,playerUsername){
+    constructor(cardsAsJSON,playerId,playerUsername,timeStamp){
         
         this.cardsAsJSON = cardsAsJSON;
         this.getCardsFromCollectionCardHandler = false;
         this.playerUsername = playerUsername;
         this.playerId = playerId;
+        this.timeStamp = timeStamp;
         this.wins = 0;
         this.ties = 0;
         this.defeats = 0;
@@ -24,9 +25,9 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         
     }
     
-    AddContender(cardsAsJSON,playerId,playerUsername){
+    AddContender(cardsAsJSON,playerId,playerUsername,timeStamp){
         
-        const c = new contender(cardsAsJSON,playerId,playerUsername);
+        const c = new contender(cardsAsJSON,playerId,playerUsername,timeStamp);
         
         if(cardsAsJSON == false) c.getCardsFromCollectionCardHandler = true; //if you don't pass this JSON cards, it will get the cards from collection Card Handler by userid instead
         
@@ -53,7 +54,35 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         
         for(const contender of this.contenders){
             
-            if(contender.otherPlayerId == id) return contender
+            if(contender.playerId == id) return contender
         }
+    }
+    
+    SortContendersByWinscore(){
+        
+        for(const contender of this.contenders){
+            
+            contender.ws =  ((2*contender.wins) + contender.ties - (2*contender.defeats))/contender.matches;
+            
+        }
+        
+        this.contenders = this.contenders.sort(SortWinscoreThenDate); //lowest winscores first
+    }
+}
+
+function SortWinscoreThenDate(ob1,ob2) {
+    if (ob1.ws > ob2.ws) {
+        return 1;
+    } else if (ob1.ws < ob2.ws) { 
+        return -1;
+    }
+
+    // Else go to the 2nd item
+    if (ob1.timestamp < ob2.timestamp) { 
+        return 1;
+    } else if (ob1.timestamp > ob2.timestamp) {
+        return -1
+    } else { // nothing to split them
+        return 0;
     }
 }

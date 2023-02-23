@@ -306,4 +306,6 @@ export function AnnounceTournamentResults(){
     artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
     OutputTextDivWithNounImages(`You were defeated by: ${defeatedByString}`);
+    
+    setTimeout(function(){bottomOfPage.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})},50);
 }

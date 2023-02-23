@@ -1,8 +1,63 @@
 import {GetSelectedCardsFor} from "./../scenario/scenarioPhases/cardInfoPhaseUtils.js";
 
-import { getDatabase, ref, child, push, update, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+import { getDatabase, ref, child, push, update, onValue, serverTimestamp,remove } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
 
-export function PushCurrentScenarioSubmissionToFirebase(dummyUser = ""){
+export function PlayerSubmissionToFirebaseFlow(){
+    
+    const th = window.gameHandler.tournamentHandler;
+    
+    const playerId = window.gameHandler.playerId;
+    
+    const playerContenderObj = th.GetContenderByUserId(playerId);
+    
+    const serverContenders = th.contenders.filter(c => c.owner != playerId);
+    
+    const scenarioName = window.gameHandler.scenarioHandler.GetCurrentScenario().scenarioName;
+    
+    let match = false;
+    
+    console.log(th.contenders);
+    
+    console.log(playerContenderObj);
+    
+    for(const contender of serverContenders){
+        
+        console.log(contender);
+        
+        // if current submission is better than an existing submission, replace it
+        if(contender.playerId.replace("server","") == playerId && playerContenderObj.ws > contender.ws){
+            
+            PushCurrentScenarioSubmissionToFirebase();
+            return
+        }
+    }
+    
+    // if there aren't at least 5 server submissions, 
+    
+    if(serverContenders.length <= 5){
+        
+        PushCurrentScenarioSubmissionToFirebase();
+        return
+    }
+    
+    //if the lowest performing contender doesn't belong to player, push player and delete the lowest performing contender
+    
+    const lowestPerformingContenderId = th.contenders[0].replace("server","");
+    
+    if(lowestPerformingContenderId != playerId){
+        
+        PushCurrentScenarioSubmissionToFirebase();
+        
+        const db = getDatabase();
+        ref(db, `/GAG101Scenarios/` + scenarioName + `/submissions/` + lowestPerformingContenderId).remove();
+        
+        return
+    }
+}
+
+export function PushCurrentScenarioSubmissionToFirebase(dummyUser = "00"){
+    
+    console.error("remove dummyUser");
     
     const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
     
