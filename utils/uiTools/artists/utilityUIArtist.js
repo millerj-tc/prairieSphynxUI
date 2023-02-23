@@ -56,7 +56,7 @@ export class utilityUIArtist
                 $returnString += " and " + nounArr[i];
             }
             else if(nounArr.length == 2) $returnString += nounArr[i]
-            else $returnString += nounArr[i] + ",";
+            else $returnString += nounArr[i] + ", ";
         }
             
         return $returnString

@@ -42,20 +42,20 @@ export function PlayerSubmissionToFirebaseFlow(){
     
     //if the lowest performing contender doesn't belong to player, push player and delete the lowest performing contender
     
-    const lowestPerformingContenderId = th.contenders[0].replace("server","");
+    const lowestPerformingContenderId = th.contenders[0].playerId.replace("server","");
     
     if(lowestPerformingContenderId != playerId){
         
         PushCurrentScenarioSubmissionToFirebase();
         
         const db = getDatabase();
-        ref(db, `/GAG101Scenarios/` + scenarioName + `/submissions/` + lowestPerformingContenderId).remove();
+        remove(ref(db, `/GAG101Scenarios/` + scenarioName + `/submissions/` + lowestPerformingContenderId));
         
         return
     }
 }
 
-export function PushCurrentScenarioSubmissionToFirebase(dummyUser = "00"){
+export function PushCurrentScenarioSubmissionToFirebase(dummyUser = "05"){
     
     console.error("remove dummyUser");
     

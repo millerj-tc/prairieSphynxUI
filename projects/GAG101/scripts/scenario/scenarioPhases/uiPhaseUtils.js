@@ -301,7 +301,7 @@ export function AnnounceTournamentResults(){
     
     artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
-    OutputTextDivWithNounImages(`You tied: ${tiedArr}`);
+    OutputTextDivWithNounImages(`You tied: ${tiedString}`);
     
     artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
