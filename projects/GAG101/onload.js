@@ -34,7 +34,7 @@ export function GotoHomeMenu(){
     
     gh.narrOutputArtist.AppendElementWithinDOM(dorButton);
     
-    console.log(gh.playerId);
+    gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
        
     const dorPButton = document.createElement("button");
 

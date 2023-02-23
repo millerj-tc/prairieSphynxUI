@@ -70,7 +70,7 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
     }
 }
 
-function SortWinscoreThenDate(ob1,ob2) {
+export function SortWinscoreThenDate(ob1,ob2) {
     if (ob1.ws > ob2.ws) {
         return 1;
     } else if (ob1.ws < ob2.ws) { 

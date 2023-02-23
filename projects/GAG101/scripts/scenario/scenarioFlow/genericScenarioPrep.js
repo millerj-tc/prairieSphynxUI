@@ -2,38 +2,11 @@ import {ShuffleArray} from "/utils/mathAndLogicUtils/miscUtils.js";
 import {UpdateCardSlotArtist,DisplayUnselectedCardsAsChoices} from "../scenarioPhases/uiPhaseUtils.js";
 import {CollapseButtonOnClick} from "/utils/uiTools/artists/trayArtistTrayMovement.js";
 import {RunPvPTournament} from "/projects/GAG101/scripts/pvp/pvpScenarioTournament.js";
+import {SortWinscoreThenDate} from "/projects/GAG101/scripts/pvp/tournamentHandler.js";
+import {OutputTextDivWithNounImages} from "../scenarioPhases/uiPhaseUtils.js";
+import {charData} from "../../data/charData.js";
 
-
-//export function GenericScenarioPrepWithAI(){ //only run this once when the scenario starts, not as a phase
-//    
-//    const gh = window.gameHandler;
-//
-//    const cardHandler = gh.collectionCardHandler;
-//
-//    const scenario = gh.scenarioHandler.GetCurrentScenario();
-//    
-//    gh.narrOutputArtist.ClearAllChildren();
-//    
-//    gh.cardChoiceTrayArtist.SetDOMDisplayTo("block");
-//    
-//    CollapseButtonOnClick(gh.cardChoiceTrayArtist);
-//            
-//    CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(scenario.playerCardSlots,gh.playerId,2);
-//
-//    CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(scenario.otherPlayerCardSlots,"AI",3);
-//
-//    RandomizePlayerIdCardChoicesForScenario();
-//
-//    RandomizePlayerIdCardChoicesForScenario("AI");
-//
-//    CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(gh.playerId,1);
-//
-//    CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart("AI",4);
-//
-//    AttachOnClickCardChoiceToDOMs();
-//
-//    AddScenarioRunButton();
-//}
+import { getDatabase, ref, child, get, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
 
 export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,contender1CardSlots){
     
@@ -67,7 +40,10 @@ export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,conten
     
     AddScenarioRunButton();
     
-    if(mode == "pvp") AddScenarioRunPvPButton();
+    if(mode == "pvp") {
+        AddScenarioRunPvPButton();
+        GetAndAnnouncePvPLeaderboard();
+    }
     
     
 }
@@ -130,74 +106,6 @@ export function CreateNCardSlotsForContenderNumber(n,contenderNum,imgGridColumnS
 
 }
 
-//export function CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart(n,id,gridColumnStart){
-//    
-//    const gh = window.gameHandler;
-//
-//    const cardHandler = gh.collectionCardHandler;
-//
-//    const scenario = gh.scenarioHandler.GetCurrentScenario();
-//        
-//    for(let i = 0; i < n; i++){
-//
-//        const dom = document.createElement("div");
-//
-//        dom.id = id + "CardSlot" + i;
-//
-//        const artist = scenario.uiToolsHandler.AddDOMUIArtist(dom);
-//
-//        artist.SetStylePropToValue("grid-column-start",gridColumnStart);
-//        artist.SetStylePropToValue("grid-row-start",(i+1).toString());
-//
-//        const cardChoiceTrayArtist = window.gameHandler.uiToolsHandler.GetArtistsByAuthorizedDOMId("cardChoiceTrayGrid");
-//        
-//        if(id != gh.playerId) artist.right = true;
-//        else artist.right = false;
-//
-//        cardChoiceTrayArtist.AppendElementWithinDOM(dom);
-//    }
-//
-//}
-    
-// export function CreateNameDisplayArtistServantsForCardSlotDOMArtistsForPlayerIdAtGridColumnStart(playerId,gridColumnStart){
-//     
-//    const gh = window.gameHandler;
-//
-//    const cardHandler = gh.collectionCardHandler;
-//
-//    const scenario = gh.scenarioHandler.GetCurrentScenario();
-//        
-//    const cardSlotArtists = scenario.uiToolsHandler.tools.filter(t => t.GetAuthorizedDOMs().id.includes(playerId + "CardSlot"));
-//
-//    for(const artist of cardSlotArtists){
-//
-//        const artistDOM = artist.GetAuthorizedDOMs();
-//
-//        const nameSlot = document.createElement("div");
-//
-//        nameSlot.id = playerId + "CardNameSlot" + artistDOM.style.gridRowStart;
-//
-//        nameSlot.classList.add("nameSlot");
-//
-//        const subArtist = scenario.uiToolsHandler.AddDOMUIArtist(nameSlot);
-//
-//        artist.SetCustomArtistPropToValue("servantArtist",subArtist);
-//
-//        subArtist.SetCustomArtistPropToValue("masterArtist",artist);
-//
-//        subArtist.SetStylePropToValue("grid-column-start",gridColumnStart);
-//
-//        subArtist.SetStylePropToValue("grid-row-start",artistDOM.style.gridRowStart);
-//
-//        subArtist.SetDOMInnerTextTo(artist.associatedCard.name);
-//
-//        const cardChoiceTrayArtist = window.gameHandler.uiToolsHandler.GetArtistsByAuthorizedDOMId("cardChoiceTrayGrid");
-//
-//        cardChoiceTrayArtist.AppendElementWithinDOM(nameSlot);
-//
-//    }
-//}
-
 export function RandomizePlayerIdChoicesForContenderNum(playerId,contenderNum){
         
     const gh = window.gameHandler;
@@ -222,30 +130,6 @@ export function RandomizePlayerIdChoicesForContenderNum(playerId,contenderNum){
     }
 }
 
-    
-//export function RandomizeContenderNumPlayerIdCardChoicesForScenario(id=window.gameHandler.playerId){ //called in begin period
-//        
-//    const gh = window.gameHandler;
-//
-//    const cardHandler = gh.collectionCardHandler;
-//
-//    const scenario = gh.scenarioHandler.GetCurrentScenario();
-//    
-//    const playerCards = cardHandler.GetCards().filter(c => (c.owner == id && c.unlockedForPlayer == true));
-//    
-//    const shuffledAvailableCards = ShuffleArray(playerCards);
-//
-//    const playerSlotArtistsArr = scenario.uiToolsHandler.tools.filter(t => t.GetAuthorizedDOMs().id.includes(id + "CardSlot"));
-//
-//    for(const artist of playerSlotArtistsArr){
-//
-//        const card = shuffledAvailableCards.shift();
-//
-//        UpdateCardSlotArtist(artist,card);
-//
-//        card.selectedForTeam = true;
-//    }
-//}
 
 export function SetCardForContenderSlot(card,owner,contenderNum,slotNum){
     
@@ -261,38 +145,6 @@ export function SetCardForContenderSlot(card,owner,contenderNum,slotNum){
     
     card.selectedForTeam = true;
 }
-
-//export function RenameCardSlotDOMsToSubmissionUserId(){
-//    
-//    const gh = window.gameHandler;
-//
-//    const scenario = gh.scenarioHandler.GetCurrentScenario();
-//    
-//    const runProcessor = scenario.GetCurrentRunProcessor();
-//    
-//    const player0Id = runProcessor.contenders[0].playerId;
-//    
-//    const player1Id = runProcessor.contenders[1].playerId;
-//    
-//    if(player0Id != gh.playerId){
-//        
-//        const artists = scenario.uiToolsHandler.tools.filter(t => t.right == false); //set in CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart 
-//    
-//        for(const artist of artists){
-//
-//            artist.GetAuthorizedDOMs().id = player0Id + "CardSlot" + artist.GetAuthorizedDOMs().id.slice(-1);
-//        }
-//    }
-//    
-//    if(player1Id == "AI") return
-//    
-//    const artists = scenario.uiToolsHandler.tools.filter(t => t.right); //set in CreateNCardSlotDOMArtistsForPlayerIdAtGridColumnStart 
-//    
-//    for(const artist of artists){
-//        
-//        artist.GetAuthorizedDOMs().id = player1Id + "CardSlot" + artist.GetAuthorizedDOMs().id.slice(-1);
-//    }
-//}
 
     
 export function AttachOnClickCardChoiceToDOMsForContenderNum(num){
@@ -373,4 +225,81 @@ export function AddScenarioRunPvPButton(){
     gh.cardChoiceTrayArtist.AppendElementWithinDOM(but);
     
 
+}
+
+export function GetAndAnnouncePvPLeaderboard(){
+
+    const returnArr = [];
+    
+    const db = getDatabase();
+    
+    const subRef = ref(db, 'GAG101Scenarios/' + window.gameHandler.scenarioHandler.GetCurrentScenario().scenarioName + '/submissions');
+    onValue(subRef, (snapshot) => {
+
+
+     const data = snapshot.val();
+
+        if(data == ""){
+
+            return
+
+        }
+
+        const returnArr = [];
+        
+        for(const userSubmission in data){
+            
+            const userSubmissionObj = data[userSubmission];
+            
+            const submissionTeamArr = [];
+            
+            for(const member in userSubmissionObj.team){
+                
+                const memberObj = userSubmissionObj.team[member];
+                
+                submissionTeamArr.push(memberObj.card);
+            }
+            
+            returnArr.push({teamAsJSONArr:submissionTeamArr, username:userSubmissionObj["submittingUser"],timestamp: userSubmissionObj["submissionTimestamp"],ws:userSubmissionObj["winscore"]});
+                  
+        }
+
+        _AnnouncePvPLeaderboard(returnArr);    
+
+
+      });
+
+}
+
+function _AnnouncePvPLeaderboard(leaderboardJSONArr){
+    
+    const orderedArr = leaderboardJSONArr.sort(SortWinscoreThenDate);
+    
+    for(let leaderInd = 0; leaderInd < orderedArr.length; leaderInd++){
+        
+        const leader = orderedArr[leaderInd];
+        
+        const genericCardArr = [];
+        
+        for(const cardJSON of leader.teamAsJSONArr){
+            
+            const card = JSON.parse(cardJSON);
+
+            for(const char of charData){
+
+                if(card.name == char.name){
+                    
+                    genericCardArr.push(char);
+                       
+                }
+            }
+        }
+        
+        const subDate = new Date(leader.timestamp);
+        
+        OutputTextDivWithNounImages(`${leaderInd + 1}. ${leader.username}: [arg0[]] (${subDate.toDateString()})`,genericCardArr);
+        
+        window.gameHandler.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend", "<br><br>");
+    }
+    
 }
