@@ -29,16 +29,16 @@ export function PlayerSubmissionToFirebaseFlow(){
             
             PushCurrentScenarioSubmissionToFirebase();
             
-            const db = getDatabase();
+            
             
             // updater serverContender winscore
             
             
         }
         
-        console.warn("remember to strip 'server' from contender player id here when replacing winscore");
+        const db = getDatabase();
         
-        set(ref(db, `/GAG101Scenarios/` + scenarioName + `/submissions/` + contender.playerId), {winscore:contender.ws});
+        set(ref(db, `/GAG101Scenarios/` + scenarioName + `/submissions/` + contender.playerId.replace("server","") + `/winscore`), contender.ws);
     }
     
     // if there aren't at least 5 server submissions, 
@@ -64,7 +64,7 @@ export function PlayerSubmissionToFirebaseFlow(){
     }
 }
 
-export function PushCurrentScenarioSubmissionToFirebase(dummyUser = ""){
+export function PushCurrentScenarioSubmissionToFirebase(dummyUser = "01"){
     
     const th = window.gameHandler.tournamentHandler;
     
