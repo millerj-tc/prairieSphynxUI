@@ -83,8 +83,6 @@ export function InsertSubmissionCardsIntoCardSlots(){
         for(let contenderCardIndex = 0; contenderCardIndex < userCards.length; contenderCardIndex++){
             
             const card = userCards[contenderCardIndex];
-            
-            console.warn("when you replace contender0 card slots with server stuff it erases the choices of the player -- can fix by running player scenarios first?");
             SetCardForContenderSlot(card,userId,contenderIndex,contenderCardIndex);
         }
         

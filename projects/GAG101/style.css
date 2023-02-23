@@ -88,12 +88,13 @@
 .narrativeOutput{
     
     margin:10%;
-    position:absolute;
     font-size: 25px;
     width: 80%;
     margin:10%;
     position:relative;
     z-index: 0;
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
 .loginWrapper{
@@ -123,3 +124,8 @@
     left: 94%;
 }
 
+.bottomOfPage{
+    position:relative;
+    height:1px;
+    width:100%;
+}
