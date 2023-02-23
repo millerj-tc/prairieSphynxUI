@@ -2,6 +2,8 @@
     <script type="module">
         import {onload} from "./onload.js";
         window.onload = onload;
+        import {GotoHomeMenu} from "./onload.js";
+        window.GotoHomeMenu = GotoHomeMenu;
         import {GAG101Login} from "./scripts/gag101Firebase/gag101Login.js";
         window.GAG101Login = GAG101Login;
         import {RetrieveUserData} from "./scripts/gag101Firebase/gag101Login.js";
@@ -51,6 +53,8 @@
 </div>
 
 <div id="bottomOfPage" class = "bottomOfPage"></div>
+
+<div class="homeButtonWrapper"><button onclick="GotoHomeMenu()" class="homeButton">🏠</button></div>
 
 <div class="signOutButtonWrapper"><button onclick="SignOut()" class="signOutButton">🚪</button></div>
     

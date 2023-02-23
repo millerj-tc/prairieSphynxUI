@@ -26,6 +26,12 @@ export function GotoHomeMenu(){
     
     gh.narrOutputArtist.ClearAllChildren();
     
+    console.warn("clear card choice grid");
+    
+    //document.getElementById("cardChoiceTrayGrid").ClearAllChildren();
+    
+    gh.cardChoiceTrayArtist.SetDOMDisplayTo("none");
+    
     const dorButton = document.createElement("button");
     
     dorButton.innerText = "Dance of Riddles (Story Mode)";

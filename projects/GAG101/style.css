@@ -124,6 +124,13 @@
     left: 94%;
 }
 
+.homeButtonWrapper{
+    
+    position:fixed;
+    top: 91%;
+    left: 94%;
+}
+
 .bottomOfPage{
     position:relative;
     height:1px;
