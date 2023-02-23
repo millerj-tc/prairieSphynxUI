@@ -1,6 +1,6 @@
 import {GetSelectedCardsFor} from "./../scenario/scenarioPhases/cardInfoPhaseUtils.js";
 
-import { getDatabase, ref, child, push, update, onValue, serverTimestamp,remove } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+import { getDatabase, ref, child, push, update, onValue, serverTimestamp,remove,set } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
 
 export function PlayerSubmissionToFirebaseFlow(){
     
@@ -28,8 +28,17 @@ export function PlayerSubmissionToFirebaseFlow(){
         if(contender.playerId.replace("server","") == playerId && playerContenderObj.ws > contender.ws){
             
             PushCurrentScenarioSubmissionToFirebase();
-            return
+            
+            const db = getDatabase();
+            
+            // updater serverContender winscore
+            
+            
         }
+        
+        console.warn("remember to strip 'server' from contender player id here when replacing winscore");
+        
+        set(ref(db, `/GAG101Scenarios/` + scenarioName + `/submissions/` + contender.playerId), {winscore:contender.ws});
     }
     
     // if there aren't at least 5 server submissions, 
@@ -55,9 +64,13 @@ export function PlayerSubmissionToFirebaseFlow(){
     }
 }
 
-export function PushCurrentScenarioSubmissionToFirebase(dummyUser = "05"){
+export function PushCurrentScenarioSubmissionToFirebase(dummyUser = ""){
     
-    console.error("remove dummyUser");
+    const th = window.gameHandler.tournamentHandler;
+    
+    const playerId = window.gameHandler.playerId;
+    
+    const playerContenderObj = th.GetContenderByUserId(playerId);
     
     const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
     
@@ -77,6 +90,7 @@ export function PushCurrentScenarioSubmissionToFirebase(dummyUser = "05"){
   const postData = {
     submittingUser: username + dummyUser,
     submissionTimestamp: serverTimestamp(),
+    winscore:playerContenderObj.ws,
     team: {}
 
   };
