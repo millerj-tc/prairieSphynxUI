@@ -53,7 +53,13 @@ export function OutputTextDivWithNounImages(string){
 
     }
     
-    const returnSpan = utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(returnString)
+    const returnSpan = utilityArtist.GetSpanWithImageTagsReplacedWithImagesFromText(returnString);
+    
+    ///
+    
+    const scenario = gh.scenarioHandler.GetCurrentScenario();
+    
+    const newArtist = scenario.uiToolsHandler.AddDOMUIArtist(returnSpan);
      
     gh.narrOutputArtist.AppendElementWithinDOM(returnSpan);
     

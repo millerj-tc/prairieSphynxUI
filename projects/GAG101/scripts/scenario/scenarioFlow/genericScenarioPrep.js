@@ -184,6 +184,8 @@ export function AddScenarioRunButton(){
     const scenario = gh.scenarioHandler.GetCurrentScenario();
         
     const but = document.createElement("button");
+    
+    scenario.uiToolsHandler.AddDOMUIArtist(but);
 
     but.innerText = "Run scenario";
 
@@ -211,6 +213,8 @@ export function AddScenarioRunPvPButton(){
     const scenario = gh.scenarioHandler.GetCurrentScenario();
         
     const but = document.createElement("button");
+    
+    scenario.uiToolsHandler.AddDOMUIArtist(but);
 
     but.innerText = "Submit Team to PvP Tournament";
 

@@ -28,7 +28,7 @@ export function GotoHomeMenu(){
     
     console.warn("clear card choice grid with domuiartist Destroy() and assign a ui tools handler to each scenario to handle the stuff that it creates so that it can all be easily wiped. Might want to add an id of some kind to OutputDivWithNounImages... so that it can be manipulated later like the highlight function of Clone Crisis.");
     
-    _ClearCardChoiceTray();
+    _ClearPreviousRunDOMs();
     
     gh.cardChoiceTrayArtist.SetDOMDisplayTo("none");
     
@@ -51,14 +51,22 @@ export function GotoHomeMenu(){
     gh.narrOutputArtist.AppendElementWithinDOM(dorPButton);
 }
 
-function _ClearCardChoiceTray(){
+function _ClearPreviousRunDOMs(){
     
-    const tray = document.getElementById("cardChoiceTrayGrid");
+    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
     
-    for(const child of tray.children){
+    if(scenario == null) return
+    
+    for(const tool of scenario.uiToolsHandler.tools){
         
-        console.log(child);
+        const dom = tool.GetAuthorizedDOMs();
         
-        if(child.id.includes("CardSlot") || child.id.includes("CardNameSlot")) child.remove();
+        tool.SetAuthorizedDOMIdTo(dom.id + "Run" + scenario.runProcessors.length);
+        
+        tool.SetDOMDisplayTo("none");
+        
+        scenario.GetCurrentRunProcessor().uiToolsHandler.tools = [...scenario.uiToolsHandler.tools];
+        
+        scenario.uiToolsHandler.tools = [];
     }
 }

@@ -135,6 +135,7 @@ class scenarioProcessorRun
         this.currentPhaseInd = 0;
         this.otherPlayerId;
         this.contenders = [];
+        this.uiToolsHandler = new uiToolsHandler();
     }
     
     RunNextPhase(){

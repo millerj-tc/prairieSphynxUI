@@ -19,6 +19,17 @@ export class domUIArtist
         }
     }
     
+    SetAuthorizedDOMIdTo(id,dom = this.authorizedDOMs[0]){
+        
+        const $dom = this._ConvertSingleDOMtoArray(dom);
+        
+        for(const a of $dom){
+            
+            a.id = id;
+
+        }
+    }
+    
     Destroy(){
         
         this.uiToolsHandler.tools = this.uiToolsHandler.tools.filter(t => t!= this);
