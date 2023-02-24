@@ -26,9 +26,9 @@ export function GotoHomeMenu(){
     
     gh.narrOutputArtist.ClearAllChildren();
     
-    console.warn("clear card choice grid");
+    console.warn("clear card choice grid with domuiartist Destroy()");
     
-    //document.getElementById("cardChoiceTrayGrid").ClearAllChildren();
+    _ClearCardChoiceTray();
     
     gh.cardChoiceTrayArtist.SetDOMDisplayTo("none");
     
@@ -49,4 +49,16 @@ export function GotoHomeMenu(){
     dorPButton.onclick = function(){DanceOfRiddlesPrep("pvp")};
 
     gh.narrOutputArtist.AppendElementWithinDOM(dorPButton);
+}
+
+function _ClearCardChoiceTray(){
+    
+    const tray = document.getElementById("cardChoiceTrayGrid");
+    
+    for(const child of tray.children){
+        
+        console.log(child);
+        
+        if(child.id.includes("CardSlot") || child.id.includes("CardNameSlot")) child.remove();
+    }
 }

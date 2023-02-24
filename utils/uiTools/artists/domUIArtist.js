@@ -19,6 +19,16 @@ export class domUIArtist
         }
     }
     
+    Destroy(){
+        
+        this.uiToolsHandler.tools = this.uiToolsHandler.tools.filter(t => t!= this);
+        
+        for(const dom of this.authorizedDOMs){
+            
+            dom.remove();
+        }
+    }
+    
     GetElementInsideDOMById(id,dom = this.authorizedDOMs[0]){
     
         if(typeof dom == "string") console.error("Passed string -- please pass DOM object");
