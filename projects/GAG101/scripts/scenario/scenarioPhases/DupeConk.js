@@ -4,8 +4,6 @@ import * as cardInfoPhaseUtils from "./cardInfoPhaseUtils.js";
 
 export function DupeConkLosers(){
     
-    console.warn("DupeConking!");
-    
     const cardHandler = window.gameHandler.collectionCardHandler;
     
     let dupeArr = _GetDupeCards();

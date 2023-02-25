@@ -23,9 +23,15 @@ export function BuildDanceOfRiddlesScenario(){
     
     DOR.AddPhase("Announce other player", uiPhaseUtils.AnnounceOtherPlayer);
     
+    DOR.AddPhase("Dupe conk", DupeConkLosers);
+    
     DOR.AddPhase("Get Winners",_GetDanceofRiddlesWinners);
     
+    console.warn("Get Winners needs to take dupeconk into account");
+    
     console.warn("clues for who is shit at this");
+    
+    DOR.AddPhase("remove dc status", RemoveDupeConkStatuses);
     
     DOR.AddPhase("Dance Output",_DanceOfRiddlesOutput);
     
