@@ -87,8 +87,6 @@ function _GetDanceofRiddlesWinners(){
     
     otherPlayerScore = otherPlayerScore/otherPlayerCards.length;
     
-    console.log(`${playerScore} vs ${otherPlayerScore}`);
-    
     if(playerScore > otherPlayerScore){
        
         contender0.wins++;

@@ -64,18 +64,13 @@ export class scenarioProcessor
         
         for(const contender of rp.contenders){
             
-            console.log(contender);
-            
             if(contender.getCardsFromCollectionCardHandler) continue
             
             for(const JSONCard of contender.cardsAsJSON){
             
                 cardHandler.MakeCardFromJSON(JSONCard,contender.playerId);
             }
-        }
-        
-        console.log(`beginning ${rp.contenders[0].playerId} vs ${rp.contenders[1].playerId}`);
-        
+        }        
         
         rp.RunNextPhase();
     }

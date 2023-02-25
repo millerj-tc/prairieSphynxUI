@@ -275,6 +275,9 @@ export function GetAndAnnouncePvPLeaderboard(){
         console.log("No data available");
       }
     }).catch((error) => {
+        
+        window.gameHandler.loginWrapperArtist.SetDOMDisplayTo("block");
+        
       console.error(error);
     });
 

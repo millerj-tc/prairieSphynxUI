@@ -257,10 +257,6 @@ export function AnnounceOtherPlayer(){
     
     const artist = window.gameHandler.narrOutputArtist;
     
-    console.log(player0Cards);
-    
-    console.log(player1Cards);
-    
     const announceSpan = OutputTextDivWithNounImages(`${player0Username} [arg0[]] VS [arg1[]] ${player1Username} `,player0Cards,player1Cards);
     
     artist.InsertHTMLAdjacentToDOM("beforeend",`<br><br>`);
@@ -312,6 +308,8 @@ export function AnnounceTournamentResults(){
     artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
     OutputTextDivWithNounImages(`You were defeated by: ${defeatedByString}`);
+    
+    artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
     setTimeout(function(){bottomOfPage.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})},50);
 }

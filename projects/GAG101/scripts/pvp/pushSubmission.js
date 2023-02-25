@@ -16,14 +16,8 @@ export function PlayerSubmissionToFirebaseFlow(){
     
     let match = false;
     
-    console.log(th.contenders);
-    
-    console.log(playerContenderObj);
-    
     for(const contender of serverContenders){
-        
-        console.log(contender);
-        
+
         // if current submission is better than an existing submission, replace it
         if(contender.playerId.replace("server","") == playerId && playerContenderObj.ws > contender.ws){
             

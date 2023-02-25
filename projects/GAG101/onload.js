@@ -26,6 +26,8 @@ export function GotoHomeMenu(){
     
     gh.narrOutputArtist.ClearAllChildren();
     
+    gh.loginWrapperArtist.SetDOMDisplayTo("none");
+    
     console.warn("clear card choice grid with domuiartist Destroy() and assign a ui tools handler to each scenario to handle the stuff that it creates so that it can all be easily wiped. Might want to add an id of some kind to OutputDivWithNounImages... so that it can be manipulated later like the highlight function of Clone Crisis.");
     
     _ClearPreviousRunDOMs();
@@ -55,7 +57,7 @@ function _ClearPreviousRunDOMs(){
     
     const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
     
-    if(scenario == null) return
+    if(scenario == null || scenario.uiToolsHandler == null || scenario.GetCurrentRunProcessor() == null) return
     
     for(const tool of scenario.uiToolsHandler.tools){
         

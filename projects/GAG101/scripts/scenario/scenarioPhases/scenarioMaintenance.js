@@ -38,8 +38,6 @@ export function PauseAtEndOfScenarioForPvP(){
         if(player0Id != window.gameHandler.playerId) cardHandler.EmptyCards(player0Id); //don't empty the cards if they belong to the actual player
         
         cardHandler.EmptyCards(player1Id);
-                
-        console.warn(`finished against ${player1Id}`);
         
         artist.InsertHTMLAdjacentToDOM("beforeend",`<br><br><br><br>`);
         
