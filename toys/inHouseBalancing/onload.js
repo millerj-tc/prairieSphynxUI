@@ -139,9 +139,36 @@ export function onload(){
             mid:13,
             bot:14,
             sup:13
+        },
+        {
+            handle:"Mechka",
+            name:"Dylan",
+            top:17,
+            jg:0,
+            mid:0,
+            bot:16,
+            sup:0
         }
         
     ]
+    
+    // evaluate one group of 10 only
+    
+    const groupArr = EvaluateGroup([_GetPlayerByName(players,"Abram"),_GetPlayerByName(players,"Brendan"),_GetPlayerByName(players,"Brett"),_GetPlayerByName(players,"Cole"),_GetPlayerByName(players,"Dylan"),_GetPlayerByName(players,"Erik"),_GetPlayerByName(players,"Joe"),_GetPlayerByName(players,"Joseph"),_GetPlayerByName(players,"Julia"),_GetPlayerByName(players,"Mike")],608,5,1);
+    
+    groupArr.sort(function(a, b){return a.matchDiff - b.matchDiff});
+    
+    _Declare(`TOTAL VALID COMBOS: ${groupArr.length}`);
+    
+    for(const match of groupArr){
+        
+        _Declare(`Group${match.groupNum}/Perm${match.permCount} -- MATCH SCORE: ${match.matchTotal} MATCH DIFF: ${match.matchDiff} \n ${match.team0Names} ${match.team0Total} vs ${match.team1Total} ${match.team1Names}`);
+    }
+    
+    
+    return
+    
+    // evaluate every possible group of 10
     
     let returnArr = [];
     
@@ -281,4 +308,12 @@ function EvaluateGroup(group,lowestAcceptableMatchScore,lowestAcceptableMatchDif
 function _Declare(string){
     
     console.log(string);
+}
+
+function _GetPlayerByName(playerArr,name){
+    
+    for(const p of playerArr){
+        
+        if(p.name == name) return p
+    }
 }
