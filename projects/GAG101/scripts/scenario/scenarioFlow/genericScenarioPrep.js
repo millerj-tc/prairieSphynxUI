@@ -20,7 +20,7 @@ export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,conten
     
     scenario.SetMode(mode);
     
-    UnselectAllPlayerCards();
+    UnselectAllCards();
     
     gh.narrOutputArtist.ClearAllChildren();
     
@@ -48,13 +48,13 @@ export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,conten
     
 }
 
-export function UnselectAllPlayerCards(){
+export function UnselectAllCards(){
     
     const cardHandler = window.gameHandler.collectionCardHandler;
     
-    const playerCards = cardHandler.GetCards(window.gameHandler.playerId);
+    const allCards = cardHandler.GetCards();
     
-    for(const card of playerCards){
+    for(const card of allCards){
         
         card.selectedForTeam = false;
     }
