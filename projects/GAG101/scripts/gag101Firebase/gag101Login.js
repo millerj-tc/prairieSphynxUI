@@ -138,7 +138,7 @@ export function UnlockServerUnlockedScenarios(){
 
 
       } else {
-        console.log("No data available");
+
       }
     }).catch((error) => {
         

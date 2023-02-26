@@ -6,8 +6,9 @@
         window.GotoHomeMenu = GotoHomeMenu;
         import {GAG101Login} from "./scripts/gag101Firebase/gag101Login.js";
         window.GAG101Login = GAG101Login;
-        import {RetrieveUserData} from "./scripts/gag101Firebase/gag101Login.js";
+        import {RetrieveUserData,UnlockServerUnlockedScenarios} from "./scripts/gag101Firebase/gag101Login.js";
         window.RetrieveUserData = RetrieveUserData;
+        window.UnlockServerUnlockedScenarios = UnlockServerUnlockedScenarios;
         import {SignOut} from "../../utils/firebase/firebaseAuth.js";
         window.SignOut = SignOut;
         import {Register} from "../../utils/firebase/firebaseAuth.js";
@@ -108,6 +109,8 @@ onAuthStateChanged(auth, (user) => {
     // User is signed in, see docs for a list of available properties
     window.gameHandler.playerId = user.uid // + "1"; console.error("remove");
     RetrieveUserData();
+      
+    UnlockServerUnlockedScenarios();
     window.gameHandler.loginWrapperArtist.SetDOMDisplayTo("none");
       
     //EstablishSession();
