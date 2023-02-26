@@ -28,7 +28,7 @@ export function GotoHomeMenu(){
     
     gh.loginWrapperArtist.SetDOMDisplayTo("none");
     
-    console.warn("if you prep Story Mode, don't run it, then go to home, then competitive it will be fucked up. Might want to add an id of some kind to OutputDivWithNounImages... so that it can be manipulated later like the highlight function of Clone Crisis.");
+    console.warn("Might want to add an id of some kind to OutputDivWithNounImages... so that it can be manipulated later like the highlight function of Clone Crisis.");
     
     _ClearPreviousRunDOMs();
     

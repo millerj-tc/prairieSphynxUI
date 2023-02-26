@@ -25,11 +25,9 @@ export function BuildDanceOfRiddlesScenario(){
     
     DOR.AddPhase("Dupe conk", DupeConkLosers);
     
+    DOR.AddPhase("Announce awkward dancers", _AnnounceAwkwardness);
+    
     DOR.AddPhase("Get Winners",_GetDanceofRiddlesWinners);
-    
-    console.warn("Get Winners needs to take dupeconk into account");
-    
-    console.warn("clues for who is shit at this");
     
     DOR.AddPhase("remove dc status", RemoveDupeConkStatuses);
     
@@ -52,6 +50,32 @@ function _SetAIUsername(){
     
     if(mode == "story" && scenario.GetCurrentRunProcessor().contenders[1].playerUsername == "AI") scenarioMaintenance.SetPlayer1Username("Practice Player");
     
+    
+}
+
+function _AnnounceAwkwardness(){
+    
+    const gh = window.gameHandler;
+    
+    let selectedCards = cardInfoPhaseUtils.GetSelectedCardsFor();
+    
+    selectedCards = selectedCards.filter(c => c.GetProp("dupeConk") != 1);
+    
+    const awkwards = [];
+    
+    for(const c of selectedCards){
+        
+        if(c.GetProp("speed") + c.GetProp("cunning") + c.GetProp("charisma") < 19){
+            
+            awkwards.push(c);
+        }
+    }
+    
+    uiPhaseUtils.OutputTextDivWithNounImages(`[arg0[]teamname] ~s0~stumbles/stumble~~ a bit here and there, waving ~s0~[p0[their]]/their~~ arms with self-doubt, confusion, and glaring boorishness (at least by Fey standards). The customary chants of the audience fall temporarily silent as mouths pause parted and brows furrow with concern. ~s0~[p0[they]]/they~~ regain their flow and struggle gamely on.`,awkwards);
+    
+    gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+    
+    uiPhaseUtils.OutputTextDivWithNounImages(`The dance continues...`);
     
 }
 
@@ -139,7 +163,9 @@ function _GetDanceofRiddlesWinners(){
 
 function _DanceOfRiddlesOutput(){
     
-    const winnerArr = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessorProp("winnerArr");
+    let winnerArr = window.gameHandler.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessorProp("winnerArr");
+    
+    winnerArr = winnerArr.filter(c => c.GetProp("dupeConk") != 1);
     
     const artist = window.gameHandler.narrOutputArtist;
     
@@ -149,11 +175,13 @@ function _DanceOfRiddlesOutput(){
         
         console.warn("must adjust this in case there is only one participant");
         
-        uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] gambol vivaciously. For each step there is a counter-step. Every graceful inquiry is answered and matched until all the participants are exhausted. Nothing is decided.",winnerArr); 
+        uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] ~s0~gambols/gambol~~ vivaciously. For each step there is a counter-step. Every graceful inquiry is answered and matched until all the participants are exhausted. Nothing is decided.",winnerArr); 
+        
+        //arg0[]name] can't decide who to side with! ~s0~[p0[they]]/they~~ [p0[are]] sitting this one out."
     }
     else{
         
-       uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] wriggle, strut, flounce, and prance. They dip and spin, they bend and twist. They pose questions with their bodies, unanswerable enigmas of form and motion.",winnerArr); 
+       uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] ~s0~wriggles/wriggle~~, ~s0~struts/strut~~, ~s0~flounces/flounce~~, and ~s0~prances/prance~~. ~s0~[p0[they]]/they~~ ~s0~dips/dip~~ and ~s0~spins/spin~~, ~s0~[p0[they]]/they~~ ~s0~bends/bend~~ and ~s0~twists/twist~~. ~s0~[p0[they]]/they~~ ~s0~poses/pose~~ questions with ~s0~[p0[their]]/their~~ ~s0~body/bodies~~, unanswerable enigmas of form and motion.",winnerArr); 
     }
     
     let consoleString = "";

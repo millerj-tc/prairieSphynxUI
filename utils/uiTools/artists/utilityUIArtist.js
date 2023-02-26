@@ -165,8 +165,6 @@ export class utilityUIArtist
 
     _SingleSubjectsReplacer(match){
         
-        console.log(match);
-        
         const regex = new RegExp(`(?<=\\~s(.*?)\\~)(.*?)(?=\\~(.*?)\\~)`,"gm");
         
         const internalMatch = match.match(regex)[0];
