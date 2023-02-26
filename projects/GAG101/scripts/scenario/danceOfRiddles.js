@@ -48,7 +48,7 @@ function _SetAIUsername(){
     
     if(mode == "story") scenarioMaintenance.SetPlayer1Username("The Holy Fey");
     
-    if(mode == "story" && scenario.GetCurrentRunProcessor().contenders[1].playerUsername == "AI") scenarioMaintenance.SetPlayer1Username("Practice Player");
+    if(mode == "pvp" && scenario.GetCurrentRunProcessor().contenders[1].playerUsername == "AI") scenarioMaintenance.SetPlayer1Username("Practice Player");
     
     
 }
