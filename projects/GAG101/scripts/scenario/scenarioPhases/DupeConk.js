@@ -33,6 +33,7 @@ export function DupeConkLosers(){
             pair[1].SetProp("doubleDupeConk",1,"DupeConk Losers");
             pair[0].SetProp("dupeConk",1,"DupeConk Losers");
             pair[1].SetProp("dupeConk",1,"DupeConk Losers");
+            console.log(`double dupeconked ${pair[0].name},${pair[1].name} for ${pair[0].owner},${pair[1].owner}`); 
         }
 
     }
@@ -65,11 +66,23 @@ function _DupeConkCardMatchingNameAndOwnerForStep(name,owner){
     
     for(const c of cardHandler.GetCards()){
         
-        if(c.name == name && c.owner == owner) c.SetProp("dupeConk",1,"DupeConk Losers")
+        if(c.name == name && c.owner == owner) {
+            
+            c.SetProp("dupeConk",1,"DupeConk Losers");
+            console.log(`dupeconked ${c.name} for ${c.owner}`);   
+        }
     }
 }
 
 function _DupeContestOutput(contestLoserArr){
+    
+    const gh = window.gameHandler;
+    
+    const rp = gh.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor();
+    
+    const contender0 = rp.contenders[0];
+    
+    const contender1 = rp.contenders[1];
     
     const artist = window.gameHandler.narrOutputArtist;
     
@@ -105,12 +118,12 @@ function _DupeContestOutput(contestLoserArr){
     }
     
     
-    const playerControlledLosers = singleDupeConkers.filter(c => c.owner == window.gameHandler.playerId);
+    const leftLosers = singleDupeConkers.filter(c => c.owner == contender0.playerId);
     
     
-    if(playerControlledLosers.length > 0){
+    if(leftLosers.length > 0){
         
-        uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] ~s0~decides/decide~~ to side with the left team!",playerControlledLosers);
+        uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]name] ~s0~decides/decide~~ to side with the right team!",leftLosers);
         
          artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>")
     }
@@ -118,11 +131,11 @@ function _DupeContestOutput(contestLoserArr){
     ///
     
     
-    const nonPlayerControlledLosers = singleDupeConkers.filter(c => c.owner != window.gameHandler.playerId);
+    const rightLosers = singleDupeConkers.filter(c => c.owner == contender1.playerId);
         
-    if(nonPlayerControlledLosers.length > 0){ 
+    if(rightLosers.length > 0){ 
     
-        uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] ~s0~decides/decide~~ to side with the right team!",nonPlayerControlledLosers);
+        uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]name] ~s0~decides/decide~~ to side with the left team!",rightLosers);
         
          artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>")
     }

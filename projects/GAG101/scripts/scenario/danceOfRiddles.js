@@ -147,6 +147,8 @@ function _DanceOfRiddlesOutput(){
     
     if(winnerArr.length > 4){
         
+        console.warn("must adjust this in case there is only one participant");
+        
         uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] gambol vivaciously. For each step there is a counter-step. Every graceful inquiry is answered and matched until all the participants are exhausted. Nothing is decided.",winnerArr); 
     }
     else{
