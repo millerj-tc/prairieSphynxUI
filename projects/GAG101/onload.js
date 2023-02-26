@@ -1,7 +1,7 @@
 import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
 import {GenerateCombinations} from "../../utils/mathAndLogicUtils/miscUtils.js";
-import {DanceOfRiddlesPrep, BuildDanceOfRiddlesScenario} from "./scripts/scenario/danceOfRiddles.js";
+import {DanceOfRiddlesPrep, BuildDanceOfRiddlesScenario} from "./scripts/scenario/scenarios/danceOfRiddles.js";
 import {UpdateCardForUser} from "./scripts/gag101Firebase/updateFirebase.js";
 import {LoadLocalCollectionCards,UnlockLocalUnlockedScenarios} from "./scripts/gag101Firebase/gag101Login.js";
 

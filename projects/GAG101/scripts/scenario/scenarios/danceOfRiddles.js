@@ -1,13 +1,9 @@
-import * as scenarioMaintenance from "./scenarioPhases/scenarioMaintenance.js";
-import {DupeConkLosers,RemoveDupeConkStatuses} from "./scenarioPhases/DupeConk.js";
-import * as cardInfoPhaseUtils from "./scenarioPhases/cardInfoPhaseUtils.js";
-import * as uiPhaseUtils from "./scenarioPhases/uiPhaseUtils.js";
-import {scenarioProcessor} from "./scenarioFlow/scenarioProcessor.js";
-import * as scenarioPrepUtils from "./scenarioFlow/genericScenarioPrep.js";
-import {CollapseButtonOnClick} from "../../../../utils/uiTools/artists/trayArtistTrayMovement.js";
-import {GenerateCombinations} from "../../../../utils/mathAndLogicUtils/miscUtils.js";
-import {charData} from "../data/charData.js";
-import {RunPvPTournament} from "../pvp/pvpScenarioTournament.js";
+import * as scenarioMaintenance from "../scenarioPhases/scenarioMaintenance.js";
+import {DupeConkLosers,RemoveDupeConkStatuses} from "../scenarioPhases/DupeConk.js";
+import * as cardInfoPhaseUtils from "../scenarioPhases/cardInfoPhaseUtils.js";
+import * as uiPhaseUtils from "../scenarioPhases/uiPhaseUtils.js";
+import {scenarioProcessor} from "../scenarioFlow/scenarioProcessor.js";
+import * as scenarioPrepUtils from "../scenarioFlow/genericScenarioPrep.js";
 
 export function BuildDanceOfRiddlesScenario(){
     
