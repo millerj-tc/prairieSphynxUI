@@ -71,7 +71,7 @@ function _AnnounceAwkwardness(){
         }
     }
     
-    uiPhaseUtils.OutputTextDivWithNounImages(`[arg0[]teamname] ~s0~stumbles/stumble~~ a bit here and there, waving ~s0~[p0[their]]/their~~ arms with self-doubt, confusion, and glaring boorishness (at least by Fey standards). The customary chants of the audience fall temporarily silent as mouths pause parted and brows furrow with concern. ~s0~[p0[they]]/they~~ regain their flow and struggle gamely on.`,awkwards);
+    uiPhaseUtils.OutputTextDivWithNounImages(`[arg0[]teamname] ~s0~stumbles/stumble~~ a bit here and there, waving ~s0~[p0[their]]/their~~ arms with self-doubt, confusion, and glaring boorishness (at least by Fey standards). The customary chants of the audience fall temporarily silent as mouths pause parted and brows furrow with concern. ~s0~[p0[they]]/they~~ ~s0~regains/regain~~ ~s0~[p0[their]]/their~~ flow and ~s0~struggles/struggle~~ gamely on.`,awkwards);
     
     gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
