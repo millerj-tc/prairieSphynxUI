@@ -8,11 +8,6 @@ import * as scenarioPrepUtils from "../scenarioFlow/genericScenarioPrep.js";
 //  - enemy: mystic cat
 
 
-
-// Psychic Maelstrom Surfing Contest (if toughness + charisma >= 13, subract 1/3 speed from speed for  toughness - speed eval)
-
-// //The Watch of Silence (best charater: toughness - speed) -- meditation (include this in a stage of the PvP so Yetelu is good) bonus if you have Doran + Pigimus
-
 export function BuildWatchOfSilenceScenario(){
     
     const gh = window.gameHandler;
@@ -34,6 +29,14 @@ export function BuildWatchOfSilenceScenario(){
     WOS.AddPhase("Cast Line Into Nothingness Evaluation",_CastTheLineIntoNothingnessEvaluate);
     
     WOS.AddPhase("Cast Line Into Nothingness Output", _CastTheLineIntoNothingnessOutput);
+    
+    WOS.AddPhase("Maelstrom Eval", _MaelstromSurfingEvaluation);
+    
+    WOS.AddPhase("Maelstrom OP", _MaelstromSurfingOutput);
+    
+    WOS.AddPhase("Watch of Silence Eval", _WatchOfSilenceEval);
+    
+    WOS.AddPhase("Watch OP",_WatchOfSilenceOutput);
     
     WOS.AddPhase("remove dc status", RemoveDupeConkStatuses);
     
@@ -143,10 +146,12 @@ function _CastTheLineIntoNothingnessOutput(){
     for(const c of rp.contenders){
         
         if(c.watchOfSilenceBuff){
-
-            artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
             
             const buffedAllies = cardInfoPhaseUtils.GetCardSelectedTeammates(rp.castLineBuffGiver);
+            
+            if(buffedAllies.length == 0) break
+
+            artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
 
             uiPhaseUtils.OutputTextDivWithNounImages(`[arg1[]teamname] ~s1~is/are~~ bolstered in their watchfulness by [arg0[]teamname].`, [rp.castLineBuffGiver],buffedAllies); 
 
@@ -156,6 +161,155 @@ function _CastTheLineIntoNothingnessOutput(){
     
     console.warn("remember to apply watch of silence buff!");
     }
+
+function _MaelstromSurfingEvaluation(){
+    
+    // Psychic Maelstrom Surfing Contest (if toughness + charisma >= 13, subract 1/3 speed from speed for  toughness - speed eval)
+
+    
+    const gh = window.gameHandler;
+    
+    const rp = gh.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor();
+    
+    const leftCards = cardInfoPhaseUtils.GetSelectedForContenderWithDupeconkStatus(0);
+    
+    const rightCards = cardInfoPhaseUtils.GetSelectedForContenderWithDupeconkStatus(1);
+    
+    let allCards = leftCards.concat(rightCards);
+    
+    const surfers = [];
+    
+    for(const c of allCards){
+        
+        if(c.GetProp("toughness") + c.GetProp("charisma") >= 13){
+            
+            const charContenderNum = cardInfoPhaseUtils.GetCardContenderNum(c);
+            
+            rp.contenders[charContenderNum].maelstromBuff = true;
+            
+            surfers.push(c);
+        }
+    }
+    
+    rp.surfers = surfers;
+}
+
+function _MaelstromSurfingOutput(){
+    
+    const gh = window.gameHandler;
+    
+    const rp = gh.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor();
+    
+    const artist = window.gameHandler.narrOutputArtist;
+    
+    artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+    
+    uiPhaseUtils.OutputTextDivWithNounImages(`As the Watch proceeds, the participants are awed by a sudden psychic maelstrom! They must quickly reach within and recover the means by which to ride the waves of the collective subconscious!`);
+    
+    if(rp.surfers.length > 0){
+        
+        artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+        
+        console.log(rp.surfers);
+            
+        uiPhaseUtils.OutputTextDivWithNounImages(`[arg0[]teamname] ~s0~demonstrates/demonstrate~~ inpsired astrally projected boogie-boarding moves as ~s0~[p[they]]/they~~ cut through the maelstrom and proceed into the final stage of the Watch of Silence.`, rp.surfers);
+    }
+    
+    artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+}
+
+function _WatchOfSilenceEval(){
+    
+    // //The Watch of Silence (best charater: toughness - speed) -- meditation (include this in a stage of the PvP so Yetelu is good) bonus if you have Doran + Pigimus
+    
+    const gh = window.gameHandler;
+    
+    const rp = gh.scenarioHandler.GetCurrentScenario().GetCurrentRunProcessor();
+    
+    const leftCards = cardInfoPhaseUtils.GetSelectedForContenderWithDupeconkStatus(0);
+    
+    const rightCards = cardInfoPhaseUtils.GetSelectedForContenderWithDupeconkStatus(1);
+    
+    let leftScore = 0;
+    
+    let rightScore = 0;
+    
+    for(const c of leftCards){
+        
+        const cardScore = c.GetProp("toughness") + c.GetProp("speed");
+        
+        if(cardScore > leftScore) leftScore = cardScore;
+    }
+    
+    for(const c of rightCards){
+        
+        const cardScore = c.GetProp("toughness") + c.GetProp("speed");
+        
+        if(cardScore > rightScore) rightScore = cardScore;
+    }
+    
+    for(const surfer of rp.surfers){
+        
+        if(cardInfoPhaseUtils.GetCardContenderNum(surfer) == 0){
+            
+            leftScore += surfer.GetProp("speed")/3;
+        }
+        
+        if(cardInfoPhaseUtils.GetCardContenderNum(surfer) == 1){
+            
+            rightScore += surfer.GetProp("speed")/3;
+        }
+    }
+    
+    if(cardInfoPhaseUtils.CharArrIncludesCharByName(leftCards,"Doran") && cardInfoPhaseUtils.CharArrIncludesCharByName(leftCards,"Pigimus")) leftScore += 2;
+    
+    if(cardInfoPhaseUtils.CharArrIncludesCharByName(rightCards,"Doran") && cardInfoPhaseUtils.CharArrIncludesCharByName(rightCards,"Pigimus")) rightScore +=2;
+    
+    if(rp.contenders[0].watchOfSilenceBuff) leftScore += 2;
+    if(rp.contenders[1].watchOfSilenceBuff) rightScore +=2;
+    
+    console.log(`leftscore is ${leftScore}, rightscore is ${rightScore}`);
+    
+    if(leftScore > rightScore) rp.wosWinners = leftCards;
+    else if(rightScore > leftScore) rp.wosWinners = rightCards;
+    else rp.wosWinners = leftCards.concat(rightCards);
+}
+
+function _WatchOfSilenceOutput(){
+    
+    const gh = window.gameHandler;
+    
+    const scenario = gh.scenarioHandler.GetCurrentScenario();
+    
+    const rp = scenario.GetCurrentRunProcessor();
+    
+    const artist = window.gameHandler.narrOutputArtist;
+    
+    const mode = scenario.GetMode();
+    
+    artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+    
+    uiPhaseUtils.OutputTextDivWithNounImages(`The Watch goes on and on, testing patience, calmitude, and bladders in equal measure. All are stretched beyond what they have endured before.`);
+    
+    artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+    
+    console.warn("dorna and pigimus buff output");  
+    
+    uiPhaseUtils.OutputTextDivWithNounImages(`Finally, it's over and [arg0[]teamname] emerge from their meditations stronger and clearer than before.`,rp.wosWinners);
+    
+    if(mode == "story" && !cardInfoPhaseUtils.CharArrIncludesCharByName(rp.wosWinners,"Aether Cat")){
+        
+        artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+    
+        uiPhaseUtils.OutputTextDivWithNounImages(`[argN[Aether Cat]] : You have impressed me mightily, young ones. That psychic maelstrom was intense. Go in peace and calmitude.`);
+    }
+    else if(mode == "story" && cardInfoPhaseUtils.CharArrIncludesCharByName(rp.wosWinners,"Aether Cat")){
+        
+        artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+    
+        uiPhaseUtils.OutputTextDivWithNounImages(`[argN[Aether Cat]] : You were not expecting such an intersection of nothingness and everythingness, were you? Perhaps this is not the right group to perform the Watch together...`);
+    }
+}
 
 
 export function WatchOfSilencePrep(mode){

@@ -261,9 +261,9 @@ export function AnnounceOtherPlayer(){
     
     artist.InsertHTMLAdjacentToDOM("beforeend",`<br><br>`);
     
-    const bottomOfPage = document.getElementById("bottomOfPage");
+    //const bottomOfPage = document.getElementById("bottomOfPage");
     
-    setTimeout(function(){bottomOfPage.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})},50);
+    setTimeout(function(){announceSpan.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})},50);
 }
 
 export function AnnounceTournamentResults(){

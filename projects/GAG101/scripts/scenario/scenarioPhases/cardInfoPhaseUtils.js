@@ -70,6 +70,16 @@ export function SortCharArrByProp(charArr,prop,descending = true){
     if(!descending) return charArr.sort(function(a,b){return a.GetProp(prop) - b.GetProp(prop)})
 }
 
+export function CharArrIncludesCharByName(charArr,name){
+    
+    for(const c of charArr){
+        
+        if(c.name == name) return true
+    }
+    
+    return false
+}
+
 export function GetCardContenderNum(card){
     
      const gh = window.gameHandler;

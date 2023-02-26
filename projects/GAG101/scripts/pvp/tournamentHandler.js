@@ -68,6 +68,47 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         
         this.contenders = this.contenders.sort(SortWinscoreThenDate); //lowest winscores first
     }
+    
+    RunAllLegalPermutations(){
+        
+        const gh = window.gameHandler;
+    
+        const cardHandler = gh.collectionCardHandler;
+
+        const scenario =  gh.scenarioHandler.GetCurrentScenario();
+        
+        const mode = scenario.GetMode();
+
+        for(const submission of leaderboardArrAsJSON){
+
+           const newContender =  gh.tournamentHandler.AddContender(submission.teamAsJSONArr,submission.userId,submission.username,submission.submissionTimestamp);
+
+        }
+
+        const matchesArr = GenerateCombinations(gh.tournamentHandler.contenders,2)
+
+        for(const match of matchesArr){
+
+            scenario.QueueProcess(match);
+        }
+
+        const playerContender = gh.tournamentHandler.AddContender(false,gh.playerId,gh.playerUsername,Date.now());
+
+        for(const serverContender of gh.tournamentHandler.contenders){
+
+            if(serverContender.playerId == playerContender.playerId) continue
+
+            scenario.QueueProcess([playerContender,serverContender]);
+        }
+
+        gh.cardChoiceTrayArtist.SetDOMDisplayTo("none");
+
+        scenario.queuedProcessors.reverse(); // reverse so it runs the actual player scenarios first. Otherwise server matches will replace the player's choices in the card choice tray.
+
+        console.log(scenario.queuedProcessors);
+
+        scenario.ProcessNextInQueue();
+    }
 }
 
 export function SortWinscoreThenDate(ob1,ob2) {
