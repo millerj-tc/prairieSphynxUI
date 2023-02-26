@@ -118,9 +118,33 @@ export function RetrieveUserData(loginCallback=false){
 
 export function UnlockServerUnlockedScenarios(){
     
-    const t = 0;
+    const scenarioHandler = window.gameHandler.scenarioHandler;
     
-    const t = `implement this`;
+    for(const s of scenarioHandler.scenarios){
+        
+        const db = getDatabase();
+    const dbRef = ref(db);
+    
+    get(child(dbRef, `/users/` + window.gameHandler.playerId + `/scenarioAchivements/` + s.scenarioName + `/` + s.scenarioName + "Unlocked")).then((snapshot) => {
+      if (snapshot.exists()) {
+
+     const data = snapshot.val();
+
+        if(data == "true"){
+
+            s.UnlockScenario();
+
+        }   
+
+
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+        
+      console.error(error);
+    });
+    }
 }
 
 export function LoadLocalCollectionCards(){
