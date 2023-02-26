@@ -14,7 +14,7 @@ class contender
         this.defeatedByPlayer = false;
         this.defeatedPlayer = false;
         this.tiedPlayer = false;
-    }
+    //} how to automate testing using tournament Handler
 }
 
 export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
