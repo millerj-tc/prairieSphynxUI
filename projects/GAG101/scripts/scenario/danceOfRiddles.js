@@ -69,9 +69,21 @@ function _GetDanceofRiddlesWinners(){
     
     const contender1 = rp.contenders[1];
     
-    const playerCards = cardInfoPhaseUtils.GetSelectedCardsFor(contender0.playerId);
+    let playerCards = cardInfoPhaseUtils.GetSelectedCardsFor(contender0.playerId);
     
-    const otherPlayerCards = cardInfoPhaseUtils.GetSelectedCardsFor(contender1.playerId);
+    let otherPlayerCards = cardInfoPhaseUtils.GetSelectedCardsFor(contender1.playerId);
+    
+    // don't count dupeconked cards
+    
+    playerCards = playerCards.filter(c => c.GetProp("dupeConk") != 1);
+    
+    otherPlayerCards = otherPlayerCards.filter(c => c.GetProp("dupeConk") != 1);
+    
+    console.log(playerCards);
+    
+    console.log(otherPlayerCards);
+    
+    //compute score
     
     let playerScore = 0;
     
