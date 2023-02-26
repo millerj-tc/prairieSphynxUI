@@ -74,6 +74,21 @@ function _DupeConkCardMatchingNameAndOwnerForStep(name,owner){
     }
 }
 
+export function DupeconkDupesOfCardWithPhaseNote(card,phaseNote = ""){
+    
+    const cardHandler = window.gameHandler.collectionCardHandler;
+    
+    for(const c of cardHandler.GetCards()){
+        
+        if(c.name == card.name && c.owner != c.owner){
+            
+            c.SetProp("dupeConk",1,phaseNote);
+
+        }
+    }
+
+}
+
 function _DupeContestOutput(contestLoserArr){
     
     const gh = window.gameHandler;

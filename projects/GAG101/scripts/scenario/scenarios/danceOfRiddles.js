@@ -106,9 +106,7 @@ function _GetDanceofRiddlesWinners(){
     //compute score
     
     let playerScore = 0;
-    
-    console.warn("doran buff -- anything else?");
-    
+        
     for(const char of playerCards){
         
         playerScore += (char.GetProp("speed") + char.GetProp("cunning") + char.GetProp("charisma"));
@@ -168,9 +166,7 @@ function _DanceOfRiddlesOutput(){
     artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
     if(winnerArr.length > 4){
-        
-        console.warn("must adjust this in case there is only one participant");
-        
+                
         uiPhaseUtils.OutputTextDivWithNounImages("[arg0[]teamname] ~s0~gambols/gambol~~ vivaciously. For each step there is a counter-step. Every graceful inquiry is answered and matched until all the participants are exhausted. Nothing is decided.",winnerArr); 
         
         //arg0[]name] can't decide who to side with! ~s0~[p0[they]]/they~~ [p0[are]] sitting this one out."

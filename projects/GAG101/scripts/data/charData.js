@@ -12,7 +12,7 @@ export const charData = [
 
     {name: "Eevin", dataType: "char", unlockedForPlayer: true, pronouns:{they: "he", them: "him", their: "his", theirs: "his", themself: "himself"}, power: 4, toughness: 5, speed: 4, cunning: 6, charisma: 6, cume: 25, imageXL: 'images/chars/eevin2-XL.png',imageL: 'images/chars/eevin2-L.png', imageM: 'images/chars/eevin2-M.png', imageS: 'images/chars/eevin2-S.png'},
     
-    {name: "Apple Helm", dataType: "char", unlockedForPlayer: true, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 4, toughness: 4, speed: 5, cunning: 4, charisma: 9, cume: 26, imageXL: 'images/chars/appleHelm-XL.png',imageL: 'images/chars/appleHelm-L.png', imageM: 'images/chars/appleHelm-M.png', imageS: 'images/chars/appleHelm-S.png'},
+    {name: "Apple Helm", dataType: "char", unlockedForPlayer: true, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 4, toughness: 4, speed: 5, cunning: 3, charisma: 9, cume: 25, imageXL: 'images/chars/appleHelm-XL.png',imageL: 'images/chars/appleHelm-L.png', imageM: 'images/chars/appleHelm-M.png', imageS: 'images/chars/appleHelm-S.png'},
     
     {name: "Pluto", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 9, toughness: 7, speed: 6, cunning: 3, charisma: 3, cume: 28, imageXL: 'images/chars/pluto-XL.png',imageL: 'images/chars/pluto-L.png', imageM: 'images/chars/pluto-M.png', imageS: 'images/chars/pluto-S.png'},
     
@@ -20,6 +20,8 @@ export const charData = [
     
     {name: "Holy Fey Upa", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 2, toughness: 3, speed: 6, cunning: 7, charisma: 6, cume: 24, imageXL: 'images/chars/feyHoly-XL.png',imageL: 'images/chars/feyHoly-L.png', imageM: 'images/chars/feyHoly-M.png', imageS: 'images/chars/feyHoly-S.png'},
     
-    {name: "Holy Fey Kupo", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 2, toughness: 3, speed: 6, cunning: 7, charisma: 6, cume: 24, imageXL: 'images/chars/feyHoly-XL.png',imageL: 'images/chars/feyHoly-L.png', imageM: 'images/chars/feyHoly-M.png', imageS: 'images/chars/feyHoly-S.png'}
+    {name: "Holy Fey Kupo", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 2, toughness: 3, speed: 6, cunning: 7, charisma: 6, cume: 24, imageXL: 'images/chars/feyHoly-XL.png',imageL: 'images/chars/feyHoly-L.png', imageM: 'images/chars/feyHoly-M.png', imageS: 'images/chars/feyHoly-S.png'},
+    
+    {name: "Aether Cat", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 2, toughness: 7, speed: 3, cunning: 4, charisma: 6, cume: 22, imageXL: 'images/chars/aetherCat-XL.png',imageL: 'images/chars/aetherCat-L.png', imageM: 'images/chars/aetherCat-M.png', imageS: 'images/chars/aetherCat-S.png'}
         
 ]

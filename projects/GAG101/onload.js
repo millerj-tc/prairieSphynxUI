@@ -2,6 +2,7 @@ import {gameHandler} from "./scripts/gameHandler.js";
 import {charData} from "./scripts/data/charData.js";
 import {GenerateCombinations} from "../../utils/mathAndLogicUtils/miscUtils.js";
 import {DanceOfRiddlesPrep, BuildDanceOfRiddlesScenario} from "./scripts/scenario/scenarios/danceOfRiddles.js";
+import {WatchOfSilencePrep, BuildWatchOfSilenceScenario} from "./scripts/scenario/scenarios/watchOfSilence.js";
 import {UpdateCardForUser} from "./scripts/gag101Firebase/updateFirebase.js";
 import {LoadLocalCollectionCards,UnlockLocalUnlockedScenarios} from "./scripts/gag101Firebase/gag101Login.js";
 
@@ -18,6 +19,8 @@ export function onload(){
     UnlockLocalUnlockedScenarios();
         
     BuildDanceOfRiddlesScenario();
+    
+    BuildWatchOfSilenceScenario();
     
     GotoHomeMenu();
 }
@@ -53,5 +56,26 @@ export function GotoHomeMenu(){
     dorPButton.onclick = function(){DanceOfRiddlesPrep("pvp")};
 
     gh.narrOutputArtist.AppendElementWithinDOM(dorPButton);
+    
+     gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+    
+    const wosButton = document.createElement("button");
+    
+    wosButton.innerText = "Watch Of Silence (Story Mode)";
+    
+    wosButton.onclick = function(){WatchOfSilencePrep("story")};
+    
+    gh.narrOutputArtist.AppendElementWithinDOM(wosButton);
+    
+    gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
+    
+       
+    const wosPButton = document.createElement("button");
+
+    wosPButton.innerText = "Watch Of Silence (Competitive Mode)";
+
+    wosPButton.onclick = function(){WatchOfSilencePrep("pvp")};
+
+    gh.narrOutputArtist.AppendElementWithinDOM(wosPButton);
 }
 
