@@ -188,6 +188,10 @@ export function AddScenarioRunButton(){
     scenario.uiToolsHandler.AddDOMUIArtist(but);
 
     but.innerText = "Run scenario";
+    
+    but.classList.add("runScenarioButton");
+    
+    but.id = "runScenarioButton";
 
     but.onclick = function(){
 

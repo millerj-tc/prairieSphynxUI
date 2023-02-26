@@ -1,3 +1,10 @@
+body{
+    
+    font-family: "Helvetica";
+    background-color:antiquewhite;
+    
+}
+
 .dimmer{
     
     height:100%;
@@ -86,6 +93,11 @@
     margin:10px;
     width: 125px;
     font-size: 18px;
+}
+
+.runScenarioButton{
+    
+    margin-right: 500px;
 }
 
 .narrativeOutput{

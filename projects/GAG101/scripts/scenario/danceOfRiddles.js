@@ -219,6 +219,8 @@ export function DanceOfRiddlesPrep(mode){
     
     if(mode == "pvp") scenarioPrepUtils.GenericScenarioPrep("Dance of Riddles","pvp",3,3);
     
+    document.getElementById("runScenarioButton").innerText = "Dance dance dance";
+    
     console.warn("what about framing text like the intro that shouldn't be cleared on subsequent runs?");
     
     // below is balance testing
