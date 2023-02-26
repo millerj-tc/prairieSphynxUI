@@ -83,7 +83,6 @@ export function RetrieveUserData(loginCallback=false){
                 window.gameHandler.collectionCardHandler.MakeCardFromJSON(data[cardKey].card,uid);
             }
             
-            
             // add any new cards that were patched into the game by checking charData for any cards that don't exist in cardHandler after updating from server
             
             for(const card of charData){
@@ -115,6 +114,13 @@ export function RetrieveUserData(loginCallback=false){
 
 
     });
+}
+
+export function UnlockServerUnlockedScenarios(){
+    
+    const t = 0;
+    
+    const t = `implement this`;
 }
 
 export function LoadLocalCollectionCards(){
@@ -149,5 +155,15 @@ export function LoadLocalCollectionCards(){
         
 
         
+    }
+}
+
+export function UnlockLocalUnlockedScenarios(){
+    
+    const scenarioHandler = window.gameHandler.scenarioHandler;
+    
+    for(const s of scenarioHandler.scenarios){
+        
+        if(localStorage.getItem(s.scenarioName + "Unlocked") == true) s.UnlockScenario();
     }
 }

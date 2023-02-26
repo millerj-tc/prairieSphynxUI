@@ -3,7 +3,7 @@ import {charData} from "./scripts/data/charData.js";
 import {GenerateCombinations} from "../../utils/mathAndLogicUtils/miscUtils.js";
 import {DanceOfRiddlesPrep, BuildDanceOfRiddlesScenario} from "./scripts/scenario/danceOfRiddles.js";
 import {UpdateCardForUser} from "./scripts/gag101Firebase/updateFirebase.js";
-import {LoadLocalCollectionCards} from "./scripts/gag101Firebase/gag101Login.js";
+import {LoadLocalCollectionCards,UnlockLocalUnlockedScenarios} from "./scripts/gag101Firebase/gag101Login.js";
 
 
 
@@ -14,6 +14,8 @@ export function onload(){
     const gh = window.gameHandler;
     
     LoadLocalCollectionCards();
+    
+    UnlockLocalUnlockedScenarios();
         
     BuildDanceOfRiddlesScenario();
     

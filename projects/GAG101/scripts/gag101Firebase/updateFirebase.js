@@ -37,8 +37,6 @@ export function UpdateScenarioAchievementForUser(scenarioName,achivementString,a
     localStorage.setItem(scenarioName + achivementString,achievementValue);
             
     const db = getDatabase();
-
-    const db = getDatabase();
         
     return set(ref(db, `/users/` + uid + `/scenarioAchivements/` + scenarioName + `/` + scenarioName + achivementString), achievementValue);
 }
