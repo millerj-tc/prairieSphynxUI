@@ -22,6 +22,8 @@ export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,conten
     
     UnselectAllCards();
     
+    _ClearPreviousRunDOMs();
+    
     gh.narrOutputArtist.ClearAllChildren();
     
     gh.cardChoiceTrayArtist.SetDOMDisplayTo("block");
@@ -46,6 +48,28 @@ export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,conten
     }
     
     
+}
+
+function _ClearPreviousRunDOMs(){
+    
+    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
+    
+    if(scenario == null || scenario.uiToolsHandler == null) return
+    
+    for(const tool of scenario.uiToolsHandler.tools){
+        
+        const dom = tool.GetAuthorizedDOMs();
+        
+        tool.SetAuthorizedDOMIdTo("");
+        
+        //above used to be "dom.id + "Ar" + scenario.runProcessors.length"
+        
+        tool.SetDOMDisplayTo("none");
+        
+       //should be able to recreate below with info from run processor without having to store //scenario.GetCurrentRunProcessor().uiToolsHandler.tools = [...scenario.uiToolsHandler.tools];
+        
+        scenario.uiToolsHandler.tools = [];
+    }
 }
 
 export function UnselectAllCards(){
@@ -217,6 +241,10 @@ export function AddScenarioRunPvPButton(){
     const scenario = gh.scenarioHandler.GetCurrentScenario();
         
     const but = document.createElement("button");
+    
+    but.classList.add("runScenarioPvPButton");
+    
+    but.id = "runScenarioPvPButton";
     
     scenario.uiToolsHandler.AddDOMUIArtist(but);
 

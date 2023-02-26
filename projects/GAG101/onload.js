@@ -32,7 +32,7 @@ export function GotoHomeMenu(){
     
     console.warn("Might want to add an id of some kind to OutputDivWithNounImages... so that it can be manipulated later like the highlight function of Clone Crisis.");
     
-    _ClearPreviousRunDOMs();
+    //_ClearPreviousRunDOMs();
     
     gh.cardChoiceTrayArtist.SetDOMDisplayTo("none");
     
@@ -55,22 +55,3 @@ export function GotoHomeMenu(){
     gh.narrOutputArtist.AppendElementWithinDOM(dorPButton);
 }
 
-function _ClearPreviousRunDOMs(){
-    
-    const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
-    
-    if(scenario == null || scenario.uiToolsHandler == null || scenario.GetCurrentRunProcessor() == null) return
-    
-    for(const tool of scenario.uiToolsHandler.tools){
-        
-        const dom = tool.GetAuthorizedDOMs();
-        
-        tool.SetAuthorizedDOMIdTo(dom.id + "Run" + scenario.runProcessors.length);
-        
-        tool.SetDOMDisplayTo("none");
-        
-        scenario.GetCurrentRunProcessor().uiToolsHandler.tools = [...scenario.uiToolsHandler.tools];
-        
-        scenario.uiToolsHandler.tools = [];
-    }
-}

@@ -96,8 +96,13 @@ body{
 }
 
 .runScenarioButton{
+
+}
+
+.runScenarioPvPButton{
     
-    margin-right: 500px;
+    float:right;
+    position: relative;
 }
 
 .narrativeOutput{
