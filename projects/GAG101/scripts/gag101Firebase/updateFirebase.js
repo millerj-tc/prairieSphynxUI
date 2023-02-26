@@ -29,3 +29,16 @@ const newCardKey = push(child(ref(db), 'cards ')).key;
     
     
 }
+
+export function UpdateScenarioAchievementForUser(scenarioName,achivementString,achievementValue){
+    
+    const uid = window.gameHandler.playerId;
+    
+    localStorage.setItem(scenarioName + achivementString,achievementValue);
+            
+    const db = getDatabase();
+
+    const db = getDatabase();
+        
+    return set(ref(db, `/users/` + uid + `/scenarioAchivements/` + scenarioName + `/` + scenarioName + achivementString), achievementValue);
+}

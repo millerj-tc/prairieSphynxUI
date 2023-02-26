@@ -15,6 +15,7 @@ export class scenarioProcessor
         this.otherPlayerCardSlots = 3;
         this.uiToolsHandler = new uiToolsHandler();
         this.mode = "story";
+        this.unlocked = true;
 
     }
     
@@ -119,6 +120,14 @@ export class scenarioProcessor
                 return ph
             }
         }
+    }
+    LockScenario(){
+        
+        this.unlocked = false;
+    }
+    UnlockScenario(){
+        
+        this.unlocked = true;
     }
 }
 

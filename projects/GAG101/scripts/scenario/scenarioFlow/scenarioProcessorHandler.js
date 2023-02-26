@@ -36,4 +36,12 @@ export class scenarioProcessorHandler
         return this.currentScenario
     }
     
+    GetScenarioByName(name){
+        
+        for(const s of this.scenarios){
+            
+            if(s.scenarioName == name) return s
+        }
+    }
+    
 }
