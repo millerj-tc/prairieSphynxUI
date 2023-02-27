@@ -3,6 +3,7 @@ import {charData} from "../data/charData.js";
 import {GenerateCombinations} from "/utils/mathAndLogicUtils/miscUtils.js";
 import {SetCardForContenderSlot} from "../scenario/scenarioFlow/genericScenarioPrep.js";
 import * as cardInfoPhaseUtils from "../scenario/scenarioPhases/cardInfoPhaseUtils.js";
+import * as uiPhaseUtils from "../scenario/scenarioPhases/uiPhaseUtils.js";
 
 class contender
 {
@@ -29,6 +30,8 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         
         this.contenders = [];
         
+        this.pastMatches = [];
+        
         this.tournamentAnalysisMode = false
         
     }
@@ -46,6 +49,10 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
     }
     
     EmptyContenders(){
+        
+        console.log(this.contenders);
+        
+        this.pastMatches.push(this.contenders);
         
         this.contenders = [];
     }
@@ -139,7 +146,7 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         for(const comboOfCards of cainCardCombinations){
             
             //cardsAsJSON,playerId,playerUsername,timeStamp
-            const cainContender = gh.tournamentHandler.AddContender(false,"tournamentCain","Cain");
+            const cainContender = gh.tournamentHandler.AddContender(false,"tournamentCain","Cain","none");
             
             cainContender.getCardsFromCollectionCardHandler = true;
             
@@ -154,7 +161,7 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
                 
                 for(const comboOfCards of abelCardCombinations){
 
-                    abelContender = gh.tournamentHandler.AddContender(false,"tournamentAbel","Abel");
+                    abelContender = gh.tournamentHandler.AddContender(false,"tournamentAbel","Abel","none");
 
                     abelContender.getCardsFromCollectionCardHandler = true;
 
@@ -167,7 +174,15 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
             
             console.log(cainContender);
             
-            if(mode == "story") scenario.QueueProcess([cainContender, {getCardsFromCollectionCardHandler:true, playerUsername:"AI", playerId:"AI"}]);
+            if(mode == "story"){
+                
+                const AIContender = this.AddContender(false,"AI","AI","none");
+                
+                AIContender.getCardsFromCollectionCardHandler = true;
+                
+                scenario.QueueProcess([cainContender, AIContender]);
+                
+            }
             
             if(mode == "pvp") scenario.QueueProcess([cainContender,abelContender]);
             
@@ -177,13 +192,57 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
             
             scenario.PrepFunc(mode);
             
-            
+            this.EmptyContenders();
         }
+        
+        
+        
+        this._GetAnalysisResults();
         
         cardHandler.EmptyCards("tournamentCain");
         cardHandler.EmptyCards("tournamentAbel");
         
+        this.pastMatches = [];
+        this.contenders = [];
+        
         this.tournamentAnalysisMode = false;
+    }
+    
+    _GetAnalysisResults(){
+        
+        let matchHTMLString = "";
+        
+        let cainWins = 0;
+        
+        let ties = 0;
+        
+        let abelWins = 0;
+        
+        console.warn("vs AI only right now");
+        
+        console.log(this.pastMatches);
+        
+        for(const m of this.pastMatches){
+            
+            matchHTMLString += "<br><br>" + JSON.stringify(m[0]); + "<br>~~~VS~~~<br>" + JSON.stringify(m[1]);
+            
+            cainWins += m[0].wins;
+            
+            ties += m[0].ties;
+            
+            abelWins += m[1].wins;
+            
+        }
+        
+        const artist = window.gameHandler.narrOutputArtist;
+        
+        uiPhaseUtils.OutputTextDivWithNounImages(`Cain wins: ${cainWins}`);
+        
+        uiPhaseUtils.OutputTextDivWithNounImages(`Ties: ${ties}`);
+        
+        uiPhaseUtils.OutputTextDivWithNounImages(`Abel Wins: ${abelWins}`);
+        
+        artist.InsertHTMLAdjacentToDOM("beforeend",matchHTMLString);
     }
 }
 
