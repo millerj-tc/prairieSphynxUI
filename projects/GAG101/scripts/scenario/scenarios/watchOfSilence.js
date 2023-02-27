@@ -18,9 +18,11 @@ export function BuildWatchOfSilenceScenario(){
     
     WOS.AddPhase("Insert submission cards", scenarioMaintenance.InsertSubmissionCardsIntoCardSlots);
     
-    WOS.AddPhase("Set AI Username", _SetAIUsername)
+    WOS.AddPhase("Set AI Username", _SetAIUsername);
     
     WOS.AddPhase("Announce other player", uiPhaseUtils.AnnounceOtherPlayer);
+    
+    WOS.AddPhase("Analysis: Log Teams", function(){gh.tournamentHandler.LogTeams()});
     
     WOS.AddPhase("Dupe conk", DupeConkLosers);
     
@@ -42,7 +44,9 @@ export function BuildWatchOfSilenceScenario(){
     
     //WOS.AddPhase("Dance Output",_DanceOfRiddlesOutput); --> output
     
-    WOS.AddPhase("Wait for PVP continnue", scenarioMaintenance.PauseAtEndOfScenarioForPvP,true);
+    WOS.AddPhase("Wait for PVP continue", scenarioMaintenance.PauseAtEndOfScenarioForPvP,true);
+    
+    WOS.PrepFunc = WatchOfSilencePrep;
     
 
 }
@@ -297,13 +301,13 @@ function _WatchOfSilenceOutput(){
     
     uiPhaseUtils.OutputTextDivWithNounImages(`Finally, it's over and [arg0[]teamname] emerge from their meditations stronger and clearer than before.`,rp.wosWinners);
     
-    if(mode == "story" && !cardInfoPhaseUtils.CharArrIncludesCharByName(rp.wosWinners,"Aether Cat")){
+    if(mode == "story" && cardInfoPhaseUtils.GetCardContenderNum(rp.wosWinners[0]) == 0){
         
         artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
         uiPhaseUtils.OutputTextDivWithNounImages(`[argN[Aether Cat]] : You have impressed me mightily, young ones. That psychic maelstrom was intense. Go in peace and calmitude.`);
     }
-    else if(mode == "story" && cardInfoPhaseUtils.CharArrIncludesCharByName(rp.wosWinners,"Aether Cat")){
+    else if(mode == "story" && cardInfoPhaseUtils.GetCardContenderNum(rp.wosWinners[0]) == 1){
         
         artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     

@@ -1,4 +1,5 @@
 import {charData} from "../../data/charData.js";
+import {GetCardContenderNum} from "./cardInfoPhaseUtils.js";
 
 export function OutputTextDivWithNounImages(string){
     
@@ -150,9 +151,9 @@ export function GetNounUtilArtistImageTagAtSize(noun,size="M",team = false, name
     
     if(team){
         
-        if(noun.owner == window.gameHandler.playerId) returnString = `##IMAGE:images/chars/leftTeamBar-M.pngIMAGE##` + returnString;
+        if(GetCardContenderNum(noun) == 0) returnString = `##IMAGE:images/chars/leftTeamBar-M.pngIMAGE##` + returnString;
         
-        else returnString += `##IMAGE:images/chars/rightTeamBar-M.pngIMAGE##`;
+        else if(GetCardContenderNum(noun) == 1) returnString += `##IMAGE:images/chars/rightTeamBar-M.pngIMAGE##`;
     }
     
     if(name) returnString += " " + noun.name;

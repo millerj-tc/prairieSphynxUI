@@ -31,6 +31,8 @@ export function BuildDanceOfRiddlesScenario(){
     
     DOR.AddPhase("Wait for PVP continnue", scenarioMaintenance.PauseAtEndOfScenarioForPvP,true);
     
+    DOR.PrepFunc = DanceOfRiddlesPrep;
+    
     console.warn("optimal DOR solution should have some effect -- unlock a holy fey? unlock the next scenario?");
     
 

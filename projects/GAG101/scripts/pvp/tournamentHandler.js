@@ -1,3 +1,9 @@
+import {WatchOfSilencePrep} from "../scenario/scenarios/watchOfSilence.js";
+import {charData} from "../data/charData.js";
+import {GenerateCombinations} from "/utils/mathAndLogicUtils/miscUtils.js";
+import {SetCardForContenderSlot} from "../scenario/scenarioFlow/genericScenarioPrep.js";
+import * as cardInfoPhaseUtils from "../scenario/scenarioPhases/cardInfoPhaseUtils.js";
+
 class contender
 {
     constructor(cardsAsJSON,playerId,playerUsername,timeStamp){
@@ -14,7 +20,7 @@ class contender
         this.defeatedByPlayer = false;
         this.defeatedPlayer = false;
         this.tiedPlayer = false;
-    //} how to automate testing using tournament Handler
+    } 
 }
 
 export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
@@ -22,6 +28,8 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
     constructor(){
         
         this.contenders = [];
+        
+        this.tournamentAnalysisMode = false
         
     }
     
@@ -69,45 +77,109 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         this.contenders = this.contenders.sort(SortWinscoreThenDate); //lowest winscores first
     }
     
-    RunAllLegalPermutations(){
+    LogTeams(){
+        
+        if(!this.tournamentAnalysisMode) return
+        
+        const cardHandler = window.gameHandler.collectionCardHandler;
+        
+        const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
+        
+        const rp = scenario.GetCurrentRunProcessor();
+        
+        console.log(rp);
+        
+        const contender0 = rp.contenders[0];
+        
+        const contender1 = rp.contenders[1];
+        
+        console.log(`Contender 0: ${contender0.playerUsername}:`);
+        
+        console.log(cardInfoPhaseUtils.GetSelectedCardsFor(contender0.playerId));
+        
+        console.log(`Contender 1: ${contender1.playerUsername}:`);
+        
+        console.log(cardInfoPhaseUtils.GetSelectedCardsFor(contender1.playerId));
+    }
+    
+    RunAllLegalPermutations(scenarioName,mode){
+        
+        this.tournamentAnalysisMode = true;
         
         const gh = window.gameHandler;
+        
+        const scenarioHandler = gh.scenarioHandler;
+        
+        const scenario = scenarioHandler.GetScenarioByName(scenarioName);
     
         const cardHandler = gh.collectionCardHandler;
-
-        const scenario =  gh.scenarioHandler.GetCurrentScenario();
         
-        const mode = scenario.GetMode();
-
-        for(const submission of leaderboardArrAsJSON){
-
-           const newContender =  gh.tournamentHandler.AddContender(submission.teamAsJSONArr,submission.userId,submission.username,submission.submissionTimestamp);
-
+        for(const c of charData){
+            
+            cardHandler.MakeCardFromJSON(JSON.stringify(c),"tournamentCain");
+            cardHandler.MakeCardFromJSON(JSON.stringify(c),"tournamentAbel");
         }
+        
+        //PrepFunc should be set in the scenario file itself (ie "danceOfRiddles.js","watchOfSilence.js", etc.)
+        
+        scenario.PrepFunc(mode);
+        
+        // contender card slots is set in the genericScenarioPrep.js where card slots are created
+        
+        const cainCardCombinations = GenerateCombinations(cardHandler.GetCards("tournamentCain"),scenario.contender0CardSlots);
+        
+        let abelCardCombinations = []
+        
+        if(mode == "pvp") abelCardCombinations = GenerateCombinations(cardHandler.GetCards("tournamentAbel"),scenario.contender1CardSlots);
+        
+        for(const comboOfCards of cainCardCombinations){
+            
+            //cardsAsJSON,playerId,playerUsername,timeStamp
+            const cainContender = gh.tournamentHandler.AddContender(false,"tournamentCain","Cain");
+            
+            cainContender.getCardsFromCollectionCardHandler = true;
+            
+            for(let cardSlotIndex = 0; cardSlotIndex < scenario.contender0CardSlots; cardSlotIndex++){
+                
+                SetCardForContenderSlot(comboOfCards[cardSlotIndex],"tournamentCain",0,cardSlotIndex);
+            }
+            
+            let abelContender = {};
+            
+            if(mode == "pvp"){
+                
+                for(const comboOfCards of abelCardCombinations){
 
-        const matchesArr = GenerateCombinations(gh.tournamentHandler.contenders,2)
+                    abelContender = gh.tournamentHandler.AddContender(false,"tournamentAbel","Abel");
 
-        for(const match of matchesArr){
+                    abelContender.getCardsFromCollectionCardHandler = true;
 
-            scenario.QueueProcess(match);
+                    for(let cardSlotIndex = 0; cardSlotIndex < scenario.contender0CardSlots; cardSlotIndex++){
+
+                        SetCardForContenderSlot(comboOfCards[cardSlotIndex],"tournamentAbel",1,cardSlotIndex);
+                    }
+                }
+            }
+            
+            console.log(cainContender);
+            
+            if(mode == "story") scenario.QueueProcess([cainContender, {getCardsFromCollectionCardHandler:true, playerUsername:"AI", playerId:"AI"}]);
+            
+            if(mode == "pvp") scenario.QueueProcess([cainContender,abelContender]);
+            
+            scenario.ProcessNextInQueue();
+            
+            gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend", "<br><br>");
+            
+            scenario.PrepFunc(mode);
+            
+            
         }
-
-        const playerContender = gh.tournamentHandler.AddContender(false,gh.playerId,gh.playerUsername,Date.now());
-
-        for(const serverContender of gh.tournamentHandler.contenders){
-
-            if(serverContender.playerId == playerContender.playerId) continue
-
-            scenario.QueueProcess([playerContender,serverContender]);
-        }
-
-        gh.cardChoiceTrayArtist.SetDOMDisplayTo("none");
-
-        scenario.queuedProcessors.reverse(); // reverse so it runs the actual player scenarios first. Otherwise server matches will replace the player's choices in the card choice tray.
-
-        console.log(scenario.queuedProcessors);
-
-        scenario.ProcessNextInQueue();
+        
+        cardHandler.EmptyCards("tournamentCain");
+        cardHandler.EmptyCards("tournamentAbel");
+        
+        this.tournamentAnalysisMode = false;
     }
 }
 

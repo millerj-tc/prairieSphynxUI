@@ -23,6 +23,8 @@ export function onload(){
     BuildWatchOfSilenceScenario();
     
     GotoHomeMenu();
+    
+    gh.tournamentHandler.RunAllLegalPermutations("Watch of Silence","story")
 }
 
 export function GotoHomeMenu(){
@@ -61,7 +63,7 @@ export function GotoHomeMenu(){
     
     const wosButton = document.createElement("button");
     
-    wosButton.innerText = "Watch Of Silence (Story Mode)";
+    wosButton.innerText = "Watch of Silence (Story Mode)";
     
     wosButton.onclick = function(){WatchOfSilencePrep("story")};
     
@@ -72,7 +74,7 @@ export function GotoHomeMenu(){
        
     const wosPButton = document.createElement("button");
 
-    wosPButton.innerText = "Watch Of Silence (Competitive Mode)";
+    wosPButton.innerText = "Watch of Silence (Competitive Mode)";
 
     wosPButton.onclick = function(){WatchOfSilencePrep("pvp")};
 

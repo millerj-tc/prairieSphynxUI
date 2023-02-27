@@ -24,15 +24,19 @@ export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,conten
     
     _ClearPreviousRunDOMs();
     
-    gh.narrOutputArtist.ClearAllChildren();
+    if(!gh.tournamentHandler.tournamentAnalysisMode) gh.narrOutputArtist.ClearAllChildren();
     
     gh.cardChoiceTrayArtist.SetDOMDisplayTo("block");
+    
+    scenario.contender0CardSlots = contender0CardSlots;
+    
+    scenario.contender1CardSlots = contender1CardSlots;
     
     CreateNCardSlotsForContenderNumber(contender0CardSlots,0,2,1);
     
     CreateNCardSlotsForContenderNumber(contender1CardSlots,1,3,4);
     
-    RandomizePlayerIdChoicesForContenderNum(gh.playerId,0);
+    if(!gh.tournamentHandler.tournamentAnalysisMode) RandomizePlayerIdChoicesForContenderNum(gh.playerId,0);
     
     if(mode != "story") RandomizePlayerIdChoicesForContenderNum("AI",1);
     
@@ -54,17 +58,21 @@ function _ClearPreviousRunDOMs(){
     
     const scenario = window.gameHandler.scenarioHandler.GetCurrentScenario();
     
+    const th = window.gameHandler.tournamentHandler;
+    
     if(scenario == null || scenario.uiToolsHandler == null) return
     
     for(const tool of scenario.uiToolsHandler.tools){
         
         const dom = tool.GetAuthorizedDOMs();
         
+        if(!th.tournamentAnalysisMode || dom.id.includes("CardSlot") || dom.id.includes("nameSlot") || dom.classList.contains("Button")) tool.SetDOMDisplayTo("none");
+        
         tool.SetAuthorizedDOMIdTo("");
         
         //above used to be "dom.id + "Ar" + scenario.runProcessors.length"
         
-        tool.SetDOMDisplayTo("none");
+        
         
        //should be able to recreate below with info from run processor without having to store //scenario.GetCurrentRunProcessor().uiToolsHandler.tools = [...scenario.uiToolsHandler.tools];
         

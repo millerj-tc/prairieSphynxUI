@@ -8,7 +8,7 @@ export function SubsequentRunReset(){
     
     if(gh.tournamentHandler.contenders.length == 0){
         
-        gh.narrOutputArtist.ClearAllChildren();
+        if(!gh.tournamentHandler.tournamentAnalysisMode)gh.narrOutputArtist.ClearAllChildren();
 
     }
 }
@@ -93,11 +93,11 @@ function _EndTournament(){
     
     th.SortContendersByWinscore(); //this is where .ws (winscore) is assigned for next step
     
-    PlayerSubmissionToFirebaseFlow();
+    if(!th.tournamentAnalysisMode) PlayerSubmissionToFirebaseFlow();
             
     th.EmptyContenders();
     
-    GetAndAnnouncePvPLeaderboard();
+    if(!th.tournamentAnalysisMode) GetAndAnnouncePvPLeaderboard();
 
 }
 
