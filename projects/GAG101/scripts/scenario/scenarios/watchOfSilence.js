@@ -274,7 +274,10 @@ function _WatchOfSilenceEval(){
     
     console.log(`leftscore is ${leftScore}, rightscore is ${rightScore}`);
     
-    if(leftScore > rightScore) rp.wosWinners = leftCards;
+    if(leftScore > rightScore){
+        
+        rp.wosWinners = leftCards;
+    }
     else if(rightScore > leftScore) rp.wosWinners = rightCards;
     else rp.wosWinners = leftCards.concat(rightCards);
 }

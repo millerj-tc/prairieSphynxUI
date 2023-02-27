@@ -152,6 +152,43 @@ class scenarioProcessorRun
         
         phase.Run();
     }
+    
+    ContenderMatchWinnersTiersLosers(winnerArr,tierArr,loserArr){
+
+        this.winnerArr = winnerArr;
+        this.tierArr = tierArr;
+        this.loserArr = loserArr;
+        
+        let playerWon = false;
+        
+        for(const winner of winnerArr){
+            
+            winner.matches++;
+            winner.wins++;
+            
+            if(winner.playerId == window.gameHandler.playerId) playerWon = true;
+        }
+        
+        for(const tier of tierArr){
+            
+            tier.matches++;
+            tier.ties++;
+        }
+        
+        for(const loser of loserArr){
+            
+            loser.matches++;
+            loser.defeats++;
+            
+            if(playerWon) loser.defeatedByPlayer = true;
+        }
+        
+        for(const winner of winnerArr){
+            
+            if(!playerWon) winner.defeatedPlayer = true;
+        }
+    }
+        
 }
 
 class scenarioPhase
