@@ -104,6 +104,10 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
     
     RunAllLegalPermutations(scenarioName,mode){
         
+        console.error("allow to set custom arr to draw combinations from (only cards unlocked for player at beginning of game, for instance)");
+        
+        console.error("aggregate scores at end -- use contenders wins/defeats/matches?");
+        
         this.tournamentAnalysisMode = true;
         
         const gh = window.gameHandler;

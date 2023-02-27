@@ -297,7 +297,7 @@ function _WatchOfSilenceOutput(){
     
     artist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
-    console.warn("dorna and pigimus buff output");  
+    console.warn("dorna and pigimus buff output + image");  
     
     uiPhaseUtils.OutputTextDivWithNounImages(`Finally, it's over and [arg0[]teamname] emerge from their meditations stronger and clearer than before.`,rp.wosWinners);
     
