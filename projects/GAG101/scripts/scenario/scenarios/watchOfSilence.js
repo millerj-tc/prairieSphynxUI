@@ -277,9 +277,16 @@ function _WatchOfSilenceEval(){
     if(leftScore > rightScore){
         
         rp.wosWinners = leftCards;
+        rp.ContenderMatchWinnersTiersLosers([rp.contenders[0]],null,[rp.contenders[1]]);
     }
-    else if(rightScore > leftScore) rp.wosWinners = rightCards;
-    else rp.wosWinners = leftCards.concat(rightCards);
+    else if(rightScore > leftScore){
+        rp.wosWinners = rightCards;
+        rp.ContenderMatchWinnersTiersLosers([rp.contenders[1]],null,[rp.contenders[0]]);
+    }
+    else {
+        rp.wosWinners = leftCards.concat(rightCards);
+        rp.ContenderMatchWinnersTiersLosers(null,[rp.contenders[0],rp.contenders[1]],null);
+    }
 }
 
 function _WatchOfSilenceOutput(){

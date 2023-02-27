@@ -154,14 +154,18 @@ class scenarioProcessorRun
     }
     
     ContenderMatchWinnersTiersLosers(winnerArr,tierArr,loserArr){
-
+        
         this.winnerArr = winnerArr;
         this.tierArr = tierArr;
         this.loserArr = loserArr;
         
+        if(this.winnerArr == null) this.winnerArr = [];
+        if(this.tierArr == null) this.tierArr = [];
+        if(this.loserArr == null) this.loserArr = [];
+        
         let playerWon = false;
         
-        for(const winner of winnerArr){
+        for(const winner of this.winnerArr){
             
             winner.matches++;
             winner.wins++;
@@ -169,13 +173,13 @@ class scenarioProcessorRun
             if(winner.playerId == window.gameHandler.playerId) playerWon = true;
         }
         
-        for(const tier of tierArr){
+        for(const tier of this.tierArr){
             
             tier.matches++;
             tier.ties++;
         }
         
-        for(const loser of loserArr){
+        for(const loser of this.loserArr){
             
             loser.matches++;
             loser.defeats++;
