@@ -1,3 +1,11 @@
+export function GetCharDataByName(name){
+    
+    for(const c of charData){
+        
+        if(c.name == name) return c
+    }
+}
+
 export const charData = [
 
     {name: "Doran", dataType: "char", unlockedForPlayer: true, pronouns:{they: "he", them: "him", their: "his", theirs: "his", themself: "himself"}, power: 4, toughness: 2, speed: 4, cunning: 8, charisma: 5, cume: 23, imageXL: 'images/chars/necromancer-XL.png',imageL: 'images/chars/necromancer-L.png', imageM: 'images/chars/necromancer-M.png', imageS: 'images/chars/necromancer-S.png'},

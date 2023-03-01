@@ -109,7 +109,7 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         console.log(cardInfoPhaseUtils.GetSelectedCardsFor(contender1.playerId));
     }
     
-    RunAllLegalPermutations(scenarioName,mode){
+    RunAllLegalPermutations(scenarioName,mode,cainCardPool,abelCardPool){
         
         console.error("allow to set custom arr to draw combinations from (only cards unlocked for player at beginning of game, for instance)");
         
@@ -125,11 +125,21 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
     
         const cardHandler = gh.collectionCardHandler;
         
-        for(const c of charData){
-            
+        
+        // generate cards from pool of all possible cards (including npcs) if card pools are not specified, otherwise make cards
+        if(cainCardPool == null) cainCardPool = charData;
+        if(abelCardPool == null) abelCardPool = charData;
+        
+        for(const c of cainCardPool){
+
             cardHandler.MakeCardFromJSON(JSON.stringify(c),"tournamentCain");
+        }
+        
+        for(const c of abelCardPool){
+            
             cardHandler.MakeCardFromJSON(JSON.stringify(c),"tournamentAbel");
         }
+        
         
         //PrepFunc should be set in the scenario file itself (ie "danceOfRiddles.js","watchOfSilence.js", etc.)
         
