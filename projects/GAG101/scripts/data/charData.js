@@ -30,6 +30,6 @@ export const charData = [
     
     {name: "Holy Fey Kupo", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 2, toughness: 3, speed: 6, cunning: 7, charisma: 6, cume: 24, imageXL: 'images/chars/feyHoly-XL.png',imageL: 'images/chars/feyHoly-L.png', imageM: 'images/chars/feyHoly-M.png', imageS: 'images/chars/feyHoly-S.png'},
     
-    {name: "Aether Cat", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 2, toughness: 7, speed: 3, cunning: 4, charisma: 6, cume: 22, imageXL: 'images/chars/aetherCat-XL.png',imageL: 'images/chars/aetherCat-L.png', imageM: 'images/chars/aetherCat-M.png', imageS: 'images/chars/aetherCat-S.png'}
+    {name: "Aether Cat", dataType: "char", unlockedForPlayer: false, pronouns:{they: "they", them: "them", their: "their", theirs: "theirs", themself: "themself"}, power: 2, toughness: 13, speed: 2, cunning: 4, charisma: 6, cume: 28, imageXL: 'images/chars/aetherCat-XL.png',imageL: 'images/chars/aetherCat-L.png', imageM: 'images/chars/aetherCat-M.png', imageS: 'images/chars/aetherCat-S.png'}
         
 ]

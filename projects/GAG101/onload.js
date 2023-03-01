@@ -1,5 +1,5 @@
 import {gameHandler} from "./scripts/gameHandler.js";
-import {charData} from "./scripts/data/charData.js";
+import {charData, GetCharDataByName} from "./scripts/data/charData.js";
 import {GenerateCombinations} from "../../utils/mathAndLogicUtils/miscUtils.js";
 import {DanceOfRiddlesPrep, BuildDanceOfRiddlesScenario} from "./scripts/scenario/scenarios/danceOfRiddles.js";
 import {WatchOfSilencePrep, BuildWatchOfSilenceScenario} from "./scripts/scenario/scenarios/watchOfSilence.js";
@@ -24,7 +24,9 @@ export function onload(){
     
     GotoHomeMenu();
     
-    gh.tournamentHandler.RunAllLegalPermutations("Watch of Silence","story")
+    const cainPool = [GetCharDataByName("Doran"),GetCharDataByName("Pigimus"),GetCharDataByName("Sinch"),GetCharDataByName("Jane"),GetCharDataByName("Robspierre"),GetCharDataByName("Eevin"),GetCharDataByName("Apple Helm")];
+    
+    gh.tournamentHandler.RunAllLegalPermutations("Watch of Silence","story",cainPool);
 }
 
 export function GotoHomeMenu(){

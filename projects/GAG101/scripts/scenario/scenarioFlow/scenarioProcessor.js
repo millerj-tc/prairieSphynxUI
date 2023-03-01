@@ -187,7 +187,7 @@ class scenarioProcessorRun
             if(playerWon) loser.defeatedByPlayer = true;
         }
         
-        for(const winner of winnerArr){
+        for(const winner of this.winnerArr){
             
             if(!playerWon) winner.defeatedPlayer = true;
         }
