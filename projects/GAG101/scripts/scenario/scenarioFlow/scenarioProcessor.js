@@ -155,6 +155,8 @@ class scenarioProcessorRun
     
     ContenderMatchWinnersTiersLosers(winnerArr,tierArr,loserArr){
         
+        // these arrs are contender objects
+        
         const cardHandler = window.gameHandler.collectionCardHandler;
         
         this.winnerArr = winnerArr;
@@ -176,7 +178,7 @@ class scenarioProcessorRun
             
             const scenarioMode = window.gameHandler.scenarioHandler.GetCurrentScenario().GetMode();
             
-            if(th.tournamentAnalysisMode && (winner.playerId != "tournamentAbel" || scenarioMode != "story")) th.winningTeams.push(cardHandler.GetCards(winner.playerId));
+            winner.cards = cardHandler.GetCards(winner.playerId);
             
             if(winner.playerId == window.gameHandler.playerId) playerWon = true;
         }
@@ -185,6 +187,8 @@ class scenarioProcessorRun
             
             tier.matches++;
             tier.ties++;
+            
+            tier.cards = cardHandler.GetCards(tier.playerId);
         }
         
         for(const loser of this.loserArr){
@@ -192,12 +196,22 @@ class scenarioProcessorRun
             loser.matches++;
             loser.defeats++;
             
+            loser.cards = cardHandler.GetCards(loser.playerId);
+            
             if(playerWon) loser.defeatedByPlayer = true;
         }
         
         for(const winner of this.winnerArr){
             
             if(!playerWon) winner.defeatedPlayer = true;
+        }
+    }
+    
+    GetContenderByUserId(id){
+        
+        for(const contender of this.contenders){
+            
+            if(contender.playerId == id) return contender
         }
     }
         

@@ -32,8 +32,6 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         
         this.pastMatches = [];
         
-        this.winningTeams = [];
-        
         this.tournamentAnalysisMode = false
         
     }
@@ -205,7 +203,7 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         
         
         
-        this._GetAnalysisResults();
+        this._GetAnalysisResults(scenario);
         
         cardHandler.EmptyCards("tournamentCain");
         cardHandler.EmptyCards("tournamentAbel");
@@ -216,15 +214,19 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         this.tournamentAnalysisMode = false;
     }
     
-    _GetAnalysisResults(){
+    _GetAnalysisResults(scenario){
         
         let matchHTMLString = "";
+        
+        let winningTeamsHTMLString = "";
         
         let cainWins = 0;
         
         let ties = 0;
         
         let abelWins = 0;
+        
+        const gh = window.gameHandler;
         
         console.warn("vs AI only right now");
         
@@ -242,6 +244,28 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
             
         }
         
+        let winningContenders = [];
+        
+        for(const rp of scenario.runProcessors){
+            
+            winningContenders.push(rp.contenders[0]);
+            
+        }
+        
+        winningContenders = winningContenders.sort(function(a,b){return b.wins - a.wins});
+            
+        for(const contender of winningContenders){
+
+            for(const card of contender.cards){
+            
+                winningTeamsHTMLString += card.name + ", ";
+            }
+        
+            
+            winningTeamsHTMLString += `wins: ${contender.wins}`
+        }
+        
+        
         const artist = window.gameHandler.narrOutputArtist;
         
         uiPhaseUtils.OutputTextDivWithNounImages(`Cain wins: ${cainWins} `);
@@ -249,6 +273,12 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         uiPhaseUtils.OutputTextDivWithNounImages(`Ties: ${ties} `);
         
         uiPhaseUtils.OutputTextDivWithNounImages(`Abel Wins: ${abelWins}`);
+        
+        gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend", "<br><br>");
+        
+        gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend",winningTeamsHTMLString);
+        
+        gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend", "<br><br>");
         
         artist.InsertHTMLAdjacentToDOM("beforeend",matchHTMLString);
     }
