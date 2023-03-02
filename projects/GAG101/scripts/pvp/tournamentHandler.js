@@ -32,6 +32,8 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         
         this.pastMatches = [];
         
+        this.winningTeams = [];
+        
         this.tournamentAnalysisMode = false
         
     }
@@ -110,10 +112,6 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
     }
     
     RunAllLegalPermutations(scenarioName,mode,cainCardPool,abelCardPool){
-        
-        console.error("allow to set custom arr to draw combinations from (only cards unlocked for player at beginning of game, for instance)");
-        
-        console.error("aggregate scores at end -- use contenders wins/defeats/matches?");
         
         this.tournamentAnalysisMode = true;
         
@@ -246,9 +244,9 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         
         const artist = window.gameHandler.narrOutputArtist;
         
-        uiPhaseUtils.OutputTextDivWithNounImages(`Cain wins: ${cainWins}`);
+        uiPhaseUtils.OutputTextDivWithNounImages(`Cain wins: ${cainWins} `);
         
-        uiPhaseUtils.OutputTextDivWithNounImages(`Ties: ${ties}`);
+        uiPhaseUtils.OutputTextDivWithNounImages(`Ties: ${ties} `);
         
         uiPhaseUtils.OutputTextDivWithNounImages(`Abel Wins: ${abelWins}`);
         

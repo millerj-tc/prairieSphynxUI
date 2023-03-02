@@ -155,6 +155,8 @@ class scenarioProcessorRun
     
     ContenderMatchWinnersTiersLosers(winnerArr,tierArr,loserArr){
         
+        const cardHandler = window.gameHandler.collectionCardHandler;
+        
         this.winnerArr = winnerArr;
         this.tierArr = tierArr;
         this.loserArr = loserArr;
@@ -169,6 +171,12 @@ class scenarioProcessorRun
             
             winner.matches++;
             winner.wins++;
+            
+            const th = window.gameHandler.tournamentHandler;
+            
+            const scenarioMode = window.gameHandler.scenarioHandler.GetCurrentScenario().GetMode();
+            
+            if(th.tournamentAnalysisMode && (winner.playerId != "tournamentAbel" || scenarioMode != "story")) th.winningTeams.push(cardHandler.GetCards(winner.playerId));
             
             if(winner.playerId == window.gameHandler.playerId) playerWon = true;
         }

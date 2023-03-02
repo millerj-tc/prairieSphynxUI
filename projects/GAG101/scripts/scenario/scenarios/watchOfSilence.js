@@ -168,7 +168,7 @@ function _CastTheLineIntoNothingnessOutput(){
 
 function _MaelstromSurfingEvaluation(){
     
-    // Psychic Maelstrom Surfing Contest (if toughness + charisma >= 13, subract 1/3 speed from speed for  toughness - speed eval)
+    // Psychic Maelstrom Surfing Contest (if toughness + charisma >= 13, get 10-surfer power in last stage)
 
     
     const gh = window.gameHandler;
@@ -256,12 +256,12 @@ function _WatchOfSilenceEval(){
         
         if(cardInfoPhaseUtils.GetCardContenderNum(surfer) == 0){
             
-            leftScore += surfer.GetProp("speed")/3;
+            leftScore += 10 - surfer.GetProp("power");
         }
         
         if(cardInfoPhaseUtils.GetCardContenderNum(surfer) == 1){
             
-            rightScore += surfer.GetProp("speed")/3;
+            rightScore += 10 - surfer.GetProp("power");
         }
     }
     
@@ -309,7 +309,7 @@ function _WatchOfSilenceOutput(){
     
     console.warn("dorna and pigimus buff output + image");  
     
-    uiPhaseUtils.OutputTextDivWithNounImages(`Finally, it's over and [arg0[]teamname] emerge from their meditations stronger and clearer than before.`,rp.wosWinners);
+    uiPhaseUtils.OutputTextDivWithNounImages(`Finally, it's over and [arg0[]teamname] ~s0~emerges/emerge~~ from their meditations stronger and clearer than before.`,rp.wosWinners);
     
     if(mode == "story" && cardInfoPhaseUtils.GetCardContenderNum(rp.wosWinners[0]) == 0){
         
