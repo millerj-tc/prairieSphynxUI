@@ -1,6 +1,7 @@
 import {uiToolsHandler} from "/utils/uiTools/uiToolsHandler.js";
 import {GenerateCombinations} from "../../../../../utils/mathAndLogicUtils/miscUtils.js";
 import {charData} from "../../data/charData.js";
+import {GetSelectedCardsFor} from "../scenarioPhases/cardInfoPhaseUtils.js";
 
 export class scenarioProcessor
 {
@@ -178,7 +179,7 @@ class scenarioProcessorRun
             
             const scenarioMode = window.gameHandler.scenarioHandler.GetCurrentScenario().GetMode();
             
-            winner.cards = cardHandler.GetCards(winner.playerId);
+            winner.cards = GetSelectedCardsFor(winner.playerId);
             
             if(winner.playerId == window.gameHandler.playerId) playerWon = true;
         }
@@ -188,7 +189,7 @@ class scenarioProcessorRun
             tier.matches++;
             tier.ties++;
             
-            tier.cards = cardHandler.GetCards(tier.playerId);
+            tier.cards = GetSelectedCardsFor(tier.playerId);
         }
         
         for(const loser of this.loserArr){
@@ -196,7 +197,7 @@ class scenarioProcessorRun
             loser.matches++;
             loser.defeats++;
             
-            loser.cards = cardHandler.GetCards(loser.playerId);
+            loser.cards = GetSelectedCardsFor(loser.playerId);
             
             if(playerWon) loser.defeatedByPlayer = true;
         }

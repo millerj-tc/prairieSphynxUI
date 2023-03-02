@@ -45,7 +45,9 @@ export class cardHandler
         
         c.owner = owner;
         
-        c.cardHandler = this;
+        /// c.cardHandler = this;
+        
+        console.error("did commentning out above break anything?");
                 
         this.cards.push(c);
         

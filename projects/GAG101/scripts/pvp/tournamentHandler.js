@@ -262,7 +262,7 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
             }
         
             
-            winningTeamsHTMLString += `wins: ${contender.wins}`
+            winningTeamsHTMLString += `wins: ${contender.wins}<br>`
         }
         
         
