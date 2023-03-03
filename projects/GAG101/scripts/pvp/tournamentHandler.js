@@ -171,7 +171,9 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
 
                     abelContender.getCardsFromCollectionCardHandler = true;
 
-                    for(let cardSlotIndex = 0; cardSlotIndex < scenario.contender0CardSlots; cardSlotIndex++){
+                    for(let cardSlotIndex = 0; cardSlotIndex < scenario.contender1CardSlots; cardSlotIndex++){
+                        
+                        console.error("it's cycling through all these combos without actually running it which is at least part of the problem")
 
                         SetCardForContenderSlot(comboOfCards[cardSlotIndex],"tournamentAbel",1,cardSlotIndex);
                     }

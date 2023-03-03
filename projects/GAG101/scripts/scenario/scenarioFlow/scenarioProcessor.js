@@ -170,7 +170,7 @@ class scenarioProcessorRun
         
         let playerWon = false;
         
-        function should implement a "scenario rating" prop for this so that you can stack rank in analysis and figure out what the ladder looks like for progression {
+        console.warn("should we pass the scoring rating from scenario to this so you have that metric for stack ranking?");
         
         for(const winner of this.winnerArr){
             

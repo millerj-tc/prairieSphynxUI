@@ -46,7 +46,7 @@ export function GenericScenarioPrep(scenarioName,mode,contender0CardSlots,conten
     
     AddScenarioRunButton();
     
-    if(mode == "pvp") {
+    if(mode == "pvp" && !gh.tournamentHandler.tournamentAnalysisMode) {
         AddScenarioRunPvPButton();
         GetAndAnnouncePvPLeaderboard();
     }
@@ -164,6 +164,8 @@ export function RandomizePlayerIdChoicesForContenderNum(playerId,contenderNum){
 
 
 export function SetCardForContenderSlot(card,owner,contenderNum,slotNum){
+    
+    console.log(`Setting slot${slotNum} to ${card.name} for ${owner} who is contender${contenderNum}`);
     
     const gh = window.gameHandler;
         
