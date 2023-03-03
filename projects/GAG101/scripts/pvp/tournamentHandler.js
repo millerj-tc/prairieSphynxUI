@@ -177,6 +177,12 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
 
                         SetCardForContenderSlot(comboOfCards[cardSlotIndex],"tournamentAbel",1,cardSlotIndex);
                     }
+                    
+                    scenario.QueueProcess([cainContender,abelContender]);
+                    
+                    this._ProcessMatchup(mode);
+                    
+                    
                 }
             }
             
@@ -190,17 +196,10 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
                 
                 scenario.QueueProcess([cainContender, AIContender]);
                 
+                this._ProcessMatchup(mode);
+                
             }
-            
-            if(mode == "pvp") scenario.QueueProcess([cainContender,abelContender]);
-            
-            scenario.ProcessNextInQueue();
-            
-            gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend", "<br><br>");
-            
-            scenario.PrepFunc(mode);
-            
-            this.EmptyContenders();
+
         }
         
         
@@ -214,6 +213,21 @@ export class tournamentHandler{ //tournament is ended in scenarioMaintenance.js
         this.contenders = [];
         
         this.tournamentAnalysisMode = false;
+    }
+    
+    _ProcessMatchup(mode){
+        
+        const gh = window.gameHandler;
+        
+        const scenario = gh.scenarioHandler.GetCurrentScenario();
+        
+        scenario.ProcessNextInQueue();
+                
+        gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend", "<br><br>");
+
+        scenario.PrepFunc(mode);
+
+        this.EmptyContenders();
     }
     
     _GetAnalysisResults(scenario){
