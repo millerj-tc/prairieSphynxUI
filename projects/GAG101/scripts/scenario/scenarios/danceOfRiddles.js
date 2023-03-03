@@ -53,6 +53,8 @@ function _SetAIUsername(){
 
 function _AnnounceAwkwardness(){
     
+    // this is just a clue for the eval
+    
     const gh = window.gameHandler;
     
     let selectedCards = cardInfoPhaseUtils.GetSelectedCardsFor();
@@ -69,7 +71,10 @@ function _AnnounceAwkwardness(){
         }
     }
     
-    uiPhaseUtils.OutputTextDivWithNounImages(`[arg0[]teamname] ~s0~stumbles/stumble~~ a bit here and there, waving ~s0~[p0[their]]/their~~ arms with self-doubt, confusion, and glaring boorishness (at least by Fey standards). The customary chants of the audience fall temporarily silent as mouths pause parted and brows furrow with concern. ~s0~[p0[they]]/they~~ ~s0~regains/regain~~ ~s0~[p0[their]]/their~~ flow and ~s0~struggles/struggle~~ gamely on.`,awkwards);
+    if(awkwards.length > 0){
+    
+        uiPhaseUtils.OutputTextDivWithNounImages(`[arg0[]teamname] ~s0~stumbles/stumble~~ a bit here and there, waving ~s0~[p0[their]]/their~~ arms with self-doubt, confusion, and glaring boorishness (at least by Fey standards). The customary chants of the audience fall temporarily silent as mouths pause parted and brows furrow with concern. ~s0~[p0[they]]/they~~ ~s0~regains/regain~~ ~s0~[p0[their]]/their~~ flow and ~s0~struggles/struggle~~ gamely on.`,awkwards);
+    }
     
     gh.narrOutputArtist.InsertHTMLAdjacentToDOM("beforeend","<br><br>");
     
@@ -127,30 +132,21 @@ function _GetDanceofRiddlesWinners(){
     
     if(playerScore > otherPlayerScore){
        
-        contender0.wins++;
-        contender1.defeats++;
-        contender0.matches++;
-        contender1.matches++;
+        rp.ContenderMatchWinnersTiersLosers([rp.contenders[0]],null,[rp.contenders[1]]);
         
         if(contender0.playerId == playerId) contender1.defeatedByPlayer = true;
         gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards);
     }
     else if(otherPlayerScore > playerScore){
        
-        contender1.wins++;
-        contender0.defeats++;
-        contender0.matches++;
-        contender1.matches++;
+        rp.ContenderMatchWinnersTiersLosers([rp.contenders[1]],null,[rp.contenders[0]]);
         
         if(contender0.playerId == playerId) contender1.defeatedPlayer = true;
         gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",otherPlayerCards);
     }
     else{
        
-        contender0.ties++;
-        contender1.ties++;
-        contender0.matches++;
-        contender1.matches++;
+        rp.ContenderMatchWinnersTiersLosers(null,[rp.contenders[0],rp.contenders[1]]);
         
         if(contender0.playerId == playerId) contender1.tiedPlayer = true;
         gh.scenarioHandler.GetCurrentScenario().SetCurrentRunProcessorProp("winnerArr",playerCards.concat(otherPlayerCards));

@@ -26,7 +26,7 @@ export function onload(){
     
     const cainPool = [GetCharDataByName("Doran"),GetCharDataByName("Pigimus"),GetCharDataByName("Sinch"),GetCharDataByName("Jane"),GetCharDataByName("Robspierre"),GetCharDataByName("Eevin"),GetCharDataByName("Apple Helm")];
     
-    gh.tournamentHandler.RunAllLegalPermutations("Watch of Silence","story",cainPool);
+    gh.tournamentHandler.RunAllLegalPermutations("Dance of Riddles","story",cainPool);
 }
 
 export function GotoHomeMenu(){
