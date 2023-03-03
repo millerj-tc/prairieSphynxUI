@@ -170,6 +170,8 @@ class scenarioProcessorRun
         
         let playerWon = false;
         
+        function should implement a "scenario rating" prop for this so that you can stack rank in analysis and figure out what the ladder looks like for progression {
+        
         for(const winner of this.winnerArr){
             
             winner.matches++;
