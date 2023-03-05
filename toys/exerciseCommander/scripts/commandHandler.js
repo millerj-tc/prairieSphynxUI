@@ -3,7 +3,8 @@ export class commandHandler
     constructor(){
         
         this.commands = [];
-        this.currentCommandInd;        
+        this.currentCommandInd;
+        this.elapsedExerciseTime = 0;
     }
     
     PlayExercisePattern(builtPattern){

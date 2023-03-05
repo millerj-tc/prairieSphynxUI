@@ -16,11 +16,13 @@ export function exerciseBeginFlow(){
     
     // filter exercises based on user requests ("abs","legs", etc.)?
         
-    const patternRequest = LoadUserExercisePatternSelection(sectionCount);
+    let patternRequest = LoadUserExercisePatternSelection(sectionCount);
     
     edArtist.ClearAllChildren();
     
     sbArtist.ClearAllChildren();
+    
+    patternRequest = [{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},  {difficulty:1,duration:30},{difficulty:1,duration:30}];
     
     //const patternRequest = [{difficulty:0.4,duration:1250},{difficulty:0.6,duration:600},{difficulty:0.8,duration:300}];
     
@@ -65,7 +67,7 @@ function LoadUserExercisePatternSelection(sectionCount){
         returnArr.push(section); 
     }
     
-    console.log(returnArr);
+//    console.log(returnArr);
     
     return returnArr
 }
@@ -107,28 +109,28 @@ function _BuildExercisePattern(patternRequest){
             exerciseCommands.push(new exerciseCommand(chosenExercise.type, reps,rate, restTime,transitionTime));
             
             const exerciseDuration = (1000 * (1/rate) * reps) + restTime + transitionTime;
-            
-            console.log(chosenExercise.type);
-            
-            console.log(exerciseDuration);
-            
-            console.log(`(${reps} * ${rate}) + ${restTime} = ${exerciseDuration}`);
-            
-            console.log(`${exerciseDuration}`)
-            
-            console.log(`${sectionRemainingDuration} - ${exerciseDuration} =`);
+//            
+//            console.log(chosenExercise.type);
+//            
+//            console.log(exerciseDuration);
+//            
+//            console.log(`(${reps} * ${rate}) + ${restTime} = ${exerciseDuration}`);
+//            
+//            console.log(`${exerciseDuration}`)
+//            
+//            console.log(`${sectionRemainingDuration} - ${exerciseDuration} =`);
             
             sectionRemainingDuration = sectionRemainingDuration - exerciseDuration;
-            
-            
-            console.log(sectionRemainingDuration);
-
-            
-            
-            console.log((reps * rate) + restTime);
-            
-            
-            console.log("~~~");
+//            
+//            
+//            console.log(sectionRemainingDuration);
+//
+//            
+//            
+//            console.log((reps * rate) + restTime);
+//            
+//            
+//            console.log("~~~");
         }
         
         

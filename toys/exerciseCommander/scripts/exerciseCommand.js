@@ -27,6 +27,14 @@ export class exerciseCommand
         
         this._SetMetronome();
         
+        const totalTimeInSecs = ((1/this.exerciseRate) * this.exerciseReps) + this.restTime/1000 + this.transitionTime/1000;
+        
+        console.log(`starting ${this.exerciseType} for ${((1/this.exerciseRate) * this.exerciseReps)} seconds with ${this.restTime/1000} seconds for rest and ${this.transitionTime/1000} seconds for transition (total time: ${totalTimeInSecs})`);
+        
+        window.commandHandler.elapsedExerciseTime += totalTimeInSecs;
+        
+        console.log(`total elapsed exercise time will be: ${window.commandHandler.elapsedExerciseTime}`);
+        
         //this._ScheduleEndTrigger();
     }
     

@@ -61,7 +61,7 @@ export const exercises =
         type: "situps",
         soundfile:null,
         difficulty1reps: 3,
-        difficulty1rate: 0.58,
+        difficulty1rate: 0.48,
         difficultyLvRateChange:-0.15,
         difficulty1rest: 3000,
         difficultyLvRestChange: -450,
