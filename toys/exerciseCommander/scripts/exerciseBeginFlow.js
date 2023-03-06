@@ -133,6 +133,15 @@ function _BuildExercisePattern(patternRequest){
         
     }
     
+    let totalTime = 0;
+    
+    for(const command of exerciseCommands){
+        
+        totalTime += ((1/command.exerciseRate) * command.exerciseReps) + (command.restTime/1000) + (command.restTime/1000);
+    }
+    
+    console.log(`total exercise time will be: ${totalTime}`);
+    
     return exerciseCommands
     
 }
@@ -155,7 +164,7 @@ function _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate,restTi
     
     let reps = Math.round(chosenExercise.difficulty1reps * section.difficulty);
     
-    while((reps * rate * 1000) + restTime > (sectionRemainingDuration)){
+    while((reps * (1/rate) * 1000) + restTime > (sectionRemainingDuration)){
         
         reps--;
     }
