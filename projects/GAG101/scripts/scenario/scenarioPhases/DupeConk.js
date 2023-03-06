@@ -95,7 +95,7 @@ function _FullDupeconkTieConkalypse(){
     tell which phase to jump to by setting argument
     make both contenders tie
     generic full tie output
-    does firebasetournament stop you from submitting exact same roster as #1 and bumping everyone else?
+    
 
 function _DupeContestOutput(contestLoserArr){
     

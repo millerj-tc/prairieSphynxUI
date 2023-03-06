@@ -22,7 +22,7 @@ export function exerciseBeginFlow(){
     
     sbArtist.ClearAllChildren();
     
-    patternRequest = [{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},  {difficulty:1,duration:30},{difficulty:1,duration:30}];
+    //patternRequest = [{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},{difficulty:1,duration:30},  {difficulty:1,duration:30},{difficulty:1,duration:30}];
     
     //const patternRequest = [{difficulty:0.4,duration:1250},{difficulty:0.6,duration:600},{difficulty:0.8,duration:300}];
     
@@ -40,10 +40,7 @@ export function exerciseBeginFlow(){
     
     commandHandler.PlayExercisePattern(builtPattern);
     
-    _SetTimer(patternRequest);
-    
-    console.error("time is incorrect because it doesn't include transition time");
-    
+    _SetTimer(patternRequest);    
 }
 
 // durRegularity measures variation in length of time doing a single exercise within the section
@@ -183,6 +180,8 @@ function _SetTimer(patternRequest){
     for(const p of patternRequest){
         
         totalTime += p.duration
+        
+        //console.log(`+${p.duration} = ${totalTime}`);
     }
     
     totalTime = totalTime * 1000;
