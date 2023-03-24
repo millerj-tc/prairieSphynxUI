@@ -31,7 +31,7 @@ export class commandHandler
         
         this.currentCommandInd++;
         
-        if(this.currentCommandInd >= this.commands.length - 1){
+        if(this.currentCommandInd > this.commands.length - 1){
             
             const edArtist = uiTH.GetArtistsByAuthorizedDOMId("exerciseDisplay");
             

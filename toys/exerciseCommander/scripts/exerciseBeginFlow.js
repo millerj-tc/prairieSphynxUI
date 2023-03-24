@@ -91,8 +91,14 @@ function _BuildExercisePattern(patternRequest){
             
             if(reps < 1){
                 
-                reps = 1;
-                sectionRemainingDuration = 0;
+                // add bits of leftover time to rest time of last exercise instead
+                
+                exerciseCommands[exerciseCommands.length - 1].restTime += sectionRemainingDuration;
+                break
+                
+//                console.log("tripped");
+//                reps = 1;
+//                sectionRemainingDuration = 0;
             }
             
             let transitionTime = 2050;
@@ -120,7 +126,7 @@ function _BuildExercisePattern(patternRequest){
             sectionRemainingDuration = sectionRemainingDuration - exerciseDuration;
 //            
 //            
-//            console.log(sectionRemainingDuration);
+            console.log(sectionRemainingDuration);
 //
 //            
 //            
@@ -137,7 +143,9 @@ function _BuildExercisePattern(patternRequest){
     
     for(const command of exerciseCommands){
         
-        totalTime += ((1/command.exerciseRate) * command.exerciseReps) + (command.restTime/1000) + (command.restTime/1000);
+        console.log(command);
+        
+        totalTime += ((1/command.exerciseRate) * command.exerciseReps) + (command.restTime/1000) + (command.restTime/1000) + (command.transitionTime/1000);
     }
     
     console.log(`total exercise time will be: ${totalTime}`);
@@ -162,11 +170,17 @@ function _ChooseRate(chosenExercise,section){
 
 function _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate,restTime){
     
-    let reps = Math.round(chosenExercise.difficulty1reps * section.difficulty);
+    let reps = Math.ceil(chosenExercise.difficulty1reps * section.difficulty);
     
-    while((reps * (1/rate) * 1000) + restTime > (sectionRemainingDuration)){
+    let exercisePartialDuration = (reps * (1/rate) * 1000) + restTime;
+    
+    while(exercisePartialDuration > (sectionRemainingDuration)){
         
+        
+        console.log(`Partial duration is: ${exercisePartialDuration}`);
         reps--;
+        console.log(`reps now set to: ${reps}`);
+        exercisePartialDuration = (reps * (1/rate) * 1000) + restTime;
     }
     
     return reps
