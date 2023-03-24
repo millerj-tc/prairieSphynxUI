@@ -99,7 +99,7 @@ function _BuildExercisePattern(patternRequest){
             
             if(section.difficulty < 1){
                 
-                transitionTime = 2050 + ((1 - section.difficulty) * 2050);
+                transitionTime = 2050 + ((1 - section.difficulty) * 4000);
             }
             
                                 
