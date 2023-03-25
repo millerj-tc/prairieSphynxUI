@@ -4,6 +4,11 @@
     text-align: center;
 }
 
+.startButton{
+    
+    font-size:55px;
+}
+
 .remainingTime{
     
     position: fixed;

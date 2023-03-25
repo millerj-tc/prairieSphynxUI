@@ -7,13 +7,13 @@ export function BeginBedtimeRoutine(){
     
     _ChooseVoiceProfile();
     
-    rh.AddAction("Wash hands", 60);
+    rh.AddAction("Wash hands", 120);
     
-    rh.AddAction("Brush teeth", 60);
+    rh.AddAction("Brush teeth", 120);
     
-    rh.AddAction("Floss",60);
+    rh.AddAction("Floss",120);
     
-    rh.AddAction("Get water",60);
+    rh.AddAction("Get water",120);
     
     // non repeating reminders
     

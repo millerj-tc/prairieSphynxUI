@@ -83,7 +83,7 @@ export class routineHandler
         
         const bg = document.getElementById("background");
         
-        document.body.style.backgroundColor = colorOrder[0];
+        document.   body.style.backgroundColor = colorOrder[0];
         
     }
     
