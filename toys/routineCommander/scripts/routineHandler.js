@@ -1,4 +1,4 @@
-import {ShuffleArray} from "/utils/mathAndLogicUtils/miscUtils.js";
+import {ShuffleArray} from "../../../utils/mathAndLogicUtils/miscUtils.js";
 
 class action
 {
@@ -42,7 +42,7 @@ export class routineHandler
         
         const rh = this;
         
-        setTimeout(function(){rh.BeginAction()},5000);
+        setTimeout(function(){rh.BeginAction()},6300);
         
         //this.BeginAction();
 
