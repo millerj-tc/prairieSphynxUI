@@ -1,0 +1,11 @@
+<head>
+    <script type="module">
+        import {routineHandler} from "./scripts/routineHandler.js";
+        window.routineHandler = new routineHandler();
+        import {BeginBedtimeRoutine} from "./scripts/bedtimeRoutine.js";
+        window.BeginBedtimeRoutine = BeginBedtimeRoutine;
+    </script>
+</head>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<div id="routineDisplay" class="routineDisplay"><button onclick="window.BeginBedtimeRoutine()">START BEDTIME</button></div>
+<div id="remainingTime" class="remainingTime"></div>

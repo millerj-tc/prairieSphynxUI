@@ -1,0 +1,16 @@
+.routineDisplay{
+    
+    font-size: 175px;
+    text-align: center;
+}
+
+.remainingTime{
+    
+    position: fixed;
+    height: 100px;
+    width: 100%;
+    bottom: 5%;
+    font-size: 100px;
+    text-align: center;
+    z-index: -1;
+}
