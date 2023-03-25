@@ -80,64 +80,80 @@ export class routineHandler
     
     PlayReminder(){
         
-        const reminderOrderArr = ShuffleArray([0,1,2,3,4,5,6]);
+        const reminderOrderArr = ShuffleArray([0,1,2,3]);
         
-        let searchComplete = false;
+        let reminderArr = []; 
         
-        let reminder;
+        const actionPath = this.currentAction.actionName.replace(/\s/gm,"");
         
-        let path;
-        
-        while(!searchComplete){
+        for(const ind of reminderOrderArr){
             
-            for(const ind of reminderOrderArr){
-                
-                const actionPath = this.currentAction.actionName.replace(/\s/gm,"");
-                
-                path = this.voiceProfilePath + actionPath + "/reminder" + ind + ".mp3";
-                
-                reminder = new Audio(path);
-                
-                console.log(reminder.load());
-                
-                if(reminder == null || this.playedReminderPaths.includes(path)){
-                    
-                    path = "";
-                    continue
-                }
-                else {
-                    console.log(`found ${path}`);
-                    searchComplete = true
-                }
-                
-            }
+            const path = this.voiceProfilePath + actionPath + "/reminder" + ind + ".mp3";
             
-            for(const ind of reminderOrderArr){
-                
-                path = this.voiceProfilePath + "/reminder" + ind + ".mp3";
-        
-                reminder = new Audio(path);
-                
-                console.log(reminder.load());
-                
-                if(reminder == null || this.playedReminderPaths.includes(path)){
-                    
-                    path = "";
-                    continue
-                }
-                else{
-                    console.log(`found ${path}`);
-                    searchComplete = true
-                }
-            }
-            
-            searchComplete = true;
+            reminderArr.push(path);
         }
-        console.log(path);
         
-        this.playedReminderPaths.push(path);
+        for(const ind of reminderOrderArr){
+            
+            const path = this.voiceProfilePath + "reminder" + ind + ".mp3";
+            
+            reminderArr.push(path)
+        }
         
-        reminder.play();
+//        while(!searchComplete){
+//            
+//            for(const ind of reminderOrderArr){
+//                
+//                const actionPath = this.currentAction.actionName.replace(/\s/gm,"");
+//                
+//                path = this.voiceProfilePath + actionPath + "/reminder" + ind + ".mp3";
+//                
+//                reminder = new Audio(path);
+//                
+//                //console.log(reminder.preload());
+//                
+//                if(reminder == null || this.playedReminderPaths.includes(path)){
+//                    
+//                    path = "";
+//                    continue
+//                }
+//                else {
+//                    console.log(`found ${path}`);
+//                    searchComplete = true
+//                }
+//                
+//            }
+//            
+//            for(const ind of reminderOrderArr){
+//                
+//                path = this.voiceProfilePath + "/reminder" + ind + ".mp3";
+//        
+//                reminder = new Audio(path);
+//                
+//                //console.log(reminder.preload());
+//                
+//                if(reminder == null || this.playedReminderPaths.includes(path)){
+//                    
+//                    path = "";
+//                    continue
+//                }
+//                else{
+//                    console.log(`found ${path}`);
+//                    searchComplete = true
+//                }
+//            }
+//            
+//            searchComplete = true;
+//        }
+        //console.log(path);
+        
+        reminderArr = ShuffleArray(reminderArr);
+        
+        const reminderPath = reminderArr[0];
+        
+        const reminderAudio = new Audio(reminderPath);
+        
+        reminderAudio.play();
     }
     
     _EndRoutine(){

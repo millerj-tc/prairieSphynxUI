@@ -29,7 +29,7 @@ function _ChooseVoiceProfile(){
     
     const rh = window.routineHandler;
     
-    const voicepackArr = ShuffleArray(["../routineCommander/voicepacks/superliminalDrBedtime/","../routineCommander/voicepacks/batmanBedtime/"])
+    const voicepackArr = ShuffleArray(["../routineCommander/voicepacks/superliminalDrBedtime/","../routineCommander/voicepacks/batmanBedtime/","../routineCommander/voicepacks/robAnybodyBedtime/","../routineCommander/voicepacks/superliminalAIBedtime/"])
     
     rh.voiceProfilePath = voicepackArr[0];
 }

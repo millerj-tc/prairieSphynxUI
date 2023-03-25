@@ -9,8 +9,8 @@
     position: fixed;
     height: 100px;
     width: 100%;
-    bottom: 5%;
-    font-size: 100px;
+    bottom: 20%;
+    font-size: 210px;
     text-align: center;
     z-index: -1;
 }
