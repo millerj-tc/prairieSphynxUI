@@ -1,4 +1,4 @@
-import {ShuffleArray} from "../../../../utils/mathAndLogicUtils/miscUtils.js";
+import {ShuffleArray} from "./../../../utils/mathAndLogicUtils/miscUtils.js";
 
 class action
 {
