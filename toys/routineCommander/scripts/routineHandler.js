@@ -36,13 +36,11 @@ export class routineHandler
     
     BeginRoutine(){
         
-        //const audio = new Audio("../exerciseCommander/audio/chime.mp3");
+        console.error("intro delay is annoying");
         
-        //audio.play();
-        
-        const routineIntro = new Audio(this.voiceProfilePath + "intro.mp3");
-        
-        routineIntro.play();
+//        const routineIntro = new Audio(this.voiceProfilePath + "intro.mp3");
+//        
+//        routineIntro.play();
         
         this.BeginAction();
 
@@ -100,6 +98,8 @@ export class routineHandler
                 
                 reminder = new Audio(path);
                 
+                console.log(reminder.load());
+                
                 if(reminder == null || this.playedReminderPaths.includes(path)){
                     
                     path = "";
@@ -117,6 +117,8 @@ export class routineHandler
                 path = this.voiceProfilePath + "/reminder" + ind + ".mp3";
         
                 reminder = new Audio(path);
+                
+                console.log(reminder.load());
                 
                 if(reminder == null || this.playedReminderPaths.includes(path)){
                     
