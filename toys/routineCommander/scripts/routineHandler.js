@@ -35,14 +35,16 @@ export class routineHandler
     }
     
     BeginRoutine(){
+                
+        const routineIntro = new Audio(this.voiceProfilePath + "intro.mp3");
         
-        console.error("intro delay is annoying");
+        routineIntro.play();
         
-//        const routineIntro = new Audio(this.voiceProfilePath + "intro.mp3");
-//        
-//        routineIntro.play();
+        const rh = this;
         
-        this.BeginAction();
+        setTimeout(function(){rh.BeginAction()},5000);
+        
+        //this.BeginAction();
 
     }
     
