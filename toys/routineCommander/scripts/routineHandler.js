@@ -65,6 +65,26 @@ export class routineHandler
         const intro = new Audio(this.voiceProfilePath + actionPath + "/intro.mp3");
         
         intro.play();
+        
+        this._ChangeBackgroundColor();
+    }
+    
+    _ChangeBackgroundColor(){
+       
+        const colorOrder = ShuffleArray([`aliceblue`,
+    `darkcyan`,
+    `pink`,
+    `tomato`,
+    `honeydew`,
+    `palegoldenrod`,
+    `papayawhip`,
+    `cadetblue`,
+    `chartreuse`]);
+        
+        const bg = document.getElementById("background");
+        
+        document.body.style.backgroundColor = colorOrder[0];
+        
     }
     
     GotoNextAction(){
