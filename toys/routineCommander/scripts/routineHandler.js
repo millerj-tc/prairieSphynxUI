@@ -42,7 +42,7 @@ export class routineHandler
         
         const rh = this;
         
-        setTimeout(function(){rh.BeginAction()},6300);
+        setTimeout(function(){rh.BeginAction()},8000);
         
         //this.BeginAction();
 
@@ -65,6 +65,8 @@ export class routineHandler
         const intro = new Audio(this.voiceProfilePath + actionPath + "/intro.mp3");
         
         intro.play();
+        
+        console.log(`playing ${this.currentAction.actionName}`);
         
         this._ChangeBackgroundColor();
     }
@@ -96,6 +98,8 @@ export class routineHandler
         this.currentAction = this.actions[this.currentActionInd];
         
         if(this.currentAction == null) this._EndRoutine();
+        
+        console.log(this.currentAction.actionName);
         
         this.BeginAction();
     }
@@ -183,6 +187,10 @@ export class routineHandler
         const div = document.getElementById("remainingTime");
 
         div.innerText = "Done!";
+        
+        const routineOutro = new Audio(this.voiceProfilePath + "outro.mp3");
+        
+        routineOutro.play();
     }
     
     _SetTimer(){
@@ -205,10 +213,8 @@ export class routineHandler
         if(remainingTimeInSecs > 0){
             
             rh._SetTimer();
-            
-            console.error("change to 25 & 0.33 below");
         
-                if(rh.currentActionTimeElapsedSecs % 10 == 0 && Math.random() > 0){
+                if(rh.currentActionTimeElapsedSecs % 13 == 0 && Math.random() > 0){
 
                 rh.PlayReminder();
                 }

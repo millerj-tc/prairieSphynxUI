@@ -7,21 +7,21 @@ export function BeginBedtimeRoutine(){
     
     _ChooseVoiceProfile();
     
-    rh.AddAction("Wash hands", 120);
+    rh.AddAction("Wash hands", 45);
+    
+    rh.AddAction("Prepare toothbrush", 30);
     
     rh.AddAction("Brush teeth", 120);
+    
+    rh.AddAction("Brush tongue", 15);
+    
+    rh.AddAction("Spit out toothpaste and clean toothbrush", 20);
+    
+    rh.AddAction("Prepare floss", 20);
     
     rh.AddAction("Floss",120);
     
     rh.AddAction("Get water",120);
-    
-    // non repeating reminders
-    
-    // custom function for each routine / action so that you can have special lines that only pertain to being near the end or beginning of certain actions, etc.
-    
-    // routine intro
-    ///action intro
-    ////action reminders?
     
     rh.BeginRoutine();
 }
