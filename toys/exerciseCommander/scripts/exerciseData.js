@@ -14,6 +14,17 @@ export const exercises =
         muscleGroups:["hamstrings","abs"] 
     },
     {
+        type: "fast jabs",
+        soundfile:null,
+        difficulty1reps: 15,
+        difficulty1rate: 2.8,
+        difficultyLvRateChange:-0.25,
+        difficulty1rest: 2000,
+        difficultyLvRestChange: -300,
+        requiresEquipment:false,
+        muscleGroups:["quads","triceps","calves","abs","biceps"] 
+    },
+    {
         type: "pushups",
         soundfile:null,
         difficulty1reps: 3,
