@@ -108,6 +108,8 @@ function _BuildExercisePattern(patternRequest){
                 transitionTime = 2050 + ((1 - section.difficulty) * 4000);
             }
             
+            if(chosenExercise.type == "rest") transitionTime = 0;
+            
                                 
             exerciseCommands.push(new exerciseCommand(chosenExercise.type, reps,rate, restTime,transitionTime));
             
@@ -158,6 +160,24 @@ function _BuildExercisePattern(patternRequest){
 
 function  _ChooseSubsectionExercise(section){
     
+    const rest = {
+            type: "rest",
+            soundfile:null,
+            difficulty1reps: 1,
+            difficulty1rate: 1,
+            difficultyLvRateChange: 0,
+            difficulty1rest: 0,
+            difficultyLvRestChange: 0,
+            requiresEquipment:false,
+            muscleGroups:[]
+            }
+    
+    if(section.difficulty == 0){
+        
+        return rest 
+            
+    }
+    
     const shuffledExercises = ShuffleArray(exercises);
     
     return shuffledExercises[0];
@@ -165,10 +185,14 @@ function  _ChooseSubsectionExercise(section){
 
 function _ChooseRate(chosenExercise,section){
     
+    if(chosenExercise.type == "rest") return 1
+    
     return chosenExercise.difficulty1rate + (chosenExercise.difficultyLvRateChange * section.difficulty);
 }
 
 function _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate,restTime){
+    
+    if(chosenExercise.type == "rest") return section.duration
     
     let reps = Math.ceil(chosenExercise.difficulty1reps * section.difficulty);
     
@@ -188,6 +212,8 @@ function _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate,restTi
 }
 
 function _ChooseRestTime(chosenExercise,section){
+    
+    if(chosenExercise.type == "rest") return 0
     
     const restTime = chosenExercise.difficulty1rest - (chosenExercise.difficultyLvRestChange * section.difficulty);
     

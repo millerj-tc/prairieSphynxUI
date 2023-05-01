@@ -60,7 +60,7 @@ export const exercises =
     {
         type: "burpees",
         soundfile:null,
-        difficulty1reps: 2,
+        difficulty1reps: 1.75,
         difficulty1rate: 0.25,
         difficultyLvRateChange: 0.075,
         difficulty1rest: 4000,
@@ -71,7 +71,7 @@ export const exercises =
     {
         type: "situps",
         soundfile:null,
-        difficulty1reps: 3,
+        difficulty1reps: 3.25,
         difficulty1rate: 0.48,
         difficultyLvRateChange:-0.15,
         difficulty1rest: 3000,
@@ -82,7 +82,7 @@ export const exercises =
     {
         type: "cross situps",
         soundfile:null,
-        difficulty1reps: 7,
+        difficulty1reps: 7.5,
         difficulty1rate: 2,
         difficultyLvRateChange:-0.15,
         difficulty1rest: 2000,
@@ -115,7 +115,7 @@ export const exercises =
     {
         type: "mountain climbers",
         soundfile:null,
-        difficulty1reps: 4,
+        difficulty1reps: 4.25,
         difficulty1rate: 1,
         difficultyLvRateChange: 0.15,
         difficulty1rest: 2000,
@@ -160,7 +160,7 @@ export const exercises =
         type: "chair tricep dips",
         soundfile:null,
         difficulty1reps: 2,
-        difficulty1rate: 0.66,
+        difficulty1rate: 0.59,
         difficultyLvRateChange: -0.15,
         difficulty1rest: 2000,
         difficultyLvRestChange: -300,
