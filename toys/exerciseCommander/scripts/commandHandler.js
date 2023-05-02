@@ -5,6 +5,7 @@ export class commandHandler
         this.commands = [];
         this.currentCommandInd;
         this.elapsedExerciseTime = 0;
+        this.currentTime = 0;
     }
     
     PlayExercisePattern(builtPattern){

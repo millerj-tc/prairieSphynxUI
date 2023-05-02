@@ -90,11 +90,6 @@ export function _AddSectionBuilder(){
     
     difficultyContainer.append(difficultyLabel);
     
-        
-    
-    
-    
-    
     
     sectionBuilderContainer.append(selectionSpan);
     
@@ -107,6 +102,10 @@ export function _AddSectionBuilder(){
         
         newSectionButton.style.display = "none";
         _AddSectionBuilder();
+        const rtArtist = uiTH.GetArtistsByAuthorizedDOMId("remainingTime");
+        
+        
+        document.getElementById("setupTimeDisplay").innerText = _GetSectionDurationValues();
     }
     
     selectionSpan.append(durationContainer);
@@ -118,4 +117,24 @@ export function _AddSectionBuilder(){
     sectionBuilderContainer.insertAdjacentHTML("beforeend","<br><br>");
     
     sbArtist.AppendElementWithinDOM(sectionBuilderContainer);
+}
+
+function _GetSectionDurationValues(){
+    
+    const sectionDOMArr = document.getElementsByClassName("sectionBuilderTitle");
+    
+    console.log(sectionDOMArr);
+    
+    let returnValue = 0;
+    
+    for(const section of sectionDOMArr){
+        
+        const sectionDurationVal = Number(section.getElementsByClassName("durationSelection selection")[0].value)
+        
+        console.log(sectionDurationVal);
+        
+        returnValue += sectionDurationVal;
+    }
+    
+    return returnValue
 }

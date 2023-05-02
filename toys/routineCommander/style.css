@@ -20,6 +20,16 @@
     z-index: -1;
 }
 
+.setupTimeDisplay{
+    
+/*    position:relative;*/
+    top:5px;
+    left:5px;
+    width: 200px;
+    height: 200px;
+    font-size:128px;
+}
+
 body{
     
     background-color: bisque;
