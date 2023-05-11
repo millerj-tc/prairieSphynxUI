@@ -180,7 +180,15 @@ function  _ChooseSubsectionExercise(section){
     
     const shuffledExercises = ShuffleArray(exercises);
     
-    return shuffledExercises[0];
+    let acceptedExercises = [];
+    
+    //"bicycle kicks", "situps", "cross situps", "fast jabs"
+    
+    for(let i = 0; i < shuffledExercises.length; i++){
+        
+        if(acceptedExercises.includes(shuffledExercises[i].type) || acceptedExercises.length == 0) return shuffledExercises[i]
+        
+    }
 }
 
 function _ChooseRate(chosenExercise,section){

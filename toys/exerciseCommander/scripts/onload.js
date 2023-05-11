@@ -105,7 +105,7 @@ export function _AddSectionBuilder(){
         const rtArtist = uiTH.GetArtistsByAuthorizedDOMId("remainingTime");
         
         
-        document.getElementById("setupTimeDisplay").innerText = _GetSectionDurationValues();
+        document.getElementById("setupTimeDisplay").innerText = (_GetSectionDurationValues()/60).toFixed(2);
     }
     
     selectionSpan.append(durationContainer);
