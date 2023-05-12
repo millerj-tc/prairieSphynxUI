@@ -73,9 +73,13 @@ function _BuildExercisePattern(patternRequest){
     
     const exerciseCommands = [];
     
-    for(const section of patternRequest){
+    for(let s = 0; s < patternRequest.length; s++){
         
         // a section is an object with difficulty, duration, diffVar, rateVar, and durRegularity props
+        
+        const section = patternRequest[s];
+        
+        const nextSection = patternRequest[s+1];
         
         let sectionRemainingDuration = section.duration * 1000;
         
@@ -85,7 +89,7 @@ function _BuildExercisePattern(patternRequest){
                         
             const rate = _ChooseRate(chosenExercise,section);
             
-            const restTime = _ChooseRestTime(chosenExercise,section);
+            const restTime = _ChooseRestTime(chosenExercise,section,nextSection);
             
             let reps = _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate,restTime);
             
@@ -219,9 +223,11 @@ function _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate,restTi
     
 }
 
-function _ChooseRestTime(chosenExercise,section){
+function _ChooseRestTime(chosenExercise,section,nextSection){
     
-    if(chosenExercise.type == "rest") return 0
+    console.log(nextSection);
+    
+    if(chosenExercise.type == "rest" || nextSection.difficulty == 0) return 0
     
     const restTime = chosenExercise.difficulty1rest - (chosenExercise.difficultyLvRestChange * section.difficulty);
     
