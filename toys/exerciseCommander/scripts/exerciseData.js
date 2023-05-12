@@ -18,7 +18,7 @@ export const exercises =
         soundfile:null,
         difficulty1reps: 15,
         difficulty1rate: 2.8,
-        difficultyLvRateChange:-0.25,
+        difficultyLvRateChange:0.08,
         difficulty1rest: 2000,
         difficultyLvRestChange: -300,
         requiresEquipment:false,

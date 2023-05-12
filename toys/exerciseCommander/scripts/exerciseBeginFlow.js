@@ -184,9 +184,9 @@ function  _ChooseSubsectionExercise(section){
     
     const shuffledExercises = ShuffleArray(exercises);
     
-    let acceptedExercises = [];
+    let acceptedExercises = ["bicycle kicks", "situps", "cross situps", "fast jabs"];
     
-    //"bicycle kicks", "situps", "cross situps", "fast jabs"
+    //
     
     for(let i = 0; i < shuffledExercises.length; i++){
         
@@ -224,10 +224,8 @@ function _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate,restTi
 }
 
 function _ChooseRestTime(chosenExercise,section,nextSection){
-    
-    console.log(nextSection);
-    
-    if(chosenExercise.type == "rest" || nextSection.difficulty == 0) return 0
+        
+    if(chosenExercise.type == "rest" || (nextSection != null && nextSection.difficulty == 0)) return 0
     
     const restTime = chosenExercise.difficulty1rest - (chosenExercise.difficultyLvRestChange * section.difficulty);
     
