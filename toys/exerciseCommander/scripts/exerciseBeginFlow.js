@@ -225,7 +225,7 @@ function _ChooseReps(chosenExercise,section,sectionRemainingDuration,rate,restTi
 
 function _ChooseRestTime(chosenExercise,section,nextSection){
         
-    if(chosenExercise.type == "rest" || (nextSection != null && nextSection.difficulty == 0)) return 0
+    if(chosenExercise.type == "rest") return 0
     
     const restTime = chosenExercise.difficulty1rest - (chosenExercise.difficultyLvRestChange * section.difficulty);
     
